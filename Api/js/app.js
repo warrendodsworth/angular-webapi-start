@@ -2,7 +2,10 @@
   'use strict';
 
   //Modules
-  angular.module('app', ['ngRoute', 'ctrls']);
+  angular.module('app', ['ngRoute',
+                         'ctrls',
+
+                         'LocalStorageModule']);
 
   angular.module('ctrls', []);
 
@@ -20,5 +23,10 @@
            $routeProvider.otherwise({ redirectTo: '/' });
 
          }]);
+
+  angular.module('app')
+         .config(function ($httpProvider) {
+           $httpProvider.interceptors.push('AuthInterceptorService');
+         });
 
 })();
