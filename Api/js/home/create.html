@@ -1,0 +1,19 @@
+﻿<h4>Create</h4>
+<hr />
+
+<div class="row">
+  <div class="col-sm-5">
+
+    <form name="form" novalidate>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" ng-model="model.name" name="name" class="form-control" />
+      </div>
+
+      <input type="submit" ng-click="create( model )" value="Create" class="btn btn-primary" />
+    </form>
+    <br />
+  
+    <p class="text-info">{{model.name}}</p>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+{
+  "name": "bower",
+  "version": "1.0.0",
+  "authors": [
+    "warrendodsworth <warren.dodsworth@gmail.com>"
+  ],
+  "description": "JobAdder Test",
+  "main": "bower.json",
+  "keywords": [
+    "web"
+  ],
+  "license": "MIT",
+  "homepage": "index",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-local-storage": "~0.2.3"
+  }
+}
