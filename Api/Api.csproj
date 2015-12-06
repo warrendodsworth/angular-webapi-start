@@ -227,6 +227,8 @@
     <Content Include="js\account\LoginCtrl.js" />
     <Content Include="js\account\register.html" />
     <Content Include="js\account\RegisterCtrl.js" />
+    <Content Include="js\account\registerExternal.html" />
+    <Content Include="js\account\RegisterExternalCtrl.js" />
     <Content Include="js\app.js" />
     <Content Include="js\home\create.html" />
     <Content Include="js\home\index.html" />

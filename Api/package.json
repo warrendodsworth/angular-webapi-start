@@ -1,7 +1,12 @@
 ﻿{
-    "version": "1.0.0",
-    "name": "Learn",
-    "description": "Learn Api",
-    "devDependencies": {
-    }
+  "version": "1.0.0",
+  "name": "Learn",
+  "description": "Learn Api",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-bower": "^0.0.11",
+    "gulp-rename": "^1.2.2"
+  }
 }
