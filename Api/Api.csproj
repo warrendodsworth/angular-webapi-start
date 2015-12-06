@@ -223,6 +223,10 @@
     <Content Include="gulpfile.js" />
     <Content Include="js\account\AccountService.js" />
     <Content Include="js\account\AuthInterceptorService.js" />
+    <Content Include="js\account\ExternalLoginControllers.js" />
+    <Content Include="js\account\externalLoginFailure.html" />
+    <Content Include="js\account\externalRegister.html" />
+    <Content Include="js\account\lockout.html" />
     <Content Include="js\account\login.html" />
     <Content Include="js\account\LoginCtrl.js" />
     <Content Include="js\account\register.html" />
