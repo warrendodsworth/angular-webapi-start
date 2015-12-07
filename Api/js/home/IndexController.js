@@ -2,8 +2,8 @@
   'use strict';
 
   //Index
-  angular.module('ctrls')
-         .controller('IndexCtrl', ['$scope', IndexController]);
+  angular.module('controllers')
+         .controller('IndexController', ['$scope', IndexController]);
 
   function IndexController($scope) {
 
@@ -14,8 +14,8 @@
 
 
   //Create
-  angular.module('ctrls')
-         .controller('CreateCtrl', ['$scope', CreateController]);
+  angular.module('controllers')
+         .controller('CreateController', ['$scope', CreateController]);
 
   function CreateController($scope) {
 

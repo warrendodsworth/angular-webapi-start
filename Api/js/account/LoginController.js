@@ -3,7 +3,7 @@
 
   angular
       .module('app')
-      .controller('LoginCtrl', ['$scope', '$location', 'AccountService', LoginController ]);
+      .controller('LoginController', ['$scope', '$location', 'AccountService', LoginController ]);
   
   function LoginController($scope, $location, AccountService) {
 

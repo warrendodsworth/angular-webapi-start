@@ -2,10 +2,10 @@
   'use strict';
 
   angular
-      .module('ctrls')
-      .controller('RegisterCtrl', ['$scope', '$location', '$timeout', 'AccountService', RegisterCtrl]);
+      .module('controllers')
+      .controller('RegisterController', ['$scope', '$location', '$timeout', 'AccountService', RegisterController]);
 
-  function RegisterCtrl($scope, $location, $timeout, AccountService) {
+  function RegisterController($scope, $location, $timeout, AccountService) {
 
     $scope.savedSuccessfully = false;
     $scope.message = "";

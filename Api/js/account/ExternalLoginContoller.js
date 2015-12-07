@@ -2,20 +2,17 @@
   'use strict';
 
   angular
-      .module('ctrls')
-      .controller('RegisterExternalCtrl', RegisterExternalController);
+      .module('controllers')
+      .controller('RegisterExternalController', RegisterExternalController);
 
   RegisterExternalController.$inject = ['$http', '$scope', '$location', '$window', 'localStorageService', 'AccountService'];
 
   //Return from Facebook to this view, which should read #params and get the access token
   function RegisterExternalController($http, $scope, $location, $window, localStorageService, AccountService) {
-    $scope.title = 'Social Login Confirm';
-    $scope.model = {};
 
-    //Callback / returnUrl from Facebook - get access_token
-    var accessToken = $location.path().split(/[=&]+/)[1];
+    //Callback access_token
     console.log('Access token');
-    console.log(accessToken);
+    var accessToken = $location.path().split(/[=&]+/)[1];
 
     AccountService.getUserInfo(accessToken).then(function (res) {
       console.log('Get User Info');
@@ -67,17 +64,8 @@
         $scope.res = res;
       });
     };
+
+
   }
 
-
-  //Dont think its required
-  angular
-     .module('ctrls')
-     .controller('ExternalLoginFailureCtrl', ExternalLoginFailureController);
-
-  ExternalLoginFailureController.$inject = ['$scope'];
-
-  function ExternalLoginFailureController($scope) {
-    $scope.title = 'Social Login Failure';
-  }
 })();

@@ -17,16 +17,16 @@ namespace Api
                     
                     "~/js/app.js",
       
-                    "~/js/home/IndexCtrl.js",
+                    "~/js/home/IndexController.js",
 
-                    "~/js/account/LoginCtrl.js",
-                    "~/js/account/RegisterCtrl.js",
-                    "~/js/account/RegisterExternalCtrls.js",
+                    "~/js/account/LoginController.js",
+                    "~/js/account/RegisterController.js",
+                    "~/js/account/ExternalLoginController.js",
 
                     "~/js/account/AccountService.js",
                     "~/js/account/AuthInterceptorService.js",
 
-                    "~/js/shared/NavbarCtrl.js",
+                    "~/js/shared/NavbarController.js",
 
                     "~/Scripts/jquery-{version}.js"));
 

@@ -67,7 +67,7 @@
     //Get External Logins
     service.getExternalLogins = function (returnUrl, generateState) {
       return $http.get('/api/account/externalLogins'
-                      + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/registerExternal.html')
+                      + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html')
                       + '&generateState=' + (generateState || false));
     };
 
