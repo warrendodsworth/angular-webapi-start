@@ -12,8 +12,22 @@ namespace Api
                     "~/scripts/angular.js",
                     "~/scripts/angular-mocks.js",
                     "~/scripts/angular-route.js",
+                    "~/lib/angular-local-storage.js",
 
+                    
                     "~/js/app.js",
+      
+                    "~/js/home/IndexCtrl.js",
+
+                    "~/js/account/LoginCtrl.js",
+                    "~/js/account/RegisterCtrl.js",
+                    "~/js/account/RegisterExternalCtrls.js",
+
+                    "~/js/account/AccountService.js",
+                    "~/js/account/AuthInterceptorService.js",
+
+                    "~/js/shared/NavbarCtrl.js",
+
                     "~/Scripts/jquery-{version}.js"));
 
       // Use the development version of Modernizr to develop with and learn from. Then, when you're

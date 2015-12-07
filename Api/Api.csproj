@@ -223,26 +223,26 @@
     <Content Include="gulpfile.js" />
     <Content Include="js\account\AccountService.js" />
     <Content Include="js\account\AuthInterceptorService.js" />
-    <Content Include="js\account\ExternalLoginControllers.js" />
-    <Content Include="js\account\externalLoginFailure.html" />
-    <Content Include="js\account\externalRegister.html" />
+    <Content Include="js\account\RegisterExternalCtrls.js" />
+    <Content Include="js\account\registerExternal.html" />
     <Content Include="js\account\lockout.html" />
     <Content Include="js\account\login.html" />
     <Content Include="js\account\LoginCtrl.js" />
     <Content Include="js\account\register.html" />
     <Content Include="js\account\RegisterCtrl.js" />
-    <Content Include="js\account\registerExternal.html" />
-    <Content Include="js\account\RegisterExternalCtrl.js" />
     <Content Include="js\app.js" />
     <Content Include="js\home\create.html" />
     <Content Include="js\home\index.html" />
     <Content Include="js\home\IndexCtrl.js" />
     <Content Include="js\shared\download.js" />
+    <Content Include="js\shared\NavbarCtrl.js" />
     <Content Include="js\test\conf.js" />
     <Content Include="js\test\labs\angular.spec.js" />
     <Content Include="js\test\e2e\create.spec.js" />
     <Content Include="js\test\e2e\index.spec.js" />
     <Content Include="js\test\labs\tutorial.spec.js" />
+    <Content Include="lib\angular-local-storage.js" />
+    <Content Include="lib\angular-local-storage.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
@@ -325,7 +325,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53233</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

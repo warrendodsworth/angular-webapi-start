@@ -3,6 +3,7 @@
 
   //Modules
   angular.module('app', ['ngRoute',
+
                          'ctrls',
 
                          'LocalStorageModule']);
@@ -24,6 +25,7 @@
 
          }]);
 
+  //Plugins
   angular.module('app')
          .config(function ($httpProvider) {
            $httpProvider.interceptors.push('AuthInterceptorService');

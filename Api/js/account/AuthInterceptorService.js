@@ -2,29 +2,31 @@
   'use strict';
 
   angular.module('app')
-         .factory('AuthInterceptorService', ['$q', '$location', 'localStorageService', function ($q, $location, localStorageService) {
+         .factory('AuthInterceptorService', ['$q', '$location', 'localStorageService', AuthInterceptorService]);
 
-           var service = {};
+  function AuthInterceptorService($q, $location, localStorageService) {
 
-           service.request = function (config) {
+    var service = {};
 
-             config.headers = config.headers || {};
+    service.request = function (config) {
 
-             var authData = localStorageService.get('authorizationData');
-             if (authData) {
-               config.headers.Authorization = 'Bearer ' + authData.token;
-             }
+      config.headers = config.headers || {};
 
-             return config;
-           };
+      var authData = localStorageService.get('authorizationData');
+      if (authData) {
+        config.headers.Authorization = 'Bearer ' + authData.token;
+      }
 
-           service.responseError = function (rejection) {
-             if (rejection.status === 401) {
-               $location.path('/login');
-             }
-             return $q.reject(rejection);
-           };
+      return config;
+    };
 
-           return service;
-         }]);
+    service.responseError = function (rejection) {
+      if (rejection.status === 401) {
+        $location.path('/login');
+      }
+      return $q.reject(rejection);
+    };
+
+    return service;
+  }
 })

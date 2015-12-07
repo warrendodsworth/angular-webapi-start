@@ -1,12 +1,13 @@
-﻿( function () {
+﻿(function () {
   'use strict';
 
 
-    angular.module( 'app' )
-           .factory( 'authService', ['$http', '$q', 'localStorageService', function ( $http, $q, localStorageService ) {
+  angular.module('app')
+         .factory('AccountService', ['$http', '$q', 'localStorageService', function ($http, $q, localStorageService) {
 
-           var serviceBase = '/api/account/';
-           var authServiceFactory = {};
+           var service = {};
+
+           //ACCOUNT
 
            service.identity = {
              isAuth: false,
@@ -15,7 +16,7 @@
 
            service.register = function (registration) {
              service.logOut();
-             return $http.post(serviceBase + 'api/account/register', registration);
+             return $http.post('/api/account/register', registration);
            };
 
            service.login = function (model) {
@@ -24,7 +25,7 @@
 
              var deferred = $q.defer();
 
-             $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
+             $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
 
                localStorageService.set('authorizationData', { token: res.data.access_token, userName: model.userName });
                service.identity.isAuth = true;
@@ -51,46 +52,46 @@
                service.identity.isAuth = true;
                service.identity.userName = authData.userName;
              }
-               };
+           };
 
-               //EXTERNAL LOGINS
+           //EXTERNAL LOGINS
 
-               //Get User Info
-               service.getUserInfo = function ( accessToken ) {
-                   var config = accessToken ? { headers: { 'Authorization': 'Bearer ' + accessToken } } : {};
-                   return $http.get( '/api/account/UserInfo', config );
+           //Get User Info
+           service.getUserInfo = function (accessToken) {
+             var config = accessToken ? { headers: { 'Authorization': 'Bearer ' + accessToken } } : {};
+             return $http.get('/api/account/UserInfo', config);
            }
-       
-               //Get External Logins
-               service.getExternalLogins = function ( returnUrl, generateState ) {
-                   return $http.get( '/api/account/externalLogins'
-                                   + '?returnUrl=' + encodeURIComponent( returnUrl || '/js/account/externalRegister.html' )
-                                   + '&generateState=' + ( generateState || false ) );
-               };
 
-               //Register External Login { email }
-               service.registerExternal = function ( model, externalAccessToken ) {
-                   return $http.post( '/api/account/registerExternal', model, {
-                       headers: { 'Authorization': 'Bearer ' + externalAccessToken }
-                   } );
-               };
+           //Get External Logins
+           service.getExternalLogins = function (returnUrl, generateState) {
+             return $http.get('/api/account/externalLogins'
+                             + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/registerExternal.html')
+                             + '&generateState=' + (generateState || false));
+           };
 
-               //Add External Login { externalAccessToken }
-               service.addExternalLogin = function ( model ) {
-                   return $http.post( '/api/account/addExternalLogin', model );
-               };
+           //Register External Login { email }
+           service.registerExternal = function (model, externalAccessToken) {
+             return $http.post('/api/account/registerExternal', model, {
+               headers: { 'Authorization': 'Bearer ' + externalAccessToken }
+             });
+           };
 
-               //Remove Login { loginProvider, providerKey }
-               service.removeLogin = function ( model ) {
-                   return $http.post( '/api/account/removeLogin', model );
-               };
+           //Add External Login { externalAccessToken }
+           service.addExternalLogin = function (model) {
+             return $http.post('/api/account/addExternalLogin', model);
+           };
 
-               //Manage social logins
-               service.getManageLogins = function ( returnUrl ) {
-                   return $http.get( '/api/account/manageInfo'
-                                   + '?returnUrl=' + encodeURIComponent( returnUrl || '/' ) );
-               };
+           //Remove Login { loginProvider, providerKey }
+           service.removeLogin = function (model) {
+             return $http.post('/api/account/removeLogin', model);
+           };
+
+           //Manage social logins
+           service.getManageLogins = function (returnUrl) {
+             return $http.get('/api/account/manageInfo'
+                             + '?returnUrl=' + encodeURIComponent(returnUrl || '/'));
+           };
 
            return service;
-           }] );
-} )();
+         }]);
+})();

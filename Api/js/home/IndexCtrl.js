@@ -2,9 +2,10 @@
   'use strict';
 
   //Index
-  angular.module('ctrls').controller('IndexCtrl', ['$scope', IndexCtrl]);
+  angular.module('ctrls')
+         .controller('IndexCtrl', ['$scope', IndexController]);
 
-  function IndexCtrl($scope) {
+  function IndexController($scope) {
 
     $scope.create = function (model) {
       $scope.result = model.name;
@@ -13,9 +14,10 @@
 
 
   //Create
-  angular.module('ctrls').controller('CreateCtrl', ['$scope', CreateCtrl]);
+  angular.module('ctrls')
+         .controller('CreateCtrl', ['$scope', CreateController]);
 
-  function CreateCtrl($scope) {
+  function CreateController($scope) {
 
   }
 

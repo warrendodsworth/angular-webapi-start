@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-      .module('app')
+      .module('ctrls')
       .controller('RegisterCtrl', ['$scope', '$location', '$timeout', 'AccountService', function ($scope, $location, $timeout, AccountService) {
 
         $scope.savedSuccessfully = false;
