@@ -1,8 +1,9 @@
 ﻿(function () {
   'use strict';
 
-  angular.module('app')
-         .factory('AuthInterceptorService', ['$q', '$location', 'localStorageService', AuthInterceptorService]);
+  angular
+    .module('app')
+    .factory('AuthInterceptorService', ['$q', '$location', 'localStorageService', AuthInterceptorService]);
 
   function AuthInterceptorService($q, $location, localStorageService) {
 

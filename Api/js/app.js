@@ -12,23 +12,32 @@
 
 
   //Routes
-  angular.module('app')
-         .config(['$routeProvider', function ($routeProvider) {
+  angular
+    .module('app')
+    .config(['$routeProvider', function ($routeProvider) {
 
-           $routeProvider.when('/create', { templateUrl: '/js/home/create.html', controller: 'CreateCtrl' })
-                         .when('/', { templateUrl: '/js/home/index.html', controller: 'IndexCtrl' });
+      $routeProvider.when('/create', { templateUrl: '/js/home/create.html', controller: 'CreateCtrl' })
+                    .when('/', { templateUrl: '/js/home/index.html', controller: 'IndexCtrl' });
 
-           $routeProvider.when('/login', { templateUrl: '/js/account/login.html', controller: 'LoginCtrl' })
-                         .when('/register', { templateUrl: '/js/account/register.html', controller: 'RegisterCtrl' });
+      $routeProvider.when('/login', { templateUrl: '/js/account/login.html', controller: 'LoginCtrl' })
+                    .when('/register', { templateUrl: '/js/account/register.html', controller: 'RegisterCtrl' });
 
-           $routeProvider.otherwise({ redirectTo: '/' });
+      $routeProvider.otherwise({ redirectTo: '/' });
 
-         }]);
+    }]);
+
 
   //Plugins
-  angular.module('app')
-         .config(function ($httpProvider) {
-           $httpProvider.interceptors.push('AuthInterceptorService');
-         });
+  angular
+    .module('app')
+    .run(['AccountService', function (AccountService) {
+      AccountService.getIdentity();
+    }]);
+
+  angular
+     .module('app')
+    .config(['$httpProvider', function ($httpProvider) {
+      $httpProvider.interceptors.push('AuthInterceptorService');
+    }]);
 
 })();

@@ -1,7 +1,8 @@
 ﻿(function () {
   'use strict';
 
-  angular.module('ctrls')
+  angular
+    .module('ctrls')
     .controller('NavbarCtrl', ['$scope', 'AccountService', NavbarController]);
 
   function NavbarController($scope, AccountService) {
