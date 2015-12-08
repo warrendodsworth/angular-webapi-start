@@ -1,0 +1,21 @@
+﻿
+<h2>Manage logins</h2>
+<hr />
+
+<table>
+  <tr>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr ng-repeat="login in logins">
+    <td>{{login.providerName}}</td>
+    <td><a ng-click="removeLogin( login )" class="btn btn-default btn-sm">Remove</a></td>
+  </tr>
+</table>
+<br />
+
+<div>
+  <h2>Add a login</h2>
+   
+</div>
+

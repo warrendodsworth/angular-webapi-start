@@ -8,9 +8,9 @@ using System.Data.Entity;
 namespace Api.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
@@ -19,20 +19,18 @@ namespace Api.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class AppContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext()
+        public AppContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public DbSet<TestModel> Tests { get; set; }
+        public DbSet<Note> Notes { get; set; }
 
-        public static ApplicationDbContext Create()
+        public static AppContext Create()
         {
-            return new ApplicationDbContext();
+            return new AppContext();
         }
-
-        public System.Data.Entity.DbSet<Api.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

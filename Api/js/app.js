@@ -29,11 +29,12 @@
     .module('app')
     .config(['$routeProvider', function ($routeProvider) {
 
-      $routeProvider.when('/create', { templateUrl: '/js/home/create.html', controller: 'CreateController' })
-                    .when('/', { templateUrl: '/js/home/index.html', controller: 'IndexController' });
+      $routeProvider.when('/', { templateUrl: '/js/home/index.html', controller: 'IndexController' })
+                    .when('/create', { templateUrl: '/js/home/create.html', controller: 'CreateController' });
 
       $routeProvider.when('/login', { templateUrl: '/js/account/login.html', controller: 'LoginController' })
-                    .when('/register', { templateUrl: '/js/account/register.html', controller: 'RegisterController' });
+                    .when('/register', { templateUrl: '/js/account/register.html', controller: 'RegisterController' })
+                    .when('/manage/logins', { templateUrl: '/js/account/manage/manageLogins.html', controller: 'ManageLoginsController' });
 
       $routeProvider.otherwise({ redirectTo: '/' });
 

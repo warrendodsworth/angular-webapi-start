@@ -3,9 +3,11 @@
 
   angular
     .module('app')
-    .factory('AccountService', ['$http', '$q', 'localStorageService', AccountService]);
-  
-  function AccountService($http, $q, localStorageService) {
+    .factory('AccountService', AccountService);
+
+  AccountService.$inject = ['$q', '$http', 'localStorageService'];
+
+  function AccountService($q, $http, localStorageService) {
 
     var service = {};
 
@@ -17,7 +19,7 @@
     };
 
     service.register = function (model) {
-      service.logOut();
+      service.logout();
       return $http.post('/api/account/register', model);
     };
 
@@ -35,7 +37,7 @@
 
         deferred.resolve(res);
       }, function (res) {
-        service.logOut();
+        service.logout();
         deferred.reject(res);
       });
 
@@ -73,9 +75,8 @@
 
     //Register External Login { email }
     service.registerExternal = function (model, externalAccessToken) {
-      return $http.post('/api/account/registerExternal', model, {
-        headers: { 'Authorization': 'Bearer ' + externalAccessToken }
-      });
+      var config = externalAccessToken ? { headers: { 'Authorization': 'Bearer ' + externalAccessToken } } : {};
+      return $http.post('/api/account/registerExternal', model, config);
     };
 
     //Add External Login { externalAccessToken }
@@ -91,7 +92,7 @@
     //Manage social logins
     service.getManageLogins = function (returnUrl) {
       return $http.get('/api/account/manageInfo'
-                      + '?returnUrl=' + encodeURIComponent(returnUrl || '/'));
+                      + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html'));
     };
 
     return service;

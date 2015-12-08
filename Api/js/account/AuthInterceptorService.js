@@ -3,7 +3,9 @@
 
   angular
     .module('app')
-    .factory('AuthInterceptorService', ['$q', '$location', 'localStorageService', AuthInterceptorService]);
+    .factory('AuthInterceptorService', AuthInterceptorService);
+
+  AuthInterceptorService.$inject = ['$q', '$location', 'localStorageService'];
 
   function AuthInterceptorService($q, $location, localStorageService) {
 
@@ -30,4 +32,4 @@
 
     return service;
   }
-})
+})();

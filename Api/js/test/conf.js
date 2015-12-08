@@ -2,7 +2,7 @@
 exports.config = {
   framework: 'jasmine',
   specs: ['./e2e/**/*.spec.js', './labs/**/*.spec.js'],
-  baseUrl: 'http://localhost:51562/',
+  baseUrl: 'http://localhost:53233/',
 };
 
 

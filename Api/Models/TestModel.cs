@@ -5,12 +5,15 @@ using System.Web;
 
 namespace Api.Models
 {
-    public class TestModel
-    {
-        public int Id { get; set; }
+  public class Note
+  {
+    public int Id { get; set; }
 
-        public bool Rehire { get; set; }
+    public string Title { get; set; }
 
-        public List<string> Result { get; set; }
-    }
+    public string Text { get; set; }
+
+    //public string UserId { get; set; }
+
+  }
 }

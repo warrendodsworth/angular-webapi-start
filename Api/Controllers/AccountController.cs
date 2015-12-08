@@ -24,24 +24,24 @@ namespace Api.Controllers
   public class AccountController : ApiController
   {
     private const string LocalLoginProvider = "Local";
-    private ApplicationUserManager _userManager;
+    private UserManager _userManager;
 
     public AccountController ()
     {
     }
 
-    public AccountController (ApplicationUserManager userManager,
+    public AccountController (UserManager userManager,
         ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
     {
       UserManager = userManager;
       AccessTokenFormat = accessTokenFormat;
     }
 
-    public ApplicationUserManager UserManager
+    public UserManager UserManager
     {
       get
       {
-        return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        return _userManager ?? Request.GetOwinContext().GetUserManager<UserManager>();
       }
       private set
       {
@@ -255,7 +255,7 @@ namespace Api.Controllers
 
 
       //Check if user is registered locally
-      ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+      User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
 
       bool hasRegistered = user != null;
 
@@ -342,7 +342,7 @@ namespace Api.Controllers
         return BadRequest(ModelState);
       }
 
-      var user = new ApplicationUser() { UserName = model.Username, Email = model.Email };
+      var user = new User() { UserName = model.Username, Email = model.Email };
 
       IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
@@ -371,7 +371,7 @@ namespace Api.Controllers
         return InternalServerError();
       }
 
-      var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+      var user = new User() { UserName = model.Email, Email = model.Email };
 
       IdentityResult result = await UserManager.CreateAsync(user);
       if ( !result.Succeeded )
