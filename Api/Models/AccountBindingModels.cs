@@ -48,7 +48,9 @@ namespace Api.Models
   public class RegisterExternalBindingModel
   {
     [Required]
-    [Display(Name = "Email")]
+    public string Username { get; set; }
+
+    [Required]
     public string Email { get; set; }
   }
 

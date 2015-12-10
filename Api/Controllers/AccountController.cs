@@ -16,6 +16,7 @@ using Microsoft.Owin.Security.OAuth;
 using Api.Models;
 using Api.Providers;
 using Api.Results;
+using Newtonsoft.Json.Linq;
 
 namespace Api.Controllers
 {
@@ -28,6 +29,7 @@ namespace Api.Controllers
 
     public AccountController ()
     {
+      AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
     }
 
     public AccountController (UserManager userManager,
@@ -51,14 +53,7 @@ namespace Api.Controllers
 
     public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-
-    // POST api/Account/Logout
-    [Route("Logout")]
-    public IHttpActionResult Logout ()
-    {
-      Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-      return Ok();
-    }
+    #region Social
 
     // GET api/Account/UserInfo
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
@@ -81,14 +76,14 @@ namespace Api.Controllers
     {
       IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-      if ( user == null )
+      if (user == null)
       {
         return null;
       }
 
       List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
 
-      foreach ( IdentityUserLogin linkedAccount in user.Logins )
+      foreach (IdentityUserLogin linkedAccount in user.Logins)
       {
         logins.Add(new UserLoginInfoViewModel
         {
@@ -97,7 +92,7 @@ namespace Api.Controllers
         });
       }
 
-      if ( user.PasswordHash != null )
+      if (user.PasswordHash != null)
       {
         logins.Add(new UserLoginInfoViewModel
         {
@@ -115,50 +110,11 @@ namespace Api.Controllers
       };
     }
 
-    // POST api/Account/ChangePassword
-    [Route("ChangePassword")]
-    public async Task<IHttpActionResult> ChangePassword (ChangePasswordBindingModel model)
-    {
-      if ( !ModelState.IsValid )
-      {
-        return BadRequest(ModelState);
-      }
-
-      IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-          model.NewPassword);
-
-      if ( !result.Succeeded )
-      {
-        return GetErrorResult(result);
-      }
-
-      return Ok();
-    }
-
-    // POST api/Account/SetPassword
-    [Route("SetPassword")]
-    public async Task<IHttpActionResult> SetPassword (SetPasswordBindingModel model)
-    {
-      if ( !ModelState.IsValid )
-      {
-        return BadRequest(ModelState);
-      }
-
-      IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-
-      if ( !result.Succeeded )
-      {
-        return GetErrorResult(result);
-      }
-
-      return Ok();
-    }
-
     // POST api/Account/AddExternalLogin
     [Route("AddExternalLogin")]
     public async Task<IHttpActionResult> AddExternalLogin (AddExternalLoginBindingModel model)
     {
-      if ( !ModelState.IsValid )
+      if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
@@ -167,16 +123,16 @@ namespace Api.Controllers
 
       AuthenticationTicket ticket = AccessTokenFormat.Unprotect(model.ExternalAccessToken);
 
-      if ( ticket == null || ticket.Identity == null || ( ticket.Properties != null
+      if (ticket == null || ticket.Identity == null || (ticket.Properties != null
           && ticket.Properties.ExpiresUtc.HasValue
-          && ticket.Properties.ExpiresUtc.Value < DateTimeOffset.UtcNow ) )
+          && ticket.Properties.ExpiresUtc.Value < DateTimeOffset.UtcNow))
       {
         return BadRequest("External login failure.");
       }
 
       ExternalLoginData externalData = ExternalLoginData.FromIdentity(ticket.Identity);
 
-      if ( externalData == null )
+      if (externalData == null)
       {
         return BadRequest("The external login is already associated with an account.");
       }
@@ -184,7 +140,7 @@ namespace Api.Controllers
       IdentityResult result = await UserManager.AddLoginAsync(User.Identity.GetUserId(),
           new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
 
-      if ( !result.Succeeded )
+      if (!result.Succeeded)
       {
         return GetErrorResult(result);
       }
@@ -196,14 +152,14 @@ namespace Api.Controllers
     [Route("RemoveLogin")]
     public async Task<IHttpActionResult> RemoveLogin (RemoveLoginBindingModel model)
     {
-      if ( !ModelState.IsValid )
+      if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
 
       IdentityResult result;
 
-      if ( model.LoginProvider == LocalLoginProvider )
+      if (model.LoginProvider == LocalLoginProvider)
       {
         result = await UserManager.RemovePasswordAsync(User.Identity.GetUserId());
       }
@@ -213,79 +169,9 @@ namespace Api.Controllers
             new UserLoginInfo(model.LoginProvider, model.ProviderKey));
       }
 
-      if ( !result.Succeeded )
+      if (!result.Succeeded)
       {
         return GetErrorResult(result);
-      }
-
-      return Ok();
-    }
-
-    // GET api/Account/ExternalLogin
-    [OverrideAuthentication]
-    [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
-    [AllowAnonymous]
-    [Route("ExternalLogin", Name = "ExternalLogin")]
-    public async Task<IHttpActionResult> GetExternalLogin (string provider, string error = null)
-    {
-      if ( error != null )
-      {
-        return Redirect(Url.Content("~/js/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
-      }
-
-      //First time - If no external cookie set by Facebook etc., then return a ChallangeResult - which challanges the caller to authenticated with the provider it called with (eg Facebook)
-      if ( !User.Identity.IsAuthenticated )
-      {
-        return new ChallengeResult(provider, this);
-      }
-
-      //Logged in with Fb - Return from Facebook with External cookie set - User logged in with Facebook successfully
-      ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-      if ( externalLogin == null )
-      {
-        return InternalServerError();
-      }
-
-      if ( externalLogin.LoginProvider != provider )
-      {
-        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-        return new ChallengeResult(provider, this);
-      }
-
-
-      //Check if user is registered locally
-      User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
-
-      bool hasRegistered = user != null;
-
-      if ( hasRegistered )
-      {
-        //Giving client a local access token  - as user already has a local db linked account    //Has local login, sign in
-
-        //3rd time
-        //http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/
-        //Invoke externalLogin with the same URL as before - 3rd time after RegisterExternal - will come here now
-        // the user is still authenticated using the same external cookie
-        // the login provider / user id pair is now registered
-        //The controller clears the external cookie
-        // and creates a new authentication ticket
-        // this ticket translates to a new token with an issuer of LOCAL AUTHORITY – aka local account
-        //The callback URL transmits the token back to the client
-        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-
-        ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
-        ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager, CookieAuthenticationDefaults.AuthenticationType);
-
-        AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user.UserName);
-        Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
-      }
-      else
-      {
-        //2nd time
-        IEnumerable<Claim> claims = externalLogin.GetClaims();
-        ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
-        Authentication.SignIn(identity);
       }
 
       return Ok();
@@ -301,7 +187,7 @@ namespace Api.Controllers
 
       string state;
 
-      if ( generateState )
+      if (generateState)
       {
         const int strengthInBits = 256;
         state = RandomOAuthStateGenerator.Generate(strengthInBits);
@@ -311,7 +197,7 @@ namespace Api.Controllers
         state = null;
       }
 
-      foreach ( AuthenticationDescription description in descriptions )
+      foreach (AuthenticationDescription description in descriptions)
       {
         ExternalLoginViewModel login = new ExternalLoginViewModel
         {
@@ -332,23 +218,71 @@ namespace Api.Controllers
       return logins;
     }
 
-    // POST api/Account/Register
+    // GET api/Account/ExternalLogin
+    [OverrideAuthentication]
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
     [AllowAnonymous]
-    [Route("Register")]
-    public async Task<IHttpActionResult> Register (RegisterBindingModel model)
+    [Route("ExternalLogin", Name = "ExternalLogin")]
+    public async Task<IHttpActionResult> GetExternalLogin (string provider, string error = null)
     {
-      if ( !ModelState.IsValid )
+      if (error != null)
       {
-        return BadRequest(ModelState);
+        return Redirect(Url.Content("~/js/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
       }
 
-      var user = new User() { UserName = model.Username, Email = model.Email };
-
-      IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
-      if ( !result.Succeeded )
+      //First time - If no external cookie set by Facebook etc., then return a ChallangeResult - which challanges the caller to authenticated with the provider it called with (eg Facebook)
+      if (!User.Identity.IsAuthenticated)
       {
-        return GetErrorResult(result);
+        return new ChallengeResult(provider, this);
+      }
+
+      //Logged in with Fb - Return from Facebook with External cookie set - User logged in with Facebook successfully
+      ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+
+      if (externalLogin == null)
+      {
+        return InternalServerError();
+      }
+
+      if (externalLogin.LoginProvider != provider)
+      {
+        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+        return new ChallengeResult(provider, this);
+      }
+
+
+      //Check if user is registered locally
+      User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+
+      bool hasRegistered = user != null;
+
+      if (hasRegistered)
+      {
+        //Giving client a local access token  - as user already has a local db linked account    //Has local login, sign in
+
+        //3rd time
+        //http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/
+        //Invoke externalLogin with the same URL as before - 3rd time after RegisterExternal - will come here now
+        // the user is still authenticated using the same external cookie
+        // the login provider / user id pair is now registered
+        //The controller clears the external cookie
+        // and creates a new authentication ticket
+        // this ticket translates to a new token with an issuer of LOCAL AUTHORITY – aka local account
+        //The callback URL transmits the token back to the client
+        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+
+        ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
+        ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager, CookieAuthenticationDefaults.AuthenticationType);
+
+        AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user);
+        Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
+      }
+      else
+      {
+        //2nd time
+        IEnumerable<Claim> claims = externalLogin.GetClaims();
+        ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
+        Authentication.SignIn(identity);
       }
 
       return Ok();
@@ -360,43 +294,116 @@ namespace Api.Controllers
     [Route("RegisterExternal")]
     public async Task<IHttpActionResult> RegisterExternal (RegisterExternalBindingModel model)
     {
-      if ( !ModelState.IsValid )
+      if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
 
       var info = await Authentication.GetExternalLoginInfoAsync();
-      if ( info == null )
+      if (info == null)
       {
         return InternalServerError();
       }
 
-      var user = new User() { UserName = model.Email, Email = model.Email };
+      var userCheck = await UserManager.FindAsync(info.Login);
+      if (userCheck != null)
+      {
+        return BadRequest("User already registered");
+      }
+
+      var user = new User() { UserName = model.Username, Email = model.Email };
 
       IdentityResult result = await UserManager.CreateAsync(user);
-      if ( !result.Succeeded )
+      if (!result.Succeeded)
       {
         return GetErrorResult(result);
       }
 
       result = await UserManager.AddLoginAsync(user.Id, info.Login); //Instead of password associate external login with this new account
-      if ( !result.Succeeded )
+      if (!result.Succeeded)
       {
         return GetErrorResult(result);
       }
+
+      var accessToken = ApplicationOAuthProvider.GenerateLocalAccessTokenResponse(model.Username);
+
+      return Ok(accessToken);
+    }
+
+    // POST api/Account/SetPassword
+    [Route("SetPassword")]
+    public async Task<IHttpActionResult> SetPassword (SetPasswordBindingModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
       return Ok();
     }
 
-    protected override void Dispose (bool disposing)
+    #endregion
+
+    #region Account
+
+    // POST api/Account/ChangePassword
+    [Route("ChangePassword")]
+    public async Task<IHttpActionResult> ChangePassword (ChangePasswordBindingModel model)
     {
-      if ( disposing && _userManager != null )
+      if (!ModelState.IsValid)
       {
-        _userManager.Dispose();
-        _userManager = null;
+        return BadRequest(ModelState);
       }
 
-      base.Dispose(disposing);
+      IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+          model.NewPassword);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      return Ok();
     }
+
+    // POST api/Account/Register
+    [AllowAnonymous]
+    [Route("Register")]
+    public async Task<IHttpActionResult> Register (RegisterBindingModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      var user = new User() { UserName = model.Username, Email = model.Email };
+
+      IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      return Ok();
+    }
+
+    // POST api/Account/Logout
+    [Route("Logout")]
+    public IHttpActionResult Logout ()
+    {
+      Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+      return Ok();
+    }
+
+    #endregion
 
     #region Helpers
 
@@ -407,22 +414,22 @@ namespace Api.Controllers
 
     private IHttpActionResult GetErrorResult (IdentityResult result)
     {
-      if ( result == null )
+      if (result == null)
       {
         return InternalServerError();
       }
 
-      if ( !result.Succeeded )
+      if (!result.Succeeded)
       {
-        if ( result.Errors != null )
+        if (result.Errors != null)
         {
-          foreach ( string error in result.Errors )
+          foreach (string error in result.Errors)
           {
             ModelState.AddModelError("", error);
           }
         }
 
-        if ( ModelState.IsValid )
+        if (ModelState.IsValid)
         {
           // No ModelState errors are available to send, so just return an empty BadRequest.
           return BadRequest();
@@ -445,7 +452,7 @@ namespace Api.Controllers
         IList<Claim> claims = new List<Claim>();
         claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
 
-        if ( UserName != null )
+        if (UserName != null)
         {
           claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
         }
@@ -456,20 +463,20 @@ namespace Api.Controllers
       //Identity recieved from Facebook login in the form of a Cookie set by Facebook
       public static ExternalLoginData FromIdentity (ClaimsIdentity identity)
       {
-        if ( identity == null )
+        if (identity == null)
         {
           return null;
         }
 
         Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
 
-        if ( providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer)
-            || String.IsNullOrEmpty(providerKeyClaim.Value) )
+        if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer)
+            || String.IsNullOrEmpty(providerKeyClaim.Value))
         {
           return null;
         }
 
-        if ( providerKeyClaim.Issuer == ClaimsIdentity.DefaultIssuer )
+        if (providerKeyClaim.Issuer == ClaimsIdentity.DefaultIssuer)
         {
           return null;
         }
@@ -491,7 +498,7 @@ namespace Api.Controllers
       {
         const int bitsPerByte = 8;
 
-        if ( strengthInBits % bitsPerByte != 0 )
+        if (strengthInBits % bitsPerByte != 0)
         {
           throw new ArgumentException("strengthInBits must be evenly divisible by 8.", "strengthInBits");
         }
@@ -502,6 +509,17 @@ namespace Api.Controllers
         _random.GetBytes(data);
         return HttpServerUtility.UrlTokenEncode(data);
       }
+    }
+
+    protected override void Dispose (bool disposing)
+    {
+      if (disposing && _userManager != null)
+      {
+        _userManager.Dispose();
+        _userManager = null;
+      }
+
+      base.Dispose(disposing);
     }
 
     #endregion

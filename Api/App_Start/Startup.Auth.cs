@@ -53,7 +53,8 @@ namespace Api
         AppSecret = "2ccc6fd1bada1fddbdb6577d47b93996",
       };
       FacebookOptions.Scope.Add("email");
-      FacebookOptions.Scope.Add("hometown");
+      FacebookOptions.Scope.Add("user_hometown");
+      FacebookOptions.Scope.Add("user_location");
 
       app.UseFacebookAuthentication(FacebookOptions);
 

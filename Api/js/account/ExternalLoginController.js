@@ -11,13 +11,15 @@
   function ExternalLoginController($http, $scope, $location, $window, localStorageService, AccountService) {
 
     //Callback access_token
-    console.log('Access token');
     var hash = $location.path().split(/[=&]+/);
     if (hash[0] == '/error') {
+      $scope.action = 'error';
       return;
     }
 
     var accessToken = hash[1];
+    console.log('Access token');
+
 
     AccountService.getUserInfo(accessToken).then(function (res) {
       console.log('Get User Info');
@@ -47,7 +49,6 @@
           //Log user in
           localStorageService.set('authorizationData', {
             token: accessToken
-            //Get from an identity call - which happens on locatio.href change next
           });
           $window.location.href = '/#/';
         }
@@ -59,14 +60,13 @@
     })
 
 
-    //Working
-    //Next get local bearer token
     $scope.registerExternal = function (model) {
       AccountService.registerExternal(model, accessToken).then(function (res) {
         $scope.res = 'You\'ve registered successfully';
         console.log(res);
-
-        //TODO Try using accessToken as a login for the user or Call ExternalLogin again and use that access token
+        //Next get local bearer token
+        //res.data.access_token res.data.username
+       
       }, function (res) {
         $scope.res = res;
       });

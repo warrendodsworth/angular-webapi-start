@@ -11,14 +11,4 @@
       $scope.result = model.name;
     }
   }
-
-
-  //Create
-  angular.module('controllers')
-         .controller('CreateController', ['$scope', CreateController]);
-
-  function CreateController($scope) {
-
-  }
-
 })();
