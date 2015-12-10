@@ -7,9 +7,10 @@
 
   ManageLoginsController.$inject = ['$scope', 'AccountService'];
 
-  function ManageLoginsController() {
+  function ManageLoginsController($scope, AccountService) {
     AccountService.getManageLogins().then(function (res) {
-      $scope.logins = res.data;
+      $scope.logins = res.data.logins;
+      $scope.externalLoginProviders = res.data.externalLoginProviders;
     });
 
     $scope.removeLogin = function (login, index) {

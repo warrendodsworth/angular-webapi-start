@@ -28,7 +28,7 @@
 
       //2nd time user has local account
       if (res.data.hasRegistered) {
-
+        $scope.action = 'process';
 
         if (AccountService.identity.isAuth) {
           //Add login (user already registered)
@@ -46,6 +46,8 @@
           });
           $window.location.href = '/#/';
         }
+      } else {
+        $scope.action = 'register';
       }
     }, function (res) {
       $scope.res = res;
