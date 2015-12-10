@@ -17,6 +17,7 @@ using Api.Models;
 using Api.Providers;
 using Api.Results;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Api.Controllers
 {
@@ -64,7 +65,9 @@ namespace Api.Controllers
 
       return new UserInfoViewModel
       {
-        Email = User.Identity.GetUserName(),
+        Name = externalLogin.Name,
+        Email = externalLogin.Email,
+        Username = externalLogin.Username,
         HasRegistered = externalLogin == null,
         LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
       };
@@ -230,7 +233,7 @@ namespace Api.Controllers
         return Redirect(Url.Content("~/js/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
       }
 
-      //First time - If no external cookie set by Facebook etc., then return a ChallangeResult - which challanges the caller to authenticated with the provider it called with (eg Facebook)
+      //1st time - send user to external provider to login
       if (!User.Identity.IsAuthenticated)
       {
         return new ChallengeResult(provider, this);
@@ -250,7 +253,6 @@ namespace Api.Controllers
         return new ChallengeResult(provider, this);
       }
 
-
       //Check if user is registered locally
       User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
 
@@ -258,9 +260,8 @@ namespace Api.Controllers
 
       if (hasRegistered)
       {
-        //Giving client a local access token  - as user already has a local db linked account    //Has local login, sign in
+        //3rd time - Give local access token - user already Registered
 
-        //3rd time
         //http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/
         //Invoke externalLogin with the same URL as before - 3rd time after RegisterExternal - will come here now
         // the user is still authenticated using the same external cookie
@@ -279,7 +280,7 @@ namespace Api.Controllers
       }
       else
       {
-        //2nd time
+        //2nd time - Register External
         IEnumerable<Claim> claims = externalLogin.GetClaims();
         ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
         Authentication.SignIn(identity);
@@ -350,6 +351,7 @@ namespace Api.Controllers
     }
 
 
+    //Thinking http://bitoftech.net/2014/08/11/asp-net-web-api-2-external-logins-social-logins-facebook-google-angularjs-app/
     [AllowAnonymous]
     [HttpGet]
     [Route("LocalAccessToken")]
@@ -486,16 +488,36 @@ namespace Api.Controllers
     {
       public string LoginProvider { get; set; }
       public string ProviderKey { get; set; }
-      public string UserName { get; set; }
+      public string Username { get; set; }
+      public string Name { get; set; }
+      public string Email { get; set; }
+      public string Token { get; set; }
 
       public IList<Claim> GetClaims ()
       {
         IList<Claim> claims = new List<Claim>();
         claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
 
-        if (UserName != null)
+        if (Name != null)
         {
-          claims.Add(new Claim(ClaimTypes.Name, UserName, null, LoginProvider));
+          claims.Add(new Claim(ClaimTypes.Name, Name, null, LoginProvider));
+        }
+
+        //Facebook nolonger provides the users username
+        if (Username != null)
+        {
+          claims.Add(new Claim("Username", Username, null, LoginProvider));
+        }
+
+        if (Email != null)
+        {
+          claims.Add(new Claim(ClaimTypes.Email, Email, null, LoginProvider));
+        }
+
+        //Not used anywhere yet
+        if (Token != null)
+        {
+          claims.Add(new Claim("FacebookAccessToken", Token, null, LoginProvider));
         }
 
         return claims;
@@ -526,7 +548,10 @@ namespace Api.Controllers
         {
           LoginProvider = providerKeyClaim.Issuer,
           ProviderKey = providerKeyClaim.Value,
-          UserName = identity.FindFirstValue(ClaimTypes.Name)
+          Username = identity.FindFirstValue("Username"),
+          Name = identity.FindFirstValue(ClaimTypes.Name),
+          Email = identity.FindFirstValue(ClaimTypes.Email),
+          Token = identity.FindFirstValue("FacebookAccessToken")
         };
       }
     }
