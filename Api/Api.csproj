@@ -221,6 +221,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\src.min.css" />
+    <Content Include="js\src.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -247,8 +249,11 @@
     <Content Include="js\test\e2e\create.spec.js" />
     <Content Include="js\test\e2e\index.spec.js" />
     <Content Include="js\test\labs\tutorial.spec.js" />
-    <Content Include="lib\angular-local-storage.js" />
-    <Content Include="lib\angular-local-storage.min.js" />
+    <Content Include="lib\angular\angular-csp.css" />
+    <Content Include="lib\angular\angular-local-storage.min.js" />
+    <Content Include="lib\angular\angular.min.js" />
+    <Content Include="lib\lib.min.css" />
+    <Content Include="lib\lib.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
