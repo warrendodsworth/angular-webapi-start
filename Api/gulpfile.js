@@ -1,4 +1,4 @@
-/// <vs AfterBuild='default' SolutionOpened='default' />
+/// <vs AfterBuild='default, src' SolutionOpened='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 
 var gulp = require('gulp');

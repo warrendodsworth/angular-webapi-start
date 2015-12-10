@@ -349,6 +349,47 @@ namespace Api.Controllers
       return Ok();
     }
 
+
+    [AllowAnonymous]
+    [HttpGet]
+    [Route("LocalAccessToken")]
+    public async Task<IHttpActionResult> GetLocalAccessToken (string externalAccessToken)
+    {
+      if (string.IsNullOrWhiteSpace(externalAccessToken))
+      {
+        return BadRequest("Provider or external access token is not sent");
+      }
+
+      AuthenticationTicket ticket = AccessTokenFormat.Unprotect(externalAccessToken);
+
+      if (ticket == null || ticket.Identity == null || (ticket.Properties != null
+          && ticket.Properties.ExpiresUtc.HasValue
+          && ticket.Properties.ExpiresUtc.Value < DateTimeOffset.UtcNow))
+      {
+        return BadRequest("External login failure.");
+      }
+
+      ExternalLoginData externalData = ExternalLoginData.FromIdentity(ticket.Identity);
+
+      if (externalData == null)
+      {
+        return BadRequest("The external login is already associated with an account.");
+      }
+
+      IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
+
+      bool hasRegistered = user != null;
+
+      if (!hasRegistered)
+      {
+        return BadRequest("External user is not registered");
+      }
+
+      var accessTokenResponse = ApplicationOAuthProvider.GenerateLocalAccessTokenResponse(user.UserName);
+
+      return Ok(accessTokenResponse);
+    }
+
     #endregion
 
     #region Account
