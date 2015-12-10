@@ -12,22 +12,8 @@ namespace Api
                     "~/scripts/angular.js",
                     "~/scripts/angular-mocks.js",
                     "~/scripts/angular-route.js",
-                    "~/lib/angular-local-storage.js",
 
-             
-                    "~/js/app.js",
-      
-                    "~/js/home/IndexController.js",
-
-                    "~/js/account/LoginController.js",
-                    "~/js/account/RegisterController.js",
-                    "~/js/account/ExternalLoginController.js",
-                    "~/js/account/manage/ManageControllers.js",
-
-                    "~/js/account/AccountService.js",
-                    "~/js/account/AuthInterceptorService.js",
-
-                    "~/js/shared/NavbarController.js",
+                    "~/lib/angular/angular-local-storage.min.js",
 
                     "~/Scripts/jquery-{version}.js"));
 
@@ -47,3 +33,18 @@ namespace Api
     }
   }
 }
+
+
+//"~/js/app.js",
+
+//"~/js/home/IndexController.js",
+
+//"~/js/account/LoginController.js",
+//"~/js/account/RegisterController.js",
+//"~/js/account/ExternalLoginController.js",
+//"~/js/account/manage/ManageControllers.js",
+
+//"~/js/account/AccountService.js",
+//"~/js/account/AuthInterceptorService.js",
+
+//"~/js/shared/NavbarController.js",

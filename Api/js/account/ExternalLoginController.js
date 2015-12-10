@@ -3,16 +3,21 @@
 
   angular
       .module('controllers')
-      .controller('RegisterExternalController', RegisterExternalController);
+      .controller('ExternalLoginController', ExternalLoginController);
 
-  RegisterExternalController.$inject = ['$http', '$scope', '$location', '$window', 'localStorageService', 'AccountService'];
+  ExternalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'localStorageService', 'AccountService'];
 
   //Return from Facebook to this view, which should read #params and get the access token
-  function RegisterExternalController($http, $scope, $location, $window, localStorageService, AccountService) {
+  function ExternalLoginController($http, $scope, $location, $window, localStorageService, AccountService) {
 
     //Callback access_token
     console.log('Access token');
-    var accessToken = $location.path().split(/[=&]+/)[1];
+    var hash = $location.path().split(/[=&]+/);
+    if (hash[0] == '/error') {
+      return;
+    }
+
+    var accessToken = hash[1];
 
     AccountService.getUserInfo(accessToken).then(function (res) {
       console.log('Get User Info');
@@ -66,8 +71,6 @@
         $scope.res = res;
       });
     };
-
-
   }
 
 })();

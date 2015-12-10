@@ -36,6 +36,9 @@
                     .when('/register', { templateUrl: '/js/account/register.html', controller: 'RegisterController' })
                     .when('/manage/logins', { templateUrl: '/js/account/manage/manageLogins.html', controller: 'ManageLoginsController' });
 
+      $routeProvider.when('/facebook', { templateUrl: '/js/user/facebook.html', controller: 'FacebookController' });
+
+
       $routeProvider.otherwise({ redirectTo: '/' });
 
     }]);

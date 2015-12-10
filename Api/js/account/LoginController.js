@@ -3,8 +3,8 @@
 
   angular
       .module('app')
-      .controller('LoginController', ['$scope', '$location', 'AccountService', LoginController ]);
-  
+      .controller('LoginController', ['$scope', '$location', 'AccountService', LoginController]);
+
   function LoginController($scope, $location, AccountService) {
 
     AccountService.getExternalLogins().then(function (res) {
@@ -16,7 +16,7 @@
 
     $scope.login = function (model) {
       AccountService.login(model).then(function (res) {
-        $location.path('/create');
+        $location.path('/').search('m', 'welcome');
       },
        function (res) {
          $scope.message = res.error_description;
@@ -24,4 +24,5 @@
     };
 
   }
+
 })();

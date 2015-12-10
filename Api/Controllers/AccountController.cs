@@ -230,7 +230,7 @@ namespace Api.Controllers
     {
       if ( error != null )
       {
-        return Redirect(Url.Content("~/") + "#error=" + Uri.EscapeDataString(error));
+        return Redirect(Url.Content("~/js/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
       }
 
       //First time - If no external cookie set by Facebook etc., then return a ChallangeResult - which challanges the caller to authenticated with the provider it called with (eg Facebook)

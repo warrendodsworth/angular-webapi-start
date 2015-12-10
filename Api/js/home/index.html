@@ -1,16 +1,12 @@
-﻿<h4>Homepage</h4>
-<hr />
-
+﻿<div class="jumbotron">
+  <h2>Welcome</h2>
+  <h4>Notes</h4>
+</div>
 <a href="#/create">CREATE</a>
 <br />
 
 <div>
-  <dl class="dl-horizontal">
-    <dt>Get Started</dt>
-    <dd><a href="https://angular.github.io/protractor/#/">https://angular.github.io/protractor/#/ </a></dd>
+  <div ng-repeat="note in notes">
 
-    <dt>Turotial</dt>
-    <dd><a href="https://angular.github.io/protractor/#/tutorial">https://angular.github.io/protractor/#/tutorial</a></dd>
-  </dl>
-
+  </div>
 </div>

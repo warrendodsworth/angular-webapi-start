@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var merge = require('gulp-merge');
 
 var project = { webroot: '' };
 var paths = {
@@ -29,39 +30,43 @@ gulp.task("lib", function () {
     gulp.src(paths.bower + bower[destinationDir]).pipe(gulp.dest(paths.lib + destinationDir));
   }
 
-  gulp.src('./lib/**/*.js')
-      .pipe(concat('lib.js'))
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(uglify())
-      .pipe(gulp.dest('./lib'));
+  var js = gulp.src('./lib/**/*.js')
+       .pipe(concat('lib.js'))
+       .pipe(rename({ suffix: '.min' }))
+       .pipe(uglify())
+       .pipe(gulp.dest('./lib'));
 
-  gulp.src('./lib/**/*.css')
-         .pipe(concat('lib.css'))
-         .pipe(rename({ suffix: '.min' }))
-         .pipe(minifyCss())
-         .pipe(gulp.dest('./lib'));
+  var css = gulp.src('./lib/**/*.css')
+          .pipe(concat('lib.css'))
+          .pipe(rename({ suffix: '.min' }))
+          .pipe(minifyCss())
+          .pipe(gulp.dest('./lib'));
+
+  return merge(js, css);
 });
 
 // Concatenate JS Files
 gulp.task('src', function () {
-  gulp.src('./js/**/*.js')
-        .pipe(concat('src.js'))
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(uglify())
-        .pipe(gulp.dest('./js'));
+  var js = gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
+          .pipe(concat('src.js'))
+          .pipe(rename({ suffix: '.min' }))
+          .pipe(uglify())
+          .pipe(gulp.dest('./js'));
 
-  gulp.src('./content/**/*.css')
-        .pipe(concat('src.css'))
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(minifyCss())
-        .pipe(gulp.dest('./css'));
+  var css = gulp.src('./content/**/*.css')
+         .pipe(concat('src.css'))
+         .pipe(rename({ suffix: '.min' }))
+         .pipe(minifyCss())
+         .pipe(gulp.dest('./css'));
+
+  return merge(js, css);
 });
 
 
 //Watch
 gulp.task('watch', function () {
 
-  gulp.watch('/js/*.js', ['src']);
+  gulp.watch('/js/**/**/.js', ['src']);
 
   // recompile and minify
   gulp.watch('/scss/*.scss', ['sass']);
