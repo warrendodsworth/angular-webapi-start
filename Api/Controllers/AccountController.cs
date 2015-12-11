@@ -28,12 +28,12 @@ namespace Api.Controllers
     private const string LocalLoginProvider = "Local";
     private UserManager _userManager;
 
-    public AccountController ()
+    public AccountController()
     {
       AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
     }
 
-    public AccountController (UserManager userManager,
+    public AccountController(UserManager userManager,
         ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
     {
       UserManager = userManager;
@@ -59,7 +59,7 @@ namespace Api.Controllers
     // GET api/Account/UserInfo
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [Route("UserInfo")]
-    public UserInfoViewModel GetUserInfo ()
+    public UserInfoViewModel GetUserInfo()
     {
       ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
@@ -75,7 +75,7 @@ namespace Api.Controllers
 
     // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
     [Route("ManageInfo")]
-    public async Task<ManageInfoViewModel> GetManageInfo (string returnUrl, bool generateState = false)
+    public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
     {
       IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
@@ -115,7 +115,7 @@ namespace Api.Controllers
 
     // POST api/Account/AddExternalLogin
     [Route("AddExternalLogin")]
-    public async Task<IHttpActionResult> AddExternalLogin (AddExternalLoginBindingModel model)
+    public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -153,7 +153,7 @@ namespace Api.Controllers
 
     // POST api/Account/RemoveLogin
     [Route("RemoveLogin")]
-    public async Task<IHttpActionResult> RemoveLogin (RemoveLoginBindingModel model)
+    public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -183,7 +183,7 @@ namespace Api.Controllers
     // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
     [AllowAnonymous]
     [Route("ExternalLogins")]
-    public IEnumerable<ExternalLoginViewModel> GetExternalLogins (string returnUrl, bool generateState = false)
+    public IEnumerable<ExternalLoginViewModel> GetExternalLogins(string returnUrl, bool generateState = false)
     {
       IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
       List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
@@ -226,7 +226,7 @@ namespace Api.Controllers
     [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
     [AllowAnonymous]
     [Route("ExternalLogin", Name = "ExternalLogin")]
-    public async Task<IHttpActionResult> GetExternalLogin (string provider, string error = null)
+    public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
     {
       if (error != null)
       {
@@ -286,6 +286,7 @@ namespace Api.Controllers
         Authentication.SignIn(identity);
       }
 
+
       return Ok();
     }
 
@@ -293,7 +294,7 @@ namespace Api.Controllers
     [OverrideAuthentication]
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [Route("RegisterExternal")]
-    public async Task<IHttpActionResult> RegisterExternal (RegisterExternalBindingModel model)
+    public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -326,14 +327,14 @@ namespace Api.Controllers
         return GetErrorResult(result);
       }
 
-      var accessToken = ApplicationOAuthProvider.GenerateLocalAccessTokenResponse(model.Username);
+      var accessToken = GenerateLocalAccessTokenResponse(user);
 
       return Ok(accessToken);
     }
 
     // POST api/Account/SetPassword
     [Route("SetPassword")]
-    public async Task<IHttpActionResult> SetPassword (SetPasswordBindingModel model)
+    public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -355,7 +356,7 @@ namespace Api.Controllers
     [AllowAnonymous]
     [HttpGet]
     [Route("LocalAccessToken")]
-    public async Task<IHttpActionResult> GetLocalAccessToken (string externalAccessToken)
+    public async Task<IHttpActionResult> GetLocalAccessToken(string externalAccessToken)
     {
       if (string.IsNullOrWhiteSpace(externalAccessToken))
       {
@@ -378,7 +379,7 @@ namespace Api.Controllers
         return BadRequest("The external login is already associated with an account.");
       }
 
-      IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
+      User user = await UserManager.FindAsync(new UserLoginInfo(externalData.LoginProvider, externalData.ProviderKey));
 
       bool hasRegistered = user != null;
 
@@ -387,9 +388,37 @@ namespace Api.Controllers
         return BadRequest("External user is not registered");
       }
 
-      var accessTokenResponse = ApplicationOAuthProvider.GenerateLocalAccessTokenResponse(user.UserName);
+      var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
 
       return Ok(accessTokenResponse);
+    }
+
+    public async Task<JObject> GenerateLocalAccessTokenResponse(User user)
+    {
+      var tokenExpiration = TimeSpan.FromDays(1);
+
+      ClaimsIdentity identity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
+
+      var props = new AuthenticationProperties()
+      {
+        IssuedUtc = DateTime.UtcNow,
+        ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
+      };
+
+      var ticket = new AuthenticationTicket(identity, props);
+
+      var accessToken = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
+
+      JObject tokenResponse = new JObject(
+                                  new JProperty("username", user.UserName),
+                                  new JProperty("access_token", accessToken),
+                                  new JProperty("token_type", "bearer"),
+                                  new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
+                                  new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
+                                  new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
+                              );
+
+      return tokenResponse;
     }
 
     #endregion
@@ -398,7 +427,7 @@ namespace Api.Controllers
 
     // POST api/Account/ChangePassword
     [Route("ChangePassword")]
-    public async Task<IHttpActionResult> ChangePassword (ChangePasswordBindingModel model)
+    public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -419,7 +448,7 @@ namespace Api.Controllers
     // POST api/Account/Register
     [AllowAnonymous]
     [Route("Register")]
-    public async Task<IHttpActionResult> Register (RegisterBindingModel model)
+    public async Task<IHttpActionResult> Register(RegisterBindingModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -440,7 +469,7 @@ namespace Api.Controllers
 
     // POST api/Account/Logout
     [Route("Logout")]
-    public IHttpActionResult Logout ()
+    public IHttpActionResult Logout()
     {
       Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
       return Ok();
@@ -455,7 +484,7 @@ namespace Api.Controllers
       get { return Request.GetOwinContext().Authentication; }
     }
 
-    private IHttpActionResult GetErrorResult (IdentityResult result)
+    private IHttpActionResult GetErrorResult(IdentityResult result)
     {
       if (result == null)
       {
@@ -493,7 +522,7 @@ namespace Api.Controllers
       public string Email { get; set; }
       public string Token { get; set; }
 
-      public IList<Claim> GetClaims ()
+      public IList<Claim> GetClaims()
       {
         IList<Claim> claims = new List<Claim>();
         claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
@@ -524,7 +553,7 @@ namespace Api.Controllers
       }
 
       //Identity recieved from Facebook login in the form of a Cookie set by Facebook
-      public static ExternalLoginData FromIdentity (ClaimsIdentity identity)
+      public static ExternalLoginData FromIdentity(ClaimsIdentity identity)
       {
         if (identity == null)
         {
@@ -560,7 +589,7 @@ namespace Api.Controllers
     {
       private static RandomNumberGenerator _random = new RNGCryptoServiceProvider();
 
-      public static string Generate (int strengthInBits)
+      public static string Generate(int strengthInBits)
       {
         const int bitsPerByte = 8;
 
@@ -577,7 +606,7 @@ namespace Api.Controllers
       }
     }
 
-    protected override void Dispose (bool disposing)
+    protected override void Dispose(bool disposing)
     {
       if (disposing && _userManager != null)
       {

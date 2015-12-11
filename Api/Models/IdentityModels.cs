@@ -7,30 +7,34 @@ using System.Data.Entity;
 
 namespace Api.Models
 {
-    // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class User : IdentityUser
+  // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+  public class User : IdentityUser
+  {
+    public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
     {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
-        {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
-            var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
-            // Add custom user claims here
-            return userIdentity;
-        }
+      // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
+      var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
+
+      // Add custom user claims here
+      userIdentity.AddClaim(new Claim("Username", UserName));
+      //userIdentity.AddClaim(new Claim(ClaimTypes.Name, Name));
+
+      return userIdentity;
+    }
+  }
+
+  public class AppContext : IdentityDbContext<User>
+  {
+    public AppContext()
+      : base("DefaultConnection", throwIfV1Schema: false)
+    {
     }
 
-    public class AppContext : IdentityDbContext<User>
+    public DbSet<Note> Notes { get; set; }
+
+    public static AppContext Create()
     {
-        public AppContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
-        public DbSet<Note> Notes { get; set; }
-
-        public static AppContext Create()
-        {
-            return new AppContext();
-        }
+      return new AppContext();
     }
+  }
 }

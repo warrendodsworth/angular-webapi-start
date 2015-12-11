@@ -96,35 +96,6 @@ namespace Api.Providers
       return new AuthenticationProperties(data);
     }
 
-    public static JObject GenerateLocalAccessTokenResponse (string username)
-    {
-      var tokenExpiration = TimeSpan.FromDays(1);
-
-      ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
-
-      identity.AddClaim(new Claim(ClaimTypes.Name, username));
-      identity.AddClaim(new Claim("role", "user"));
-
-      var props = new AuthenticationProperties()
-      {
-        IssuedUtc = DateTime.UtcNow,
-        ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
-      };
-
-      var ticket = new AuthenticationTicket(identity, props);
-
-      var accessToken = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
-
-      JObject tokenResponse = new JObject(
-                                  new JProperty("username", username),
-                                  new JProperty("access_token", accessToken),
-                                  new JProperty("token_type", "bearer"),
-                                  new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
-                                  new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
-                                  new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
-                              );
-
-      return tokenResponse;
-    }
+   
   }
 }
