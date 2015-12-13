@@ -221,11 +221,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="css\src.css" />
     <Content Include="css\src.min.css" />
+    <Content Include="css\styles.css" />
     <Content Include="js\home\CreateController.js" />
     <Content Include="js\shared\FacebookService.js" />
     <Content Include="js\shared\result.js" />
-    <Content Include="js\src.min.js" />
+    <Content Include="build\src.js" />
+    <Content Include="build\src.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -256,8 +259,8 @@
     <Content Include="lib\angular\angular-csp.css" />
     <Content Include="lib\angular\angular-local-storage.min.js" />
     <Content Include="lib\angular\angular.min.js" />
-    <Content Include="lib\lib.min.css" />
-    <Content Include="lib\lib.min.js" />
+    <Content Include="build\lib.min.css" />
+    <Content Include="build\lib.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
@@ -310,6 +313,12 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="scss\styles.css">
+      <DependentUpon>styles.scss</DependentUpon>
+    </Content>
+    <Content Include="scss\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -325,6 +334,10 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="scss\styles.scss" />
+    <Content Include="scss\styles.css.map">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

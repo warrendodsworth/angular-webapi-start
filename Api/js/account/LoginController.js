@@ -12,14 +12,12 @@
     });
 
 
-    $scope.message = "";
-
     $scope.login = function (model) {
       AccountService.login(model).then(function (res) {
         $location.path('/').search('m', 'welcome');
       },
        function (res) {
-         $scope.message = res.error_description;
+         $scope.res = res;
        });
     };
 

@@ -5,19 +5,14 @@
       .module('app')
       .controller('FacebookController', FacebookController);
 
-  FacebookController.$inject = ['$scope', 'FacebookService'];
+  FacebookController.$inject = ['$scope', '$http', 'FacebookService'];
 
-  function FacebookController($scope, FacebookService) {
+  function FacebookController($scope, $http, FacebookService) {
     $scope.title = 'FacebookController';
 
-    activate();
+    //FacebookService.api('/me', { fields: 'last_name' }).then(function (res) {
+    //  $scope.result = res;
+    //})
 
-    function activate() {
-
-      FacebookService.api('/me', { fields: 'last_name' }).then(function (res) {
-        $scope.result = res;
-      })
-
-    }
   }
 })();

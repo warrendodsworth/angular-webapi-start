@@ -1,4 +1,4 @@
-/// <vs AfterBuild='default, src' />
+/// <vs AfterBuild='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 
 var gulp = require('gulp');
@@ -8,6 +8,7 @@ var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var merge = require('gulp-merge');
+var sass = require('gulp-sass');
 
 var project = { webroot: '' };
 var paths = {
@@ -16,8 +17,29 @@ var paths = {
   lib: './lib/'
 };
 
-gulp.task('default', ['watch', 'lib', 'src']);
+gulp.task('default', ['watch', 'src-js', 'src-css']);
 
+
+//SRC
+gulp.task('src-js', function () {
+  return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
+               .pipe(concat('src.js'))
+               .pipe(gulp.dest('./build'))
+               .pipe(rename({ suffix: '.min' }))
+               .pipe(uglify())
+               .pipe(gulp.dest('./build'));
+});
+
+gulp.task('src-css', function () {
+  return gulp.src('./content/**/*.css')
+         .pipe(concat('src.css'))
+         .pipe(gulp.dest('./build'))
+         .pipe(rename({ suffix: '.min' }))
+         .pipe(minifyCss())
+         .pipe(gulp.dest('./build'));
+});
+
+//LIB
 gulp.task("lib", function () {
   var bower = {
     "angular": "angular/**/*.min.{js,css}",
@@ -34,49 +56,37 @@ gulp.task("lib", function () {
        .pipe(concat('lib.js'))
        .pipe(rename({ suffix: '.min' }))
        .pipe(uglify())
-       .pipe(gulp.dest('./lib'));
+       .pipe(gulp.dest('./build'));
 
   var css = gulp.src('./lib/**/*.css')
           .pipe(concat('lib.css'))
           .pipe(rename({ suffix: '.min' }))
           .pipe(minifyCss())
-          .pipe(gulp.dest('./lib'));
+          .pipe(gulp.dest('./build'));
 
   return merge(js, css);
 });
 
-// Concatenate JS Files
-gulp.task('src', function () {
-  var js = gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
-          .pipe(concat('src.js'))
-          .pipe(rename({ suffix: '.min' }))
-          .pipe(uglify())
-          .pipe(gulp.dest('./js'));
-
-  var css = gulp.src('./content/**/*.css')
-         .pipe(concat('src.css'))
-         .pipe(rename({ suffix: '.min' }))
-         .pipe(minifyCss())
-         .pipe(gulp.dest('./css'));
-
-  return merge(js, css);
+gulp.task('sass', function () {
+  return gulp.src('./scss/styles.scss')
+    .pipe(sass()) // Converts Sass to CSS with gulp-sass
+    .pipe(gulp.dest('./css'));
 });
 
-
-//Watch
+//WATCH
 gulp.task('watch', function () {
 
-  gulp.watch('/js/**/**/.js', ['src']);
+  gulp.watch('./js/**/*.js', ['src-js']);
 
-  // recompile and minify
-  gulp.watch('/scss/*.scss', ['sass']);
+  gulp.watch('/scss/**/*.scss', ['sass']);
 });
 
 
 
 
-
-
+//gulp.task('test', function () {
+//  console.log('Testing gulp on the cmd');
+//})
 
 //"jquery": "jquery/jquery*.{js,map}",
 //"bootstrap-touch-carousel": "bootstrap-touch-carousel/dist/**/*.{js,css}",
