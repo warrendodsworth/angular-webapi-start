@@ -18,7 +18,7 @@ namespace Api.Providers
   {
     private readonly string _publicClientId;
 
-    public ApplicationOAuthProvider (string publicClientId)
+    public ApplicationOAuthProvider(string publicClientId)
     {
       if (publicClientId == null)
       {
@@ -28,7 +28,7 @@ namespace Api.Providers
       _publicClientId = publicClientId;
     }
 
-    public override async Task GrantResourceOwnerCredentials (OAuthGrantResourceOwnerCredentialsContext context)
+    public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
     {
       var userManager = context.OwinContext.GetUserManager<UserManager>();
 
@@ -36,6 +36,21 @@ namespace Api.Providers
 
       if (user == null)
       {
+        user = await userManager.FindByNameAsync(context.UserName);
+        if (user != null)
+        {
+          var isLocked = await userManager.IsLockedOutAsync(user.Id);
+          if (isLocked)
+          {
+            context.SetError("locked_out", "This account is locked out. Please try again later.");
+            return;
+          }
+          else
+          {
+            await userManager.AccessFailedAsync(user.Id);
+          }
+        }
+
         context.SetError("invalid_grant", "The user name or password is incorrect.");
         return;
       }
@@ -51,7 +66,7 @@ namespace Api.Providers
       context.Request.Context.Authentication.SignIn(properties, cookiesIdentity, oAuthIdentity);
     }
 
-    public override Task TokenEndpoint (OAuthTokenEndpointContext context)
+    public override Task TokenEndpoint(OAuthTokenEndpointContext context)
     {
       foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
       {
@@ -61,7 +76,7 @@ namespace Api.Providers
       return Task.FromResult<object>(null);
     }
 
-    public override Task ValidateClientAuthentication (OAuthValidateClientAuthenticationContext context)
+    public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
     {
       // Resource owner password credentials does not provide a client ID.
       if (context.ClientId == null)
@@ -72,7 +87,7 @@ namespace Api.Providers
       return Task.FromResult<object>(null);
     }
 
-    public override Task ValidateClientRedirectUri (OAuthValidateClientRedirectUriContext context)
+    public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
     {
       if (context.ClientId == _publicClientId)
       {
@@ -87,7 +102,7 @@ namespace Api.Providers
       return Task.FromResult<object>(null);
     }
 
-    public static AuthenticationProperties CreateProperties (User user)
+    public static AuthenticationProperties CreateProperties(User user)
     {
       IDictionary<string, string> data = new Dictionary<string, string>
             {
@@ -96,6 +111,6 @@ namespace Api.Providers
       return new AuthenticationProperties(data);
     }
 
-   
+
   }
 }

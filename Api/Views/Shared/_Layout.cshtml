@@ -20,6 +20,17 @@
         <a href="/#/" class="navbar-brand">Learn</a>
       </div>
       <div class="navbar-collapse collapse">
+        <!--<form name="searchForm" class="navbar-form navbar-left" role="search" novalidate>
+          <div class="input-group">
+            <input type="text" ng-model="model.q" name="q" required class="form-control search" placeholder="Search">
+            <span class="input-group-btn">
+              <button type="submit" ng-click="searchForm.$valid && search( model )" class="btn btn-primary">
+                <i class="fa fa-search h-sm"></i>
+              </button>
+            </span>
+          </div>
+        </form>-->
+
         <ul class="nav navbar-nav">
           <li></li>
         </ul>
@@ -67,8 +78,6 @@
 
   @Scripts.Render("~/bundles/angular")
   <script src="~/js/src.min.js"></script>
-  <script src="~/Scripts/bootstrap.min.js"></script>
-  <script src="~/Scripts/respond.js"></script>
 
 
   @RenderSection("scripts", required: false)

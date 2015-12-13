@@ -15,17 +15,16 @@ namespace Api
 
                     "~/lib/angular/angular-local-storage.min.js",
 
-                    "~/Scripts/jquery-{version}.js"));
+                    //Jq + bootstrap - to be replaced with UI bootstrap
+                    "~/Scripts/jquery-{version}.js",
+                    "~/Scripts/bootstrap.js",
+                    "~/Scripts/respond.js"));
 
 
       // Use the development version of Modernizr to develop with and learn from. Then, when you're
       // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
       bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                   "~/Scripts/modernizr-*"));
-
-      bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.js",
-                "~/Scripts/respond.js"));
 
       bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
@@ -36,15 +35,11 @@ namespace Api
 
 
 //"~/js/app.js",
-
 //"~/js/home/IndexController.js",
-
 //"~/js/account/LoginController.js",
 //"~/js/account/RegisterController.js",
 //"~/js/account/ExternalLoginController.js",
 //"~/js/account/manage/ManageControllers.js",
-
 //"~/js/account/AccountService.js",
 //"~/js/account/AuthInterceptorService.js",
-
 //"~/js/shared/NavbarController.js",
