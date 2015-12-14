@@ -15,7 +15,7 @@
     $scope.login = function (model) {
       AccountService.login(model).then(function (res) {
         $location.path('/').search('m', 'welcome');
-      },
+      }, 
        function (res) {
          $scope.res = res;
        });

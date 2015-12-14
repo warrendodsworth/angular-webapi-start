@@ -217,12 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="css\src.css" />
-    <Content Include="css\src.min.css" />
+    <Content Include="build\lib.css" />
+    <Content Include="build\lib.js" />
+    <Content Include="build\src.css" />
+    <Content Include="build\src.min.css" />
     <Content Include="css\styles.css" />
     <Content Include="js\home\CreateController.js" />
     <Content Include="js\shared\FacebookService.js" />
@@ -256,11 +254,23 @@
     <Content Include="js\test\labs\tutorial.spec.js" />
     <Content Include="js\user\facebook.html" />
     <Content Include="js\user\FacebookController.js" />
+    <Content Include="lib\angular-local-storage\angular-local-storage.min.js" />
+    <Content Include="lib\angular-ui-bootstrap\ui-bootstrap-csp.css" />
+    <Content Include="lib\angular-ui-bootstrap\ui-bootstrap-tpls.min.js" />
+    <Content Include="lib\angular-ui-bootstrap\ui-bootstrap.min.js" />
     <Content Include="lib\angular\angular-csp.css" />
-    <Content Include="lib\angular\angular-local-storage.min.js" />
     <Content Include="lib\angular\angular.min.js" />
     <Content Include="build\lib.min.css" />
     <Content Include="build\lib.min.js" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="lib\bootstrap\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="lib\bootstrap\js\npm.js" />
+    <Content Include="lib\jquery\jquery.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular-route.js" />
     <Content Include="Scripts\angular-route.min.js" />
@@ -293,10 +303,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -327,7 +340,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\Site.css" />
+    <Content Include="css\Site.css" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />

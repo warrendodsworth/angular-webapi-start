@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width" />
   <title>@ViewBag.Title</title>
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
-  @Styles.Render("~/Content/css")
+  <link href="~/build/lib.css" rel="stylesheet" />
+  <link href="~/build/src.css" rel="stylesheet" />
   @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -76,8 +77,8 @@
     }(document, 'script', 'facebook-jssdk'));
   </script>
 
-  @Scripts.Render("~/bundles/angular")
-  <script src="~/js/src.js"></script>
+  <script src="~/build/lib.js"></script>
+  <script src="~/build/src.js"></script>
 
 
   @RenderSection("scripts", required: false)

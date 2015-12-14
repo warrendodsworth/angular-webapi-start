@@ -17,7 +17,7 @@ var paths = {
   lib: './lib/'
 };
 
-gulp.task('default', ['watch', 'src-js', 'src-css']);
+gulp.task('default', ['src-js', 'src-css', 'watch']);
 
 
 //SRC
@@ -30,7 +30,7 @@ gulp.task('src-js', function () {
                .pipe(gulp.dest('./build'));
 });
 
-gulp.task('src-css', function () {
+gulp.task('src-css', ['sass'], function () {
   return gulp.src('./content/**/*.css')
          .pipe(concat('src.css'))
          .pipe(gulp.dest('./build'))
@@ -39,27 +39,41 @@ gulp.task('src-css', function () {
          .pipe(gulp.dest('./build'));
 });
 
+
+gulp.task('sass', function () {
+  return gulp.src('./scss/**/*.scss')
+    .pipe(sass()) // Converts Sass to CSS with gulp-sass
+    .pipe(gulp.dest('./css'));
+});
+
+
 //LIB
 gulp.task("lib", function () {
   var bower = {
-    "angular": "angular/**/*.min.{js,css}",
-    "angular": "angular-bootstrap/**/*.min.{js,css}", //Not getting copied
-    "angular": "angular-local-storage/dist/**/*.min.{js,css}",
-    "bootstrap": "bootstrap/dist/**/*.{js,map,css,ttf,svg,woff,eot}",
+    "angular": "angular/**/*.+(js|css)",
+    "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
+    "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
+    "bootstrap": "bootstrap/dist/**/*.+(js|map|css|ttf|svg|woff|eot)",
+    "jquery": "jquery/dist/**/*.+(js|map)",
   }
 
   for (var destinationDir in bower) {
-    gulp.src(paths.bower + bower[destinationDir]).pipe(gulp.dest(paths.lib + destinationDir));
+    gulp.src(paths.bower + bower[destinationDir])
+        .pipe(gulp.dest(paths.lib + destinationDir));
+
+    console.log('Copying from ' + paths.bower + bower[destinationDir] + ' to ' + paths.lib + destinationDir);
   }
 
-  var js = gulp.src('./lib/**/*.js')
+  var js = gulp.src('./lib/**/*.min.js')
        .pipe(concat('lib.js'))
+       .pipe(gulp.dest('./build'))
        .pipe(rename({ suffix: '.min' }))
        .pipe(uglify())
        .pipe(gulp.dest('./build'));
 
   var css = gulp.src('./lib/**/*.css')
           .pipe(concat('lib.css'))
+          .pipe(gulp.dest('./build'))
           .pipe(rename({ suffix: '.min' }))
           .pipe(minifyCss())
           .pipe(gulp.dest('./build'));
@@ -67,11 +81,6 @@ gulp.task("lib", function () {
   return merge(js, css);
 });
 
-gulp.task('sass', function () {
-  return gulp.src('./scss/styles.scss')
-    .pipe(sass()) // Converts Sass to CSS with gulp-sass
-    .pipe(gulp.dest('./css'));
-});
 
 //WATCH
 gulp.task('watch', function () {
