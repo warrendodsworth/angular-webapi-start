@@ -255,6 +255,13 @@
     <Content Include="js\user\facebook.html" />
     <Content Include="js\user\FacebookController.js" />
     <Content Include="lib\angular-local-storage\angular-local-storage.min.js" />
+    <Content Include="lib\angular-mocks\angular-mocks.js" />
+    <Content Include="lib\angular-mocks\ngAnimateMock.js" />
+    <Content Include="lib\angular-mocks\ngMock.js" />
+    <Content Include="lib\angular-mocks\ngMockE2E.js" />
+    <Content Include="lib\angular-route\angular-route.js" />
+    <Content Include="lib\angular-route\angular-route.min.js" />
+    <Content Include="lib\angular-route\index.js" />
     <Content Include="lib\angular-ui-bootstrap\ui-bootstrap-csp.css" />
     <Content Include="lib\angular-ui-bootstrap\ui-bootstrap-tpls.min.js" />
     <Content Include="lib\angular-ui-bootstrap\ui-bootstrap.min.js" />

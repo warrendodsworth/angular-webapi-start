@@ -3,10 +3,10 @@
 
   angular
     .module('app')
-    .directive('result', [function () {
+    .directive('result', function () {
       return {
         restrict: 'E',
-        template: '<p ng-show="validationSummary" ng-class="validationSummary ? \'alert alert-danger\' : \'\'">{{validationSummary}}</p>',
+        template: '<p ng-show="validationSummary" ng-class="validationSummary ? "alert alert-danger"" : """>{{validationSummary}}</p>',
         scope: {
           res: '='
         },
@@ -40,7 +40,7 @@
 
           scope.validationSummary = validationSummary;
         }
-      }
-    }])
+      };
+    });
 
-})();
+})(); 

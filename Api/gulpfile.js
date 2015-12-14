@@ -31,7 +31,7 @@ gulp.task('src-js', function () {
 });
 
 gulp.task('src-css', ['sass'], function () {
-  return gulp.src('./content/**/*.css')
+  return gulp.src('./css/**/*.css')
          .pipe(concat('src.css'))
          .pipe(gulp.dest('./build'))
          .pipe(rename({ suffix: '.min' }))
@@ -51,6 +51,8 @@ gulp.task('sass', function () {
 gulp.task("lib", function () {
   var bower = {
     "angular": "angular/**/*.+(js|css)",
+    "angular-route": "angular-route/**/*.+(js|css)",
+    "angular-mocks": "angular-mocks/**/*.+(js|css)",
     "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
     "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
     "bootstrap": "bootstrap/dist/**/*.+(js|map|css|ttf|svg|woff|eot)",
