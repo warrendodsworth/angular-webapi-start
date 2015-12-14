@@ -2,45 +2,60 @@
   'use strict';
 
   angular
-    .module('app')
-    .directive('result', function () {
-      return {
-        restrict: 'E',
-        template: '<p ng-show="validationSummary" ng-class="validationSummary ? "alert alert-danger"" : """>{{validationSummary}}</p>',
-        scope: {
-          res: '='
-        },
-        link: function (scope, elem, attrs) {
+      .module('app')
+      .directive('result', result);
 
-          var errors = [], validationSummary;
-          var res = scope.res;
-          console.log(scope.res);
+  result.$inject = ['$window', '$timeout'];
 
-          // eg - res.data.modelState
-          if (res.data && res.data.modelState) {
-            //If BadRequest(ModelState)
-            $.each(res.data.modelState, function (i, propertyErrors) {
-              errors.push.apply(errors, propertyErrors);
-            });
+  function result($window, $timeout) {
+    // Usage:
+    //     <result></result>
+    // Creates:
+    // 
+    var directive = {
+      link: link,
+      restrict: 'EA',
+      template: '<div ng-if="msg" class="alert" ng-class="msg.success ? \'alert-success\' : \'alert-danger\'" ><p ng-bind-html="msg.text"></p></div>',
+      scope: {
+        res: '='
+      }
+    };
+    return directive;
 
-            validationSummary = errors.join('</br>');
-          } else if (res.data) {
-            //else BadRequest("Message") or /token error
-            if (res.data.message)
-              errors.push(res.data.message);
-            else
-              errors.push(res.data.error_description);
+    function link(scope, element, attrs) {
 
-            validationSummary = errors.join('');
+      scope.$watch('res', function (value) {
+        if (value) {
+          scope.msg = {
+            text: !scope.res.data ? scope.res : errors(scope.res),
+            success: !scope.res.data
           }
 
-
-          if (validationSummary)
-            validationSummary = validationSummary.trim();
-
-          scope.validationSummary = validationSummary;
+          $timeout(function () {
+            scope.res = null;
+          }, 5000);
         }
-      };
-    });
+      })
+    }
 
-})(); 
+    function errors(res) {
+      var errors = [], validationSummary;
+      if (res.data.modelState) {
+        $.each(res.data.modelState, function (i, propertyErrors) {
+          errors.push.apply(errors, propertyErrors);
+        });
+
+        validationSummary = errors.join('</br>');
+      } else {
+        errors.push(res.data.message || res.data.error_description);
+        validationSummary = errors.join('');
+      }
+
+      if (validationSummary)
+        validationSummary = validationSummary.trim();
+
+      return validationSummary;
+    }
+  }
+
+})();

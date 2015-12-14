@@ -21,7 +21,7 @@ gulp.task('default', ['src-js', 'src-css', 'watch']);
 
 
 //SRC
-gulp.task('src-js', function () {
+gulp.task('src-js', function () {r
   return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
                .pipe(concat('src.js'))
                .pipe(gulp.dest('./build'))
@@ -52,6 +52,7 @@ gulp.task("lib", function () {
   var bower = {
     "angular": "angular/**/*.+(js|css)",
     "angular-route": "angular-route/**/*.+(js|css)",
+    "angular-sanitize": "angular-sanitize/**/*.+(js|css)",
     "angular-mocks": "angular-mocks/**/*.+(js|css)",
     "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
     "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
