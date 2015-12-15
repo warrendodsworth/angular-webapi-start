@@ -18,11 +18,13 @@
       username: ''
     };
 
+    //Register
     service.register = function (model) {
       service.logout();
       return $http.post('/api/account/register', model);
     };
 
+    //Login
     service.login = function (model) {
 
       var data = "grant_type=password&username=" + model.username + "&password=" + model.password;
@@ -31,7 +33,12 @@
 
       $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
 
-        localStorageService.set('authorizationData', { token: res.data.access_token, username: model.username });
+        localStorageService.set('authorizationData', {
+          token: res.data.access_token,
+          tokenType: res.data.token_type,
+          expiresIn: res.data.expires_in,
+          username: model.username
+        });
         service.identity.isAuth = true;
         service.identity.username = model.username;
 
@@ -44,6 +51,7 @@
       return deferred.promise;
     };
 
+    //Logout
     service.logout = function () {
       localStorageService.remove('authorizationData');
       service.identity.isAuth = false;

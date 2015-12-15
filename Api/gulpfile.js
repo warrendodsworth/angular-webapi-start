@@ -1,4 +1,4 @@
-/// <vs AfterBuild='default' />
+/// <vs AfterBuild='lib' SolutionOpened='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 
 var gulp = require('gulp');
@@ -21,7 +21,7 @@ gulp.task('default', ['src-js', 'src-css', 'watch']);
 
 
 //SRC
-gulp.task('src-js', function () {r
+gulp.task('src-js', function () {
   return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
                .pipe(concat('src.js'))
                .pipe(gulp.dest('./build'))

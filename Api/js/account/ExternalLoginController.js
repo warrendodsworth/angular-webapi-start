@@ -18,6 +18,8 @@
     }
 
     var accessToken = hash[1];
+    var expiresIn = hash[3];
+    var tokenType = hash[5];
     console.log('Access token');
 
 
@@ -48,7 +50,9 @@
         } else {
           //Log user in
           localStorageService.set('authorizationData', {
-            token: accessToken
+            token: accessToken,
+            tokenType: tokenType,
+            expiresIn: expiresIn
           });
           $window.location.href = '/#/';
         }
@@ -64,9 +68,14 @@
       AccountService.registerExternal(model, accessToken).then(function (res) {
         $scope.res = 'You\'ve registered successfully';
         console.log(res);
-        //Next get local bearer token
-        //res.data.access_token res.data.username
-       
+
+        localStorageService.set('authorizationData', {
+          token: res.data.access_token,
+          tokenType: res.data.token_type,
+          expiresIn: res.data.expires_in
+        });
+
+        $window.location.href = '/#/';
       }, function (res) {
         $scope.res = res;
       });
