@@ -42,3 +42,12 @@
   }
 
 })();
+
+
+
+(function () {
+  var link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(link);
+})();

@@ -1,15 +1,15 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Api.Models
 {
   // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
   public class User : IdentityUser
   {
+    public string Name { get; set; }
+
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
     {
       // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -17,24 +17,10 @@ namespace Api.Models
 
       // Add custom user claims here
       userIdentity.AddClaim(new Claim("Username", UserName));
-      //userIdentity.AddClaim(new Claim(ClaimTypes.Name, Name));
+      userIdentity.AddClaim(new Claim("Name", Name));
 
       return userIdentity;
     }
   }
 
-  public class AppContext : IdentityDbContext<User>
-  {
-    public AppContext()
-      : base("DefaultConnection", throwIfV1Schema: false)
-    {
-    }
-
-    public DbSet<Note> Notes { get; set; }
-
-    public static AppContext Create()
-    {
-      return new AppContext();
-    }
-  }
 }
