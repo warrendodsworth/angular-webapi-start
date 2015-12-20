@@ -1,3 +1,4 @@
+/// <binding AfterBuild='lib' Clean='default' />
 /// <vs AfterBuild='lib' SolutionOpened='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 
@@ -8,7 +9,7 @@ var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var merge = require('gulp-merge');
-var sass = require('gulp-sass');
+//var sass = require('gulp-sass');
 
 var project = { webroot: '' };
 var paths = {
@@ -30,7 +31,7 @@ gulp.task('src-js', function () {
                .pipe(gulp.dest('./build'));
 });
 
-gulp.task('src-css', ['sass'], function () {
+gulp.task('src-css', function () { //, ['sass']
   return gulp.src('./css/**/*.css')
          .pipe(concat('src.css'))
          .pipe(gulp.dest('./build'))
@@ -40,11 +41,11 @@ gulp.task('src-css', ['sass'], function () {
 });
 
 
-gulp.task('sass', function () {
-  return gulp.src('./scss/**/*.scss')
-    .pipe(sass()) // Converts Sass to CSS with gulp-sass
-    .pipe(gulp.dest('./css'));
-});
+//gulp.task('sass', function () {
+//  return gulp.src('./scss/**/*.scss')
+//    .pipe(sass()) // Converts Sass to CSS with gulp-sass
+//    .pipe(gulp.dest('./css'));
+//});
 
 
 //LIB
@@ -56,7 +57,7 @@ gulp.task("lib", function () {
     "angular-mocks": "angular-mocks/**/*.+(js|css)",
     "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
     "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
-    "bootstrap": "bootstrap/dist/**/*.+(js|map|css|ttf|svg|woff|eot)",
+    "bootstrap": "bootstrap/dist/**/*.+(map|css|ttf|svg|woff|eot)", //Dont load bootstrap js 
     "jquery": "jquery/dist/**/*.+(js|map)",
   }
 

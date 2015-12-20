@@ -10,16 +10,27 @@ namespace Api
   //API
   public class HandleLogErrorApiAttribute : ExceptionFilterAttribute
   {
-    public override void OnException(HttpActionExecutedContext actionExecutedContext)
+    public override void OnException (HttpActionExecutedContext actionExecutedContext)
     {
-      var e = actionExecutedContext.Exception;
-      var ms = actionExecutedContext.ActionContext.ModelState;
-      if (e is DbEntityValidationException)
+
+      base.OnException(actionExecutedContext);
+    }
+
+    public override System.Threading.Tasks.Task OnExceptionAsync (HttpActionExecutedContext actionExecutedContext, System.Threading.CancellationToken cancellationToken)
+    {
+      return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
+    }
+
+    private void Handle (HttpActionExecutedContext context)
+    {
+      var e = context.Exception;
+      var ms = context.ActionContext.ModelState;
+      if ( e is DbEntityValidationException )
       {
         //Add to ModelState
-        foreach (var entity in ((DbEntityValidationException) e).EntityValidationErrors)
+        foreach ( var entity in ( (DbEntityValidationException) e ).EntityValidationErrors )
         {
-          foreach (var error in entity.ValidationErrors)
+          foreach ( var error in entity.ValidationErrors )
           {
             ms.AddModelError(error.PropertyName, error.ErrorMessage);
           }
@@ -28,14 +39,8 @@ namespace Api
       else
       {
         //Log
+        ms.AddModelError("", e.Message);
       }
-
-      base.OnException(actionExecutedContext);
-    }
-
-    public override System.Threading.Tasks.Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, System.Threading.CancellationToken cancellationToken)
-    {
-      return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
     }
   }
 }

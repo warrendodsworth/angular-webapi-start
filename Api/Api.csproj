@@ -22,6 +22,7 @@
     <IISExpressUseClassicPipelineMode />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -169,7 +170,8 @@
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
-    <Compile Include="App_Start\UserManager.cs" />
+    <Compile Include="Models\Dtos\UserDto.cs" />
+    <Compile Include="Services\UserManager.cs" />
     <Compile Include="App_Start\Mvc\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Api\WebApiConfig.cs" />
@@ -225,6 +227,7 @@
     <Content Include="build\src.css" />
     <Content Include="build\src.min.css" />
     <Content Include="css\styles.css" />
+    <Content Include="js\account\manage\manage.html" />
     <Content Include="js\home\CreateController.js" />
     <Content Include="js\shared\FacebookService.js" />
     <Content Include="js\shared\result.js" />
@@ -364,7 +367,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -10,7 +10,9 @@ namespace Api.Models
   {
     public string Name { get; set; }
 
-    public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
+    public UserStatus Status { get; set; }
+
+    public async Task<ClaimsIdentity> GenerateUserIdentityAsync (UserManager<User> manager, string authenticationType)
     {
       // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
       var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
@@ -23,4 +25,9 @@ namespace Api.Models
     }
   }
 
+  public enum UserStatus
+  {
+    Active,
+    Deactivated
+  }
 }

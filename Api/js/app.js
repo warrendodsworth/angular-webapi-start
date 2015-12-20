@@ -34,6 +34,7 @@
 
       $routeProvider.when('/login', { templateUrl: '/js/account/login.html', controller: 'LoginController' })
                     .when('/register', { templateUrl: '/js/account/register.html', controller: 'RegisterController' })
+                    .when('/manage', { templateUrl: '/js/account/manage/manage.html', controller: 'ManageController' })
                     .when('/manage/logins', { templateUrl: '/js/account/manage/manageLogins.html', controller: 'ManageLoginsController' });
 
       $routeProvider.when('/facebook', { templateUrl: '/js/user/facebook.html', controller: 'FacebookController' });
