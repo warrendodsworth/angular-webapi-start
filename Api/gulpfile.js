@@ -1,4 +1,4 @@
-/// <binding AfterBuild='lib' Clean='default' ProjectOpened='default' />
+/// <binding AfterBuild='lib' Clean='default' ProjectOpened='default, watch' />
 /// <vs AfterBuild='lib' SolutionOpened='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 
@@ -13,9 +13,9 @@ var merge = require('gulp-merge');
 
 var project = { webroot: '' };
 var paths = {
-  webroot: './',
-  bower: './bower_components/',
-  lib: './lib/'
+    webroot: './',
+    bower: './bower_components/',
+    lib: './lib/'
 };
 
 gulp.task('default', ['src-js', 'src-css', 'watch']);
@@ -23,21 +23,21 @@ gulp.task('default', ['src-js', 'src-css', 'watch']);
 
 //SRC
 gulp.task('src-js', function () {
-  return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
-               .pipe(concat('src.js'))
-               .pipe(gulp.dest('./build'))
-               .pipe(rename({ suffix: '.min' }))
-               .pipe(uglify())
-               .pipe(gulp.dest('./build'));
+    return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
+                 .pipe(concat('src.js'))
+                 .pipe(gulp.dest('./build'))
+                 .pipe(rename({ suffix: '.min' }))
+                 .pipe(uglify())
+                 .pipe(gulp.dest('./build'));
 });
 
 gulp.task('src-css', function () { //, ['sass']
-  return gulp.src('./css/**/*.css')
-         .pipe(concat('src.css'))
-         .pipe(gulp.dest('./build'))
-         .pipe(rename({ suffix: '.min' }))
-         .pipe(minifyCss())
-         .pipe(gulp.dest('./build'));
+    return gulp.src('./css/**/*.css')
+           .pipe(concat('src.css'))
+           .pipe(gulp.dest('./build'))
+           .pipe(rename({ suffix: '.min' }))
+           .pipe(minifyCss())
+           .pipe(gulp.dest('./build'));
 });
 
 
@@ -50,48 +50,50 @@ gulp.task('src-css', function () { //, ['sass']
 
 //LIB
 gulp.task("lib", function () {
-  var bower = {
-    "angular": "angular/**/*.+(js|css)",
-    "angular-route": "angular-route/**/*.+(js|css)",
-    "angular-sanitize": "angular-sanitize/**/*.+(js|css)",
-    "angular-mocks": "angular-mocks/**/*.+(js|css)",
-    "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
-    "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
-    "bootstrap": "bootstrap/dist/**/*.+(map|css|ttf|svg|woff|eot)", //Dont load bootstrap js 
-    "jquery": "jquery/dist/**/*.+(js|map)",
-  }
+    var bower = {
+        "angular": "angular/**/*.+(js|css)",
+        "angular-route": "angular-route/**/*.+(js|css)",
+        "angular-sanitize": "angular-sanitize/**/*.+(js|css)",
+        "angular-mocks": "angular-mocks/**/*.+(js|css)",
+        "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
+        "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
+        "bootstrap": "bootstrap/dist/**/*.+(map|css|ttf|svg|woff|eot)", //Dont load bootstrap js 
+        "jquery": "jquery/dist/**/*.+(js|map)",
+    }
 
-  for (var destinationDir in bower) {
-    gulp.src(paths.bower + bower[destinationDir])
-        .pipe(gulp.dest(paths.lib + destinationDir));
+    for (var destinationDir in bower) {
+        gulp.src(paths.bower + bower[destinationDir])
+            .pipe(gulp.dest(paths.lib + destinationDir));
 
-    console.log('Copying from ' + paths.bower + bower[destinationDir] + ' to ' + paths.lib + destinationDir);
-  }
+        console.log('Copying from ' + paths.bower + bower[destinationDir] + ' to ' + paths.lib + destinationDir);
+    }
 
-  var js = gulp.src('./lib/**/*.min.js')
-       .pipe(concat('lib.js'))
-       .pipe(gulp.dest('./build'))
-       .pipe(rename({ suffix: '.min' }))
-       .pipe(uglify())
-       .pipe(gulp.dest('./build'));
+    var js = gulp.src('./lib/**/*.min.js')
+         .pipe(concat('lib.js'))
+         .pipe(gulp.dest('./build'))
+         .pipe(rename({ suffix: '.min' }))
+         .pipe(uglify())
+         .pipe(gulp.dest('./build'));
 
-  var css = gulp.src('./lib/**/*.css')
-          .pipe(concat('lib.css'))
-          .pipe(gulp.dest('./build'))
-          .pipe(rename({ suffix: '.min' }))
-          .pipe(minifyCss())
-          .pipe(gulp.dest('./build'));
+    var css = gulp.src('./lib/**/*.css')
+            .pipe(concat('lib.css'))
+            .pipe(gulp.dest('./build'))
+            .pipe(rename({ suffix: '.min' }))
+            .pipe(minifyCss())
+            .pipe(gulp.dest('./build'));
 
-  return merge(js, css);
+    return merge(js, css);
 });
 
 
 //WATCH
 gulp.task('watch', function () {
 
-  gulp.watch('./js/**/*.js', ['src-js']);
+    gulp.watch('./js/**/*.js', ['src-js']);
 
-  gulp.watch('/scss/**/*.scss', ['sass']);
+    gulp.watch('./css/**/*.css', ['src-css']);
+
+    gulp.watch('/scss/**/*.scss', ['sass']);
 });
 
 

@@ -3,12 +3,16 @@
 
     angular
         .module('controllers')
-        .controller('CreateController', CreateController);
+        .controller('Notes.CreateController', CreateController);
 
-    CreateController.$inject = ['$scope', '$http', '$location'];
+    CreateController.$inject = ['$scope', '$http', '$location', 'AccountService'];
 
-    function CreateController($scope, $http, $location) {
+    function CreateController($scope, $http, $location, AccountService) {
         $scope.title = 'Create Controller';
+
+        if (!AccountService.identity.isAuth) {
+            $location.path('/login').search('m', '401');
+        }
 
         $scope.create = function (model) {
 

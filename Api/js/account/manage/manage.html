@@ -11,9 +11,9 @@
         <dd>{{user.username}}</dd>
     </dl>
     <br />
-    <p>
-        <a ng-click="deactivate( )">Deactivate</a> | 
-        <a href="#/manage/logins">Manage Logins</a>
-    </p>
+    <ul class="nav nav-pills">
+        <li><a href="#/manage/logins">Manage Logins</a></li>
+        <li><a ng-click="deactivate( )">Deactivate</a></li>
+    </ul>
     <result res="res"></result>
 </div>
