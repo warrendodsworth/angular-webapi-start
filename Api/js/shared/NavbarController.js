@@ -3,19 +3,19 @@
 
     angular
       .module('controllers')
-      .controller('NavbarController', ['$scope', 'AccountService', NavbarController]);
+      .controller('NavbarController', ['$scope', '$location', 'AccountService', NavbarController]);
 
-    function NavbarController($scope, AccountService) {
+    function NavbarController($scope, $location, AccountService) {
 
         $scope.identity = AccountService.identity;
 
         $scope.$on('user:logout', function (event, data) {
             $scope.identity = data;
-            console.log('Logout broadcast detected');
         });
 
         $scope.logout = function () {
             AccountService.logout();
+            $location.path('/');
         }
     }
 })();

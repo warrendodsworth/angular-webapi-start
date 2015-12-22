@@ -6,7 +6,7 @@
 <table class="table">
   <tr ng-repeat="login in logins">
     <td>{{login.loginProvider}}</td>
-    <td><a ng-click="removeLogin( login )" class="btn btn-default btn-sm">Remove</a></td>
+    <td><a ng-click="removeLogin( login )" ng-hide="login.loginProvider == 'Local'" class="btn btn-default btn-sm">Remove</a></td>
   </tr>
 </table>
 <br />

@@ -2,16 +2,24 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('controllers')
         .controller('CreateController', CreateController);
 
-    CreateController.$inject = ['$scope']; 
+    CreateController.$inject = ['$scope', '$http', '$location'];
 
-    function CreateController($scope) {
-        $scope.title = 'CreateController';
+    function CreateController($scope, $http, $location) {
+        $scope.title = 'Create Controller';
 
-        activate();
+        $scope.create = function (model) {
 
-        function activate() { }
+            $http.post('/api/notes', model).then(function (res) {
+                $scope.res = 'Note Created';
+                $location.path('/');
+            }, function (res) {
+                $scope.res = res;
+            });
+
+        };
+
     }
 })();

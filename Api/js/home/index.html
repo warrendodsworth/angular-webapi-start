@@ -1,12 +1,14 @@
 ﻿<div class="jumbotron">
-  <h2>Welcome</h2>
-  <h4>Notes</h4>
+    <h2>Welcome</h2>
+    <h4>Notes</h4>
 </div>
 <a href="#/create">CREATE</a>
 <br />
 
 <div>
-  <div ng-repeat="note in notes">
-
-  </div>
+    <div ng-repeat="note in notes">
+        <h4>{{note.title}}</h4>
+        <p class="text-muted">{{note.text}}</p>
+        <hr />
+    </div>
 </div>

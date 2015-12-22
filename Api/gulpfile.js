@@ -1,4 +1,4 @@
-/// <binding AfterBuild='lib' Clean='default' />
+/// <binding AfterBuild='lib' Clean='default' ProjectOpened='default' />
 /// <vs AfterBuild='lib' SolutionOpened='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 

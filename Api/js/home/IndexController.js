@@ -1,14 +1,17 @@
 ﻿(function () {
-  'use strict';
+    'use strict';
 
-  //Index
-  angular.module('controllers')
-         .controller('IndexController', ['$scope', IndexController]);
+    //Index
+    angular.module('controllers')
+           .controller('IndexController', IndexController);
 
-  function IndexController($scope) {
+    IndexController.$inject = ['$scope', '$http', '$location'];
 
-    $scope.create = function (model) {
-      $scope.result = model.name;
+    function IndexController($scope, $http, $location) {
+
+        $http.get('/api/notes').then(function (res) {
+            $scope.notes = res.data;
+        });
+
     }
-  }
 })();

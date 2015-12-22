@@ -37,10 +37,13 @@
                     token: res.data.access_token,
                     tokenType: res.data.token_type,
                     expiresIn: res.data.expires_in,
-                    username: model.username
+                    
+                    name: res.data.name,
+                    username: res.data.username
                 });
                 service.identity.isAuth = true;
-                service.identity.username = model.username;
+                service.identity.username = res.data.username;
+                service.identity.name = res.data.name;
 
                 deferred.resolve(res);
             }, function (res) {
@@ -68,6 +71,7 @@
             if (authData) {
                 service.identity.isAuth = true;
                 service.identity.username = authData.username;
+                service.identity.name = authData.name;
             }
         };
 
