@@ -229,7 +229,6 @@
     <Content Include="css\styles.css" />
     <Content Include="js\account\manage\manage.html" />
     <Content Include="js\user\notes\CreateController.js" />
-    <Content Include="js\shared\FacebookService.js" />
     <Content Include="js\shared\result.js" />
     <Content Include="build\src.js" />
     <Content Include="build\src.min.js" />

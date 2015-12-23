@@ -57,6 +57,7 @@ gulp.task("lib", function () {
         "angular-mocks": "angular-mocks/**/*.+(js|css)",
         "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
         "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
+        "ng-facebook": "ng-facebook/ngFacebook.+(js|css)",
         "bootstrap": "bootstrap/dist/**/*.+(map|css|ttf|svg|woff|eot)", //Dont load bootstrap js 
         "jquery": "jquery/dist/**/*.+(js|map)",
     }
