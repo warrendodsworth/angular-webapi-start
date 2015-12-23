@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Linq;
 
 namespace Api.Controllers
 {
@@ -14,9 +15,17 @@ namespace Api.Controllers
     private AppContext db = new AppContext();
 
     // GET api/notes
-    public async Task<IEnumerable<Note>> Get ()
+    [AllowAnonymous]
+    public async Task<IEnumerable<Note>> Get (string search = null)
     {
-      return await db.Notes.ToListAsync();
+      var q = db.Notes.AsQueryable();
+
+      if ( search != null )
+      {
+        q = q.Where(x => x.Text.Contains(search) || x.Title.Contains(search));
+      }
+
+      return await q.ToListAsync();
     }
 
     // GET api/notes/5
@@ -31,7 +40,7 @@ namespace Api.Controllers
       return Ok(note);
     }
 
-    // POST api/values
+    // POST api/notes
     public async Task<IHttpActionResult> Post (Note note)
     {
       if ( !ModelState.IsValid )
@@ -53,7 +62,8 @@ namespace Api.Controllers
         return BadRequest();
       }
 
-      if(id != note.Id) {
+      if ( id != note.Id )
+      {
         return BadRequest();
       }
 
@@ -76,6 +86,15 @@ namespace Api.Controllers
       await db.SaveChangesAsync();
 
       return Ok();
+    }
+
+    protected override void Dispose (bool disposing)
+    {
+      if ( disposing )
+      {
+        db.Dispose();
+      }
+      base.Dispose(disposing);
     }
   }
 }

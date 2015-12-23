@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/#/" class="navbar-brand">Learn</a>
+                <a href="/#/" class="navbar-brand">Api</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -40,7 +40,7 @@
                             <li><a href="#/manage">Manage</a></li>
                             <li><a href="#/manage/logins">Manage Logins</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/help">API</a></li>
+                            <li><a href="/help">API Docs</a></li>
                             <li><a ng-click="logout( )">Logout</a></li>
                         </ul>
                     </li>
@@ -48,6 +48,7 @@
             </div>
         </div>
     </nav>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -58,8 +59,6 @@
             </ul>
         </footer>
     </div>
-
-
 
     <script>
         (function (d, s, id) {
@@ -73,20 +72,19 @@
 
     <script src="~/build/lib.js"></script>
     <script src="~/build/src.js"></script>
-
-
-    @RenderSection("scripts", required: false)
 </body>
 </html>
 
 
-<!--<form name="searchForm" class="navbar-form navbar-left" role="search" novalidate>
-                 <div class="input-group">
-                   <input type="text" ng-model="model.q" name="q" required class="form-control search" placeholder="Search">
-                   <span class="input-group-btn">
-                     <button type="submit" ng-click="searchForm.$valid && search( model )" class="btn btn-primary">
-                       <i class="fa fa-search h-sm"></i>
-                     </button>
-                   </span>
-                 </div>
-               </form>-->
+<!--
+    <form name="searchForm" class="navbar-form navbar-left" role="search" novalidate>
+        <div class="input-group">
+        <input type="text" ng-model="model.q" name="q" required class="form-control search" placeholder="Search">
+        <span class="input-group-btn">
+            <button type="submit" ng-click="searchForm.$valid && search( model )" class="btn btn-primary">
+            <i class="fa fa-search h-sm"></i>
+            </button>
+        </span>
+        </div>
+    </form>
+-->

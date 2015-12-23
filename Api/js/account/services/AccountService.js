@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-      .module('app')
+      .module('services')
       .factory('AccountService', AccountService);
 
     AccountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
@@ -58,12 +58,18 @@
         service.logout = function () {
             localStorageService.remove('authorizationData');
 
-            service.identity = {
-                isAuth: false,
-                username: ''
-            };
+          
+            service.identity.isAuth = false;
+            service.identity.username = '';
+            service.identity.name = '';
 
-            $rootScope.$broadcast('user:logout', service.identity);
+            //service.identity = {  
+            //    isAuth: false,
+            //    username: ''
+            //};
+
+            //$rootScope.$broadcast('user:logout', service.identity);   
+            //Only required if you overwrite an entire service object, modifying the individual properties removes the need for broadcast
         };
 
         service.getIdentity = function () {
