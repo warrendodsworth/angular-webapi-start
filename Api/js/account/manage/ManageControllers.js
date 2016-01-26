@@ -36,10 +36,31 @@
             AccountService.deactivateAccount().then(function (res) {
                 $scope.res = 'Account Deactivated';
                 AccountService.logout();
-                
+
                 $timeout(function () {
                     $location.path('/');
                 }, 2000);
+            });
+        }
+    }
+
+    angular
+          .module('controllers')
+          .controller('ForgotPasswordController', ForgotPassword);
+
+    ForgotPassword.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
+
+    function ForgotPassword($scope, $location, $timeout, AccountService) {
+
+        $scope.forgotPassword = function (model) {
+            AccountService.forgotPassword(model).then(function (res) {
+                $scope.res = 'We\'ve sent you a link';
+
+                $timeout(function () {
+                    $location.path('/');
+                }, 4000);
+            }, function (res) {
+                $scope.res = res;
             });
         }
     }

@@ -227,6 +227,7 @@
     <Content Include="build\src.css" />
     <Content Include="build\src.min.css" />
     <Content Include="css\styles.css" />
+    <Content Include="js\account\manage\forgotPassword.html" />
     <Content Include="js\account\manage\manage.html" />
     <Content Include="js\user\notes\CreateController.js" />
     <Content Include="js\shared\result.js" />

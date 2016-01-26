@@ -28,13 +28,18 @@
     });
 
 
-    //$facebook.api('/me', { fields: 'last_name' }).then(function (res) {
-    //  $scope.result = res;
-    //});
-
     $facebook.api('/me').then(function (res) {
       $scope.user = res;
     });
 
+    $facebook.api('/' + authData.userId + '/photos').then(function (res) {
+        console.log(res);
+    });
+
   }
 })();
+
+
+//$facebook.api('/me', { fields: 'last_name' }).then(function (res) {
+//  $scope.result = res;
+//});

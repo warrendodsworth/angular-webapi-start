@@ -37,7 +37,7 @@
                     token: res.data.access_token,
                     tokenType: res.data.token_type,
                     expiresIn: res.data.expires_in,
-                    
+
                     name: res.data.name,
                     username: res.data.username
                 });
@@ -58,7 +58,7 @@
         service.logout = function () {
             localStorageService.remove('authorizationData');
 
-          
+
             service.identity.isAuth = false;
             service.identity.username = '';
             service.identity.name = '';
@@ -125,6 +125,13 @@
             return $http.get('/api/account/manageInfo'
                             + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html'));
         };
+
+
+        //MANAGE
+        service.forgotPassword = function (model) {
+            return $http.post('/api/account/forgot-password', model);
+        }
+
 
         return service;
     }
