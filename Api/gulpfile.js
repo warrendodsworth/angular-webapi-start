@@ -8,7 +8,7 @@ var gulp = require('gulp');
 
 // Include plugins
 var plugins = require("gulp-load-plugins")({
-    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'merge-stream'],
+    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'merge-stream', 'shelljs'],
     replaceString: /\bgulp[\-.]/
 });
 
@@ -27,35 +27,35 @@ gulp.task('src', function () {
         .pipe(gulp.dest('./www/js'))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.uglify())
-        .pipe(gulp.dest( './www/js'));
+        .pipe(gulp.dest('./www/js'));
 });
 
 gulp.task('lib', function () {
-    var js = gulp.src(plugins.mainBowerFiles())
+    gulp.src(plugins.mainBowerFiles())
         .pipe(plugins.filter('*.js'))
         .pipe(plugins.concat('lib.min.js'))
         .pipe(plugins.uglify())
         .pipe(gulp.dest('./www/js'));
-
-    var css = gulp.src(plugins.mainBowerFiles())
-        .pipe(plugins.filter('*.css'))
-        .pipe(plugins.concat('lib.min.css'))
-        .pipe(plugins.minifyCss())
-        .pipe(gulp.dest('./www/css'));
-
-    return plugins.merge(js, css);
+    /*
+        var css = gulp.src(plugins.mainBowerFiles())
+            .pipe(plugins.filter('*.css'))
+            .pipe(plugins.concat('lib.min.css'))
+            .pipe(plugins.minifyCss())
+            .pipe(gulp.dest('./www/css'));
+    
+        return plugins.mergeStream(js, css);*/
 });
 
 gulp.task('sass', function (done) {
     gulp.src(paths.sass)
         .pipe(plugins.sass())
         .on('error', plugins.sass.logError)
-        .pipe(gulp.dest('./www/css/'))
+        .pipe(gulp.dest('./www/css'))
         .pipe(plugins.minifyCss({
             keepSpecialComments: 0
         }))
         .pipe(plugins.rename({ extname: '.min.css' }))
-        .pipe(gulp.dest('./www/css/'))
+        .pipe(gulp.dest('./www/css'))
         .on('end', done);
 });
 
@@ -66,9 +66,9 @@ gulp.task('watch', function () {
 });
 
 
-
+/*
 gulp.task('install', ['git-check'], function () {
-    return plugins.bower.commands.install()
+    return bower.commands.install()
         .on('log', function (data) {
             plugins.gutil.log('bower', plugins.gutil.colors.cyan(data.id), data.message);
         });
@@ -86,7 +86,7 @@ gulp.task('git-check', function (done) {
     }
     done();
 });
-
+*/
 
 /*
     var css = gulp.src(paths.css)
