@@ -2,74 +2,63 @@
 /// <vs AfterBuild='lib' SolutionOpened='default' />
 //https://github.com/JustMaier/angular-signalr-hub - IMP
 
+// Include Gulp
 var gulp = require('gulp');
-var bower = require('gulp-bower');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var merge = require('merge-stream');
-var mainBowerFiles = require('main-bower-files');
-var filter = require('gulp-filter');
-//var sass = require('gulp-sass');
 
-var project = { webroot: '' };
-var paths = {
-  webroot: './',
-  bower: './bower_components/',
-  lib: './lib/'
-};
+// Include plugins
+var plugins = require("gulp-load-plugins")({
+    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'merge-stream'],
+    replaceString: /\bgulp[\-.]/
+});
 
-gulp.task('default', ['src-js', 'src-css', 'watch']);
+// Define default destination folder
+var dest = './www/';
+
+gulp.task('default', ['src', 'lib', 'watch']);
 
 //SRC
-gulp.task('src-js', function () {
-  return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
-               .pipe(concat('src.js'))
-               .pipe(gulp.dest('./build'))
-               .pipe(rename({ suffix: '.min' }))
-               .pipe(uglify())
-               .pipe(gulp.dest('./build'));
+gulp.task('src', function () {
+    var js = gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
+        .pipe(plugins.concat('src.js'))
+        .pipe(gulp.dest(dest + 'js'))
+        .pipe(plugins.rename({ suffix: '.min' }))
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(dest + 'js'));
+
+    var css = gulp.src('./css/**/*.css')
+        .pipe(plugins.concat('src.css'))
+        .pipe(gulp.dest(dest + 'css'))
+        .pipe(plugins.rename({ suffix: '.min' }))
+        .pipe(plugins.minifyCss())
+        .pipe(gulp.dest(dest + 'css'));
+
+    return plugins.merge(js, css);
 });
 
-gulp.task('src-css', function () { //, ['sass']
-  return gulp.src('./css/**/*.css')
-         .pipe(concat('src.css'))
-         .pipe(gulp.dest('./build'))
-         .pipe(rename({ suffix: '.min' }))
-         .pipe(minifyCss())
-         .pipe(gulp.dest('./build'));
-});
-
-
-//LIBS
 gulp.task('lib', function () {
+    var js = gulp.src(plugins.mainBowerFiles())
+        .pipe(plugins.filter('*.js'))
+        .pipe(plugins.concat('lib.min.js'))
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(dest + 'js'));
 
-  var js = gulp.src(mainBowerFiles())
-     .pipe(filter('*.js'))
-     .pipe(concat('lib.min.js'))
-     .pipe(uglify())
-     .pipe(gulp.dest('./js/shared/lib'));
+    var css = gulp.src(plugins.mainBowerFiles())
+        .pipe(plugins.filter('*.css'))
+        .pipe(plugins.concat('lib.min.css'))
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest(dest + 'css'));
 
-  var css = gulp.src(mainBowerFiles())
-     .pipe(filter('*.css'))
-     .pipe(concat('lib.min.css'))
-     .pipe(uglify())
-     .pipe(gulp.dest('./js/shared/lib'));
-
- return merge(js, css);
+    return plugins.merge(js, css);
 });
 
 //WATCH
 gulp.task('watch', function () {
 
-  gulp.watch('./js/**/*.js', ['src-js']);
+    gulp.watch('./www/js/**/*.js', ['src']);
 
-  gulp.watch('./css/**/*.css', ['src-css']);
+    gulp.watch('./www/css/**/*.css', ['src']);
 
-  gulp.watch('/scss/**/*.scss', ['sass']);
+    gulp.watch('./scss/**/*.scss', ['sass']);
 });
 
 //http://andy-carter.com/blog/a-beginners-guide-to-package-manager-bower-and-using-gulp-to-manage-components
-//.concat(cssFiles)
-//var cssFiles = ['./css/*'];
