@@ -1,6 +1,7 @@
 /// <binding AfterBuild='lib' Clean='default' ProjectOpened='default, watch' />
 /// <vs AfterBuild='lib' SolutionOpened='default' />
-//https://github.com/JustMaier/angular-signalr-hub - IMP
+//https://github.com/JustMaier/angular-signalr-hub
+//http://andy-carter.com/blog/a-beginners-guide-to-package-manager-bower-and-using-gulp-to-manage-components
 
 // Include Gulp
 var gulp = require('gulp');
@@ -18,14 +19,14 @@ gulp.task('default', ['src', 'lib', 'watch']);
 
 //SRC
 gulp.task('src', function () {
-    var js = gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
+    var js = gulp.src([dest + '**/*.js', '!./www/lib/**/*.js', '!./www/js/test/**/*.js'])
         .pipe(plugins.concat('src.js'))
         .pipe(gulp.dest(dest + 'js'))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.uglify())
         .pipe(gulp.dest(dest + 'js'));
 
-    var css = gulp.src('./css/**/*.css')
+    var css = gulp.src('css/**/*.css')
         .pipe(plugins.concat('src.css'))
         .pipe(gulp.dest(dest + 'css'))
         .pipe(plugins.rename({ suffix: '.min' }))
@@ -54,11 +55,9 @@ gulp.task('lib', function () {
 //WATCH
 gulp.task('watch', function () {
 
-    gulp.watch('./www/js/**/*.js', ['src']);
+    gulp.watch(dest + 'js/**/*.js', ['src']);
 
-    gulp.watch('./www/css/**/*.css', ['src']);
+    gulp.watch(dest + 'css/**/*.css', ['src']);
 
     gulp.watch('./scss/**/*.scss', ['sass']);
 });
-
-//http://andy-carter.com/blog/a-beginners-guide-to-package-manager-bower-and-using-gulp-to-manage-components

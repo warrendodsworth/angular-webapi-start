@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
-  "name": "Learn",
-  "description": "Learn Api",
+  "name": "angular-webapi",
+  "description": "Angular + Api Start",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-bower": "^0.0.11",
