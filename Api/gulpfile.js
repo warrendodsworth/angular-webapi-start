@@ -14,19 +14,20 @@ var plugins = require("gulp-load-plugins")({
 
 // Define default destination folder
 var dest = './www/';
+var jsFiles = ['./www/**/*.js', '!./www/lib/**/*.js', '!./www/js/test/**/*.js'];
+var cssFiles = ['./www/css/**/*.css'];
 
 gulp.task('default', ['src', 'lib', 'watch']);
 
-//SRC
 gulp.task('src', function () {
-    var js = gulp.src([dest + '**/*.js', '!./www/lib/**/*.js', '!./www/js/test/**/*.js'])
+    var js = gulp.src(jsFiles)
         .pipe(plugins.concat('src.js'))
         .pipe(gulp.dest(dest + 'js'))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.uglify())
         .pipe(gulp.dest(dest + 'js'));
 
-    var css = gulp.src('css/**/*.css')
+    var css = gulp.src(cssFiles)
         .pipe(plugins.concat('src.css'))
         .pipe(gulp.dest(dest + 'css'))
         .pipe(plugins.rename({ suffix: '.min' }))
@@ -46,7 +47,7 @@ gulp.task('lib', function () {
     var css = gulp.src(plugins.mainBowerFiles())
         .pipe(plugins.filter('*.css'))
         .pipe(plugins.concat('lib.min.css'))
-        .pipe(plugins.uglify())
+        .pipe(plugins.minifyCss())
         .pipe(gulp.dest(dest + 'css'));
 
     return plugins.merge(js, css);
@@ -54,10 +55,7 @@ gulp.task('lib', function () {
 
 //WATCH
 gulp.task('watch', function () {
-
-    gulp.watch(dest + 'js/**/*.js', ['src']);
-
-    gulp.watch(dest + 'css/**/*.css', ['src']);
-
+    gulp.watch(jsFiles, ['src']);
+    gulp.watch(cssFiles, ['src']);
     gulp.watch('./scss/**/*.scss', ['sass']);
 });

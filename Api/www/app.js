@@ -13,7 +13,6 @@
 
     angular.module('services', []);
 
-
     //Plugins
     angular
        .module('app')
@@ -23,10 +22,8 @@
        .config(['$facebookProvider', function ($facebookProvider) {
            $facebookProvider.setAppId('292179600807388')
                             .setPermissions("email,user_likes");
-       }]);
-
-    angular
-      .module('app')
+       }])
+       
       .run(['AccountService', function (AccountService) {
           AccountService.getIdentity();
       }])
