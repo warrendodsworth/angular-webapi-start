@@ -5,10 +5,11 @@
 
 // Include Gulp
 var gulp = require('gulp');
+var mergeStream = require('merge-stream');
 
 // Include plugins
 var plugins = require("gulp-load-plugins")({
-    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'merge-stream', 'shelljs'],
+    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'shelljs'],
     replaceString: /\bgulp[\-.]/
 });
 
@@ -30,20 +31,22 @@ gulp.task('src', function () {
         .pipe(gulp.dest('./www/js'));
 });
 
-gulp.task('lib', function () {
+gulp.task('lib', ['js', 'css']);
+
+gulp.task('js', function () {
     gulp.src(plugins.mainBowerFiles())
         .pipe(plugins.filter('*.js'))
         .pipe(plugins.concat('lib.min.js'))
         .pipe(plugins.uglify())
         .pipe(gulp.dest('./www/js'));
-    /*
-        var css = gulp.src(plugins.mainBowerFiles())
-            .pipe(plugins.filter('*.css'))
-            .pipe(plugins.concat('lib.min.css'))
-            .pipe(plugins.minifyCss())
-            .pipe(gulp.dest('./www/css'));
-    
-        return plugins.mergeStream(js, css);*/
+});
+
+gulp.task('css', ['sass'], function () {
+    gulp.src(plugins.mainBowerFiles())
+        .pipe(plugins.filter('*.css'))
+        .pipe(plugins.concat('lib.min.css'))
+        .pipe(plugins.minifyCss())
+        .pipe(gulp.dest('./www/css'));
 });
 
 gulp.task('sass', function (done) {
@@ -65,7 +68,6 @@ gulp.task('watch', function () {
 });
 
 
-//gulp.watch(paths.css, ['src']);
 
 /*
 gulp.task('install', ['git-check'], function () {
@@ -96,6 +98,5 @@ gulp.task('git-check', function (done) {
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.minifyCss())
         .pipe(gulp.dest(dest + 'css'));
-
-    return plugins.merge(js, css);
 */
+//    return plugins.merge(js, css);
