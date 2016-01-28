@@ -14,20 +14,23 @@ var plugins = require("gulp-load-plugins")({
 
 // Define default destination folder
 var dest = './www/';
-var jsFiles = ['./www/**/*.js', '!./www/lib/**/*.js', '!./www/js/test/**/*.js'];
-var cssFiles = ['./www/css/**/*.css'];
+var paths = {
+    sass: ['./scss/**/*.scss'],
+    cssFiles: ['./www/css/**/*.css'],
+    jsFiles: ['./www/**/*.js', '!./www/lib/**/*.js', '!./www/js/test/**/*.js']
+};
 
 gulp.task('default', ['src', 'lib', 'watch']);
 
 gulp.task('src', function () {
-    var js = gulp.src(jsFiles)
+    var js = gulp.src(paths.jsFiles)
         .pipe(plugins.concat('src.js'))
         .pipe(gulp.dest(dest + 'js'))
         .pipe(plugins.rename({ suffix: '.min' }))
         .pipe(plugins.uglify())
         .pipe(gulp.dest(dest + 'js'));
 
-    var css = gulp.src(cssFiles)
+    var css = gulp.src(paths.cssFiles)
         .pipe(plugins.concat('src.css'))
         .pipe(gulp.dest(dest + 'css'))
         .pipe(plugins.rename({ suffix: '.min' }))
@@ -53,9 +56,21 @@ gulp.task('lib', function () {
     return plugins.merge(js, css);
 });
 
-//WATCH
+gulp.task('sass', function(done) {
+  gulp.src(paths.sass)
+    .pipe(plugins.sass())
+    .on('error', plugins.sass.logError)
+    .pipe(gulp.dest('./www/css/'))
+    .pipe(plugins.minifyCss({
+      keepSpecialComments: 0
+    }))
+    .pipe(plugins.rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('./www/css/'))
+    .on('end', done);
+});
+
 gulp.task('watch', function () {
-    gulp.watch(jsFiles, ['src']);
-    gulp.watch(cssFiles, ['src']);
-    gulp.watch('./scss/**/*.scss', ['sass']);
+    gulp.watch(paths.jsFiles, ['src']);
+    gulp.watch(paths.cssFiles, ['src']);
+    gulp.watch(paths.sass, ['sass']);
 });
