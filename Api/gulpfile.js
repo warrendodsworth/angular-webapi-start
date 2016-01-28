@@ -16,7 +16,7 @@ var plugins = require("gulp-load-plugins")({
 var paths = {
     sass: ['./scss/**/*.scss'],
     css: ['./www/css/**/*.css'],
-    js: ['./www/**/*.js', '!./www/lib/**/*.js', '!./www/js/test/**/*.js']
+    js: ['./www/account/**/*.js', './www/home/**/*.js', './www/shared/**/*.js', './www/user/**/*.js']
 };
 
 gulp.task('default', ['src', 'lib', 'watch']);
@@ -61,10 +61,11 @@ gulp.task('sass', function (done) {
 
 gulp.task('watch', function () {
     gulp.watch(paths.js, ['src']);
-    gulp.watch(paths.css, ['src']);
     gulp.watch(paths.sass, ['sass']);
 });
 
+
+//gulp.watch(paths.css, ['src']);
 
 /*
 gulp.task('install', ['git-check'], function () {

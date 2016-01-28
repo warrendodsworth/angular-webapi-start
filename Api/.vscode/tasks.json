@@ -6,5 +6,11 @@
         ""
     ],
     "tasks": [
+         {
+            "taskName": "default",
+            "args": [],
+            "isBuildCommand": true
+            /*"problemMatcher": "$msCompile"*/
+        }
     ]
 }
