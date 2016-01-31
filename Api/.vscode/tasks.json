@@ -7,10 +7,11 @@
     ],
     "tasks": [
          {
-            "taskName": "lib",
+            "taskName": "default",
             "args": [],
-            "isBuildCommand": true
-            /*"problemMatcher": "$msCompile"*/
+            "showOutput": "silent",
+            "isBuildCommand": true,
+            "problemMatcher": "$msCompile"
         }
     ]
 }

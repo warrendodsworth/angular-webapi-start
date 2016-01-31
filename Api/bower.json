@@ -4,7 +4,7 @@
   "authors": [
     "warrendodsworth <warren.dodsworth@gmail.com>"
   ],
-  "description": "JobAdder Test",
+  "description": "Angular WebApi Starter template",
   "main": "bower.json",
   "keywords": [
     "web"
