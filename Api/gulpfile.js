@@ -6,10 +6,12 @@
 // Include Gulp
 var gulp = require('gulp');
 var mergeStream = require('merge-stream');
+var mainBowerFiles = require('main-bower-files');
+var shelljs = require('shelljs');
 
 // Include plugins
 var plugins = require("gulp-load-plugins")({
-    pattern: ['gulp-*', 'gulp.*', 'main-bower-files', 'shelljs'],
+    pattern: ['gulp-*', 'gulp.*'],
     replaceString: /\bgulp[\-.]/
 });
 
@@ -20,33 +22,33 @@ var paths = {
     js: ['./www/account/**/*.js', './www/home/**/*.js', './www/shared/**/*.js', './www/user/**/*.js']
 };
 
-gulp.task('default', ['src', 'lib', 'watch']);
+gulp.task('default', ['lib', 'js', 'sass']); //, 'watch'
 
-gulp.task('src', function () {
-    gulp.src(paths.js)
-        .pipe(plugins.concat('src.js'))
-        .pipe(gulp.dest('./www/js'))
-        .pipe(plugins.rename({ suffix: '.min' }))
-        .pipe(plugins.uglify())
-        .pipe(gulp.dest('./www/js'));
-});
+gulp.task('lib', ['libjs', 'libcss']);
 
-gulp.task('lib', ['js', 'css']);
-
-gulp.task('js', function () {
-    gulp.src(plugins.mainBowerFiles())
+gulp.task('libjs', function () {
+    gulp.src(mainBowerFiles())
         .pipe(plugins.filter('*.js'))
         .pipe(plugins.concat('lib.min.js'))
         .pipe(plugins.uglify())
         .pipe(gulp.dest('./www/js'));
 });
 
-gulp.task('css', ['sass'], function () {
-    gulp.src(plugins.mainBowerFiles())
+gulp.task('libcss', ['sass'], function () {
+    gulp.src(mainBowerFiles())
         .pipe(plugins.filter('*.css'))
         .pipe(plugins.concat('lib.min.css'))
         .pipe(plugins.minifyCss())
         .pipe(gulp.dest('./www/css'));
+});
+
+gulp.task('js', function () {
+    gulp.src(paths.js)
+        .pipe(plugins.concat('src.js'))
+        .pipe(gulp.dest('./www/js'))
+        .pipe(plugins.rename({ suffix: '.min' }))
+        .pipe(plugins.uglify())
+        .pipe(gulp.dest('./www/js'));
 });
 
 gulp.task('sass', function (done) {
