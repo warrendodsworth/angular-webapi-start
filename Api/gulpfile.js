@@ -34,11 +34,11 @@ gulp.task('libjs', function () {
         .pipe(gulp.dest('./www/js'));
 });
 
-gulp.task('libcss', ['sass'], function () {
+gulp.task('libcss', function () {
     gulp.src(mainBowerFiles())
         .pipe(plugins.filter('*.css'))
-        .pipe(plugins.concat('lib.min.css'))
-        .pipe(plugins.minifyCss())
+        .pipe(plugins.concat('lib.css'))
+        .pipe(plugins.uglify())
         .pipe(gulp.dest('./www/css'));
 });
 
