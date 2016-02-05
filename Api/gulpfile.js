@@ -1,6 +1,3 @@
-/// <binding AfterBuild='lib' Clean='default' ProjectOpened='default, watch' />
-/// <vs AfterBuild='lib' SolutionOpened='default' />
-
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -13,21 +10,21 @@ var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var mainBowerFiles = require('main-bower-files');
 var less = require('gulp-less');
-
 var livereload = require('livereload');
 
 var paths = {
     sass: ['./scss/**/*.scss'],
-    js: ['./www/js/**/*.js', '!./www/js/test/**/*.js'],
-    bower: ['./www/lib', '!./www/lib/dist']
+    js: ['./www/js/**/*.js', './www/account/**/*.js', './www/home/**/*.js',
+        './www/shared/**/*.js', './www/user/**/*.js', '!./www/js/test/**/*.js'],
+    bower: ['./www/lib/**/*.js', '!./www/lib/*.js', '!./www/lib/*.css']
 };
 
-gulp.task('default', ['sass', 'js', 'bower-js', 'bower-css', 'livereload']); //, 'watch'
+gulp.task('default', ['sass', 'js', 'bower-js', 'bower-css']); //, 'livereload' //, 'watch'
 
-gulp.task('watch', function () {
+gulp.task('watch', ['livereload'], function () {
     gulp.watch(paths.sass, ['sass']);
     gulp.watch(paths.js, ['js']);
-    gulp.watch(paths.bower, ['bower']);
+    gulp.watch(paths.bower, ['bower-js', 'bower-css']);
 });
 
 gulp.task('livereload', function () {
@@ -36,8 +33,9 @@ gulp.task('livereload', function () {
 });
 
 gulp.task('sass', function (done) {
-    gulp.src('./scss/app.scss')
+    gulp.src(paths.sass)
         .pipe(sass())
+        .pipe(concat('app.css'))
         .on('error', sass.logError)
         .pipe(gulp.dest('./www/css/'))
         .pipe(minifyCss({
@@ -60,8 +58,7 @@ gulp.task('js', function () {
 gulp.task('bower-js', function () {
     gulp.src(mainBowerFiles())
         .pipe(filter('*.js'))
-        .pipe(concat('bower.js'))
-        .pipe(rename({ suffix: '.min' }))
+        .pipe(concat('bower.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./www/lib'));
 });
@@ -96,7 +93,9 @@ gulp.task('git-check', function (done) {
 });
 
 // http://clubmate.fi/bower-and-gulp-match-made-in-heaven-also/
-// gulp.task('bower-test', function() {
-//     return gulp.src(mainBowerFiles())
-//         .pipe(gulp.dest('./www/lib'))
-// });
+gulp.task('test', function () {
+    gulp.src('./www/lib/*.()')
+        .pipe(gulp.dest('./www/lib/test'));
+    // return gulp.src(mainBowerFiles())
+    //     .pipe(gulp.dest('./www/lib'))
+});
