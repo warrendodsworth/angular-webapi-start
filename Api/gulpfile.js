@@ -14,12 +14,12 @@ var livereload = require('livereload');
 
 var paths = {
     sass: ['./scss/**/*.scss'],
-    js: ['./www/js/**/*.js', './www/account/**/*.js', './www/home/**/*.js',
+    js: ['./www/js/app.js', './www/js/**/*.js', './www/account/**/*.js', './www/home/**/*.js',
         './www/shared/**/*.js', './www/user/**/*.js', '!./www/js/test/**/*.js'],
     bower: ['./www/lib/**/*.js', '!./www/lib/*.js', '!./www/lib/*.css']
 };
 
-gulp.task('default', ['sass', 'js', 'bower-js', 'bower-css']); //, 'livereload' //, 'watch'
+gulp.task('default', ['sass', 'js', 'bower-js', 'bower-css']);
 
 gulp.task('watch', ['livereload'], function () {
     gulp.watch(paths.sass, ['sass']);
