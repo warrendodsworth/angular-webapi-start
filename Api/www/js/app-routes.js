@@ -7,7 +7,7 @@
         .config(['$routeProvider', function ($routeProvider) {
 
             //Home
-            $routeProvider.when('/', { templateUrl: '../home/index.html', controller: 'IndexController' });
+            $routeProvider.when('/', { templateUrl: './www/home/index.html', controller: 'IndexController' });
 
             //Account
             $routeProvider.when('/login', { templateUrl: '../account/login.html', controller: 'LoginController' })
