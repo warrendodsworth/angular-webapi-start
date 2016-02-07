@@ -14,7 +14,7 @@ var livereload = require('livereload');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
-  js: ['./www/js/app.js', './www/**/*.js', '!./www/lib/**', '!./www/test/**'],
+  js: ['./www/js/app.js', './www/**/*.js', '!./www/js/src*.js', '!./www/lib/**', '!./www/test/**'],
   bower: ['./www/lib/**/*.js', '!./www/lib/*.js', '!./www/lib/*.css']
 };
 
