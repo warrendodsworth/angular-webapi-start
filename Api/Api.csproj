@@ -292,7 +292,6 @@
     <Content Include="www\account\services\AccountService.js" />
     <Content Include="www\account\services\AuthInterceptorService.js" />
     <Content Include="www\css\src.css" />
-    <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="www\home\index.html" />
     <Content Include="www\home\IndexController.js" />
     <Content Include="www\index.html" />
@@ -489,10 +488,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="www\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="www\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="www\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="www\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="www\lib\angular-bootstrap\.bower.json" />
     <Content Include="www\lib\angular-bootstrap\.gitignore" />
     <Content Include="www\lib\angular-bootstrap\.npmignore" />
