@@ -255,12 +255,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include=".bowerrc" />
-    <Content Include="scss\styles.css">
-      <DependentUpon>styles.scss</DependentUpon>
-    </Content>
-    <Content Include="scss\styles.min.css">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -275,10 +269,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="scss\styles.scss" />
-    <Content Include="scss\styles.css.map">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="www\account\externalLogin.html" />
     <Content Include="www\account\ExternalLoginController.js" />
     <Content Include="www\account\login.html" />
@@ -291,7 +281,8 @@
     <Content Include="www\account\RegisterController.js" />
     <Content Include="www\account\services\AccountService.js" />
     <Content Include="www\account\services\AuthInterceptorService.js" />
-    <Content Include="www\css\src.css" />
+    <Content Include="www\css\app.css" />
+    <Content Include="www\css\sass.css" />
     <Content Include="www\home\index.html" />
     <Content Include="www\home\IndexController.js" />
     <Content Include="www\index.html" />
@@ -643,6 +634,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="scss\app.scss" />
+    <Content Include="scss\var.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

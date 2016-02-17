@@ -25,6 +25,7 @@ var paths = {
 gulp.task('default', ['css', 'js', 'bower-js', 'bower-css']);
 
 gulp.task('watch', ['livereload'], function () {
+  gulp.watch(paths.sass, ['sass']);
   gulp.watch(paths.css, ['css']);
   gulp.watch(paths.js, ['js']);
 });
@@ -49,7 +50,7 @@ gulp.task('css', ['sass'], function (done) {
 gulp.task('sass', function (done) {
   gulp.src(paths.sass)
     .pipe(sass())
-    .pipe(concat('src.css'))
+    .pipe(concat('sass.css'))
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
     .on('end', done);
