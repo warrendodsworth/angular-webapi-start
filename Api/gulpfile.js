@@ -1,3 +1,4 @@
+/// <binding AfterBuild='default' ProjectOpened='install' />
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
@@ -24,9 +25,8 @@ var paths = {
 gulp.task('default', ['css', 'js', 'bower-js', 'bower-css']);
 
 gulp.task('watch', ['livereload'], function () {
-  gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.css, ['css']);
   gulp.watch(paths.js, ['js']);
-  gulp.watch(paths.bower, ['bower-js', 'bower-css']);
 });
 
 gulp.task('livereload', function () {
@@ -55,7 +55,7 @@ gulp.task('sass', function (done) {
     .on('end', done);
 });
 
-gulp.task('js', ['jshint'], function (done) {
+gulp.task('js', function (done) {
   gulp.src(paths.js)
     .pipe(filter('**/*.js'))
     .pipe(concat('app.js'))
