@@ -10,15 +10,18 @@ var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var mainBowerFiles = require('main-bower-files');
 var less = require('gulp-less');
+var jshint = require('gulp-jshint')
 var livereload = require('livereload');
 
+// http://clubmate.fi/bower-and-gulp-match-made-in-heaven-also/
 var paths = {
   sass: ['./scss/**/*.scss'],
-  js: ['./www/js/app.js', './www/**/*.js', '!./www/js/src*.js', '!./www/lib/**', '!./www/test/**'],
+  css: ['./www/css/**/*.css'],
+  js: ['./www/js/app.js', './www/**/*.js', '!./www/lib/**', '!./www/test/**'],
   bower: ['./www/lib/**/*.js', '!./www/lib/*.js', '!./www/lib/*.css']
 };
 
-gulp.task('default', ['sass', 'js', 'bower-js', 'bower-css']);
+gulp.task('default', ['css', 'js', 'bower-js', 'bower-css']);
 
 gulp.task('watch', ['livereload'], function () {
   gulp.watch(paths.sass, ['sass']);
@@ -31,42 +34,62 @@ gulp.task('livereload', function () {
   server.watch('./www');
 });
 
+gulp.task('css', ['sass'], function (done) {
+  gulp.src(paths.css)
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest('./www/lib/'))
+    .pipe(minifyCss({
+      keepSpecialComments: 0
+    }))
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest('./www/lib/'))
+    .on('end', done);
+})
+
 gulp.task('sass', function (done) {
   gulp.src(paths.sass)
     .pipe(sass())
     .pipe(concat('src.css'))
     .on('error', sass.logError)
     .pipe(gulp.dest('./www/css/'))
-    .pipe(minifyCss({
-      keepSpecialComments: 0
-    }))
-    .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
     .on('end', done);
 });
 
-gulp.task('js', function () {
+gulp.task('js', ['jshint'], function (done) {
   gulp.src(paths.js)
     .pipe(filter('**/*.js'))
-    .pipe(concat('src.js'))
-    .pipe(gulp.dest('./www/js'));
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest('./www/lib'))
+    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('./www/lib'))
+    .on('end', done);
 });
 
-gulp.task('bower-js', function () {
+gulp.task('jshint', function (done) {
+  gulp.src(paths.js)
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    .on('end', done);
+});
+
+gulp.task('bower-js', function (done) {
   gulp.src(mainBowerFiles())
     .pipe(filter('*.js'))
     .pipe(concat('bower.min.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('./www/lib'));
+    .pipe(gulp.dest('./www/lib'))
+    .on('end', done);
 });
 
-gulp.task('bower-css', function () {
+gulp.task('bower-css', function (done) {
   gulp.src(mainBowerFiles())
     .pipe(filter(['*.less', '*.css']))
     .pipe(less())
     .pipe(concat('bower.min.css'))
     .pipe(minifyCss())
-    .pipe(gulp.dest('./www/lib'));
+    .pipe(gulp.dest('./www/lib'))
+    .on('end', done);
 });
 
 gulp.task('install', ['git-check'], function () {
@@ -89,7 +112,3 @@ gulp.task('git-check', function (done) {
   done();
 });
 
-// http://clubmate.fi/bower-and-gulp-match-made-in-heaven-also/
- // .pipe(rename({ suffix: '.min' }))
-  // .pipe(uglify())
-  // .pipe(gulp.dest('./www/js'));
