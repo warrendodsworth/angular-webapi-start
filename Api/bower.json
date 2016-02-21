@@ -19,17 +19,29 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.4.8",
+    "angular": "^1.4.9",
+    "angular-route": "^1.4.9",
+    "angular-ui-bootstrap-bower": "^1.1.2",
     "angular-local-storage": "~0.2.3",
-    "angular-bootstrap": "~0.14.3",
     "angular-mocks": "~1.4.8",
-    "bootstrap": "~3.3.6",
-    "angular-route": "~1.4.8",
-    "angular-sanitize": "^1.4.8",
+    "ng-facebook": "^0.1.6",
     "jquery": "^2.2.0",
-    "ng-facebook": "^0.1.6"
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.5.0"
   },
   "devDependencies": {
     "angular-mocks": "^1.4.8"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    }
   }
 }

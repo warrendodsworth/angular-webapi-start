@@ -2,9 +2,10 @@
     'use strict';
 
     //Modules
-    angular.module('app', ['ngRoute', 'ngSanitize',
+    angular.module('app', ['ngRoute',
 
-                           'controllers', 'directives',
+                           'controllers',
+                           'directives',
                             
                            'ngFacebook',
                            'LocalStorageModule']);

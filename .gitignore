@@ -160,6 +160,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+bower_components/
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -188,4 +189,4 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
-/Api/bower_components
+
