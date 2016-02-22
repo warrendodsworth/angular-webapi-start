@@ -15,6 +15,7 @@ var mainBowerFiles = require('main-bower-files');
 var paths = {
   css: ['./css/**/*.css'],
   js: ['./js/app.js', './js/**/*.js'],
+  font: './fonts',
   lib: './lib/'
 };
 
@@ -58,6 +59,7 @@ gulp.task('bower', ['install'], function (done) {
   var files = mainBowerFiles(),
     jsFilter = filter('**/*.js', { restore: true }),
     cssFilter = filter(['**/*.css'], { restore: true }),
+    fontFilter = filter(['**/*.{eot,woff,woff2,svg,ttf,otf}'], { restore: true }),
     everythingElseFilter = filter(['**/*.!{js,css}'], { restore: true }),
     onError = function (err) {
       console.log(err);
@@ -72,15 +74,19 @@ gulp.task('bower', ['install'], function (done) {
     .pipe(concat('bower.js'))
     .on('error', onError)
     .pipe(gulp.dest(paths.lib))
-
     .pipe(jsFilter.restore)
+
     .pipe(cssFilter)
     .pipe(less())
     .pipe(concat('bower.css'))
     .on('error', onError)
     .pipe(gulp.dest(paths.lib))
-
     .pipe(cssFilter.restore)
+
+    .pipe(fontFilter)
+    .pipe(gulp.dest(paths.font))
+    .pipe(fontFilter.restore)
+
     .pipe(everythingElseFilter)
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
