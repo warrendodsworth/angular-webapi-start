@@ -7,13 +7,14 @@ var rename = require('gulp-rename');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
 var less = require('gulp-less');
+var sass = require('gulp-sass');
 var sh = require('shelljs');
 var bower = require('bower');
 var livereload = require('livereload');
 var mainBowerFiles = require('main-bower-files');
 
 var paths = {
-  css: ['./css/**/*.css'],
+  css: ['./scss/**/*.scss', './css/**/*.css'],
   js: ['./js/app.js', './js/**/*.js'],
   font: './fonts',
   lib: './lib/'
@@ -33,7 +34,7 @@ gulp.task('livereload', function () {
 
 gulp.task('css', function (done) {
   gulp.src(paths.css)
-    .pipe(filter('**/*.css'))
+    .pipe(sass())
     .pipe(concat('app.css'))
     .pipe(gulp.dest(paths.lib))
     .pipe(minifyCss({

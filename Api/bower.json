@@ -36,7 +36,8 @@
   "overrides": {
     "bootstrap": {
       "main": [
-        "dist/css/bootstrap.css"
+        "dist/css/bootstrap.css",
+        "dist/fonts/*"
       ]
     },
     "font-awesome": {
