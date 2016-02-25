@@ -7,6 +7,7 @@
                            'controllers',
                            'directives',
                             
+                           'ui.bootstrap',
                            'ngFacebook',
                            'LocalStorageModule']);
 

@@ -21,10 +21,8 @@
   "dependencies": {
     "angular": "1.4.8",
     "angular-route": "1.4.8",
-
     "angular-bootstrap": "~1.1.2",
     "angular-local-storage": "~0.2.3",
-
     "ng-facebook": "^0.1.6",
     "jquery": "^2.2.0",
     "bootstrap": "^3.3.6",
@@ -46,5 +44,8 @@
         "fonts/*"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "1.5.0"
   }
 }
