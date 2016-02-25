@@ -1,0 +1,43 @@
+{
+  "name": "Labs",
+  "authors": [
+  ],
+  "description": "Labs projects, random code snippets and tests",
+  "main": "index.html",
+  "moduleType": [ ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.4.9",
+    "angular-route": "^1.4.9",
+    "angular-bootstrap": "^1.1.2",
+    "angular-local-storage": "~0.2.3",
+    "ng-facebook": "^0.1.6",
+    "jquery": "^2.2.0",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "4.5.0"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/fonts/*"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css",
+        "fonts/*"
+      ]
+    }
+  }
+}
