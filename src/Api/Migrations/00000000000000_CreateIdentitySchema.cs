@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
 
-namespace Auth.Migrations
+namespace Api.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {
@@ -46,7 +46,7 @@ namespace Auth.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUser", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -81,7 +81,7 @@ namespace Auth.Migrations
                 {
                     table.PrimaryKey("PK_IdentityUserClaim<string>", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_IdentityUserClaim<string>_ApplicationUser_UserId",
+                        name: "FK_IdentityUserClaim<string>_User_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -99,7 +99,7 @@ namespace Auth.Migrations
                 {
                     table.PrimaryKey("PK_IdentityUserLogin<string>", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_IdentityUserLogin<string>_ApplicationUser_UserId",
+                        name: "FK_IdentityUserLogin<string>_User_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
@@ -120,7 +120,7 @@ namespace Auth.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_IdentityUserRole<string>_ApplicationUser_UserId",
+                        name: "FK_IdentityUserRole<string>_User_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");

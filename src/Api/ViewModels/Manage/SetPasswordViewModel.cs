@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Auth.ViewModels.Manage
+namespace Api.ViewModels.Manage
 {
     public class SetPasswordViewModel
     {

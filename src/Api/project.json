@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet5-Auth-9da92170-c8b6-424e-821d-5743e31a699d",
   "version": "1.0.0-*",
   "compilationOptions": {
@@ -34,7 +34,10 @@
   },
 
   "frameworks": {
-    "dnx451": { },
+    "dnx451": {
+      "dependencies": {
+      }
+    },
     "dnxcore50": { }
   },
 

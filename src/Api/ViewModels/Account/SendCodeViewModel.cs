@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc.Rendering;
 
-namespace Auth.ViewModels.Account
+namespace Api.ViewModels.Account
 {
     public class SendCodeViewModel
     {

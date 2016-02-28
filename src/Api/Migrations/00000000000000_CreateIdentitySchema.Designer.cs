@@ -6,11 +6,11 @@ using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
 using Microsoft.Data.Entity.Migrations;
-using Auth.Models;
+using Api.Models;
 
-namespace Auth.Migrations
+namespace Api.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(Api.Models.AppDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
@@ -99,7 +99,7 @@ namespace Auth.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Auth.Models.ApplicationUser", b =>
+            modelBuilder.Entity("Api.Models.User", b =>
                 {
                     b.Property<string>("Id");
 
@@ -156,14 +156,14 @@ namespace Auth.Migrations
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Auth.Models.ApplicationUser")
+                    b.HasOne("Api.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Auth.Models.ApplicationUser")
+                    b.HasOne("Api.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -174,7 +174,7 @@ namespace Auth.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId");
 
-                    b.HasOne("Auth.Models.ApplicationUser")
+                    b.HasOne("Api.Models.User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
