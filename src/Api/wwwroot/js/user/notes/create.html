@@ -1,0 +1,31 @@
+﻿<h4>Create</h4>
+<hr />
+
+<div class="row">
+    <div class="col-sm-5">
+
+        <form name="form" novalidate>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" ng-model="model.title" name="title" class="form-control" placeholder="Title" />
+            </div>
+
+            <div class="form-group">
+                <label>Text</label>
+                <textarea ng-model="model.text" name="text" required class="form-control" cols="3" placeholder="Enter your note here"></textarea>
+            </div>
+
+            <input type="submit" ng-click="form.$valid && create( model )" value="Create Note" class="btn btn-primary" />
+        </form>
+        <br />
+
+        <result res="res"></result>
+        <br />
+
+        <h4>{{model.title}}</h4>
+        <p class="text-muted">{{model.text}}</p>
+
+        <br />
+        <a href="#/">Back</a>
+    </div>
+</div>
