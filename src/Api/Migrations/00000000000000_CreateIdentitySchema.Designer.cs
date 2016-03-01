@@ -10,7 +10,7 @@ using Api.Models;
 
 namespace Api.Migrations
 {
-    [DbContext(typeof(Api.Models.DbContext))]
+    [DbContext(typeof(Api.Models.AppDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
