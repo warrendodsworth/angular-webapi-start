@@ -13,3 +13,6 @@
 /// <reference path="js/shared/result.js" />
 /// <reference path="js/user/FacebookController.js" />
 /// <reference path="js/user/notes/CreateController.js" />
+/// <reference path="lib/angular/angular.js" />
+/// <reference path="lib/angular-bootstrap/ui-bootstrap-tpls.js" />
+/// <reference path="lib/angular-route/angular-route.js" />

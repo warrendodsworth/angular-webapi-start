@@ -10,7 +10,7 @@ using Api.Models;
 
 namespace Api.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(Models.DbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

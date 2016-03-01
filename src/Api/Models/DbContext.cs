@@ -7,7 +7,7 @@ using Microsoft.Data.Entity;
 
 namespace Api.Models
 {
-    public class AppDbContext : IdentityDbContext<User>
+    public class DbContext : IdentityDbContext<User>
     {
         protected override void OnModelCreating(ModelBuilder builder)
         {

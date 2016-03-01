@@ -47,11 +47,11 @@ namespace Auth
 
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<AppDbContext>(options =>
+                .AddDbContext<Api.Models.DbContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
+                .AddEntityFrameworkStores<Api.Models.DbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
@@ -85,7 +85,7 @@ namespace Auth
                     using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                         .CreateScope())
                     {
-                        serviceScope.ServiceProvider.GetService<AppDbContext>()
+                        serviceScope.ServiceProvider.GetService<Api.Models.DbContext>()
                              .Database.Migrate();
                     }
                 }
