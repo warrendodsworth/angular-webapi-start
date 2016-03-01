@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Api", "src\Api\Api.xproj", "{50A931C4-5F2D-4714-BF09-811A36BEA74A}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Labs", "src\Labs\Labs.xproj", "{78FCAC60-BC08-46FE-9500-3F1A61800579}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,11 +26,16 @@ Global
 		{50A931C4-5F2D-4714-BF09-811A36BEA74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50A931C4-5F2D-4714-BF09-811A36BEA74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50A931C4-5F2D-4714-BF09-811A36BEA74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78FCAC60-BC08-46FE-9500-3F1A61800579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78FCAC60-BC08-46FE-9500-3F1A61800579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78FCAC60-BC08-46FE-9500-3F1A61800579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78FCAC60-BC08-46FE-9500-3F1A61800579}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{50A931C4-5F2D-4714-BF09-811A36BEA74A} = {EB97A36B-0809-4BC2-AD44-590F53A811EB}
+		{78FCAC60-BC08-46FE-9500-3F1A61800579} = {EB97A36B-0809-4BC2-AD44-590F53A811EB}
 	EndGlobalSection
 EndGlobal
