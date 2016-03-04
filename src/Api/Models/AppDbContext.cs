@@ -10,6 +10,7 @@ namespace Api.Models
   public class AppDbContext : IdentityDbContext<User>
   {
     public DbSet<Trip> Trips { get; set; }
+    public DbSet<Stop> Stops { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

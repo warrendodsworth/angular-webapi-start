@@ -12,7 +12,7 @@ namespace Api.Models
     public DateTime Created { get; set; }
     public string UserName { get; set; }
 
-    public IList<Stop> Stops { get; set; }
+    public virtual IList<Stop> Stops { get; set; }
   }
 
   public class Stop
@@ -21,6 +21,9 @@ namespace Api.Models
     public string Name { get; set; }
     public double Longitude { get; set; }
     public double Latitude { get; set; }
+    public int Order { get; set; }
     public DateTime Arrival { get; set; }
+
+    public virtual Trip Trip { get; set; }
   }
 }

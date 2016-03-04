@@ -10,7 +10,7 @@ namespace Api.Models
   {
     public string Name { get; set; }
 
-    public UserStatus Status { get; set; }
+    //public UserStatus Status { get; set; }
 
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync (UserManager<User> manager, string authenticationType)
     {

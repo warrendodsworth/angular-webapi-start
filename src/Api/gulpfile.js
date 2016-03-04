@@ -41,13 +41,13 @@ gulp.task('css', function (done) {
     .pipe(sourcemaps.init())
     .pipe(sass({ errLogToConsole: true }).on('error', sass.logError))
     .pipe(concat('app.css'))
-    //.pipe(sourcemaps.write('./'))
 
     .pipe(gulp.dest(paths.lib))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ suffix: '.min' }))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
 });

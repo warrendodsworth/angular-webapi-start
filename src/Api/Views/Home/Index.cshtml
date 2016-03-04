@@ -1,5 +1,14 @@
-﻿@{
+﻿@model IEnumerable<Api.Models.Trip>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <ng-view></ng-view>
+
+
+<h2>Trips</h2>
+
+@foreach (var trip in Model)
+{
+  <p>@trip.Name</p>
+}
