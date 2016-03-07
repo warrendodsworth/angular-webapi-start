@@ -14,9 +14,8 @@
 
         //User
         $routeProvider
-          .when('/notes/create', { templateUrl: 'js/user/notes/create.html', controller: 'Notes.CreateController' });
-
-        $routeProvider
+          .when('/notes', { templateUrl: 'js/user/notes/notes.html', controller: 'User.NotesController' })
+       
           .when('/facebook', { templateUrl: 'js/user/facebook.html', controller: 'FacebookController' });
 
         $routeProvider
