@@ -20,6 +20,7 @@
   <ItemGroup>
     <DnxInvisibleFolder Include="wwwroot\lib\angular-bootstrap\" />
     <DnxInvisibleFolder Include="wwwroot\lib\angular-route\" />
+    <DnxInvisibleFolder Include="wwwroot\lib\angular-sanitize\" />
     <DnxInvisibleFolder Include="wwwroot\lib\angular\" />
     <DnxInvisibleFolder Include="wwwroot\lib\bootstrap\" />
     <DnxInvisibleFolder Include="wwwroot\lib\font-awesome\" />

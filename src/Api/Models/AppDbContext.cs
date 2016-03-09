@@ -12,6 +12,8 @@ namespace Api.Models
     public DbSet<Trip> Trips { get; set; }
     public DbSet<Stop> Stops { get; set; }
 
+    public DbSet<Note> Notes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
       base.OnModelCreating(builder);
