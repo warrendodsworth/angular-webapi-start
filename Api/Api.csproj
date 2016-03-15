@@ -212,8 +212,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountBindingModels.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModels\AccountBindingModels.cs" />
+    <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\AppContext.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\User.cs" />
@@ -274,7 +274,7 @@
     <Content Include="js\account\register.html" />
     <Content Include="js\account\RegisterController.js" />
     <Content Include="js\account\services\AccountService.js" />
-    <Content Include="js\account\services\AuthInterceptorService.js" />
+    <Content Include="js\account\services\HttpInterceptorService.js" />
     <Content Include="css\app.css" />
     <Content Include="js\home\index.html" />
     <Content Include="js\home\IndexController.js" />

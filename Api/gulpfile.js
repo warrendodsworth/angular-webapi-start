@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='default' ProjectOpened='watch' />
+/// <binding ProjectOpened='watch' />
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
