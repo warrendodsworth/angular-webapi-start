@@ -510,7 +510,7 @@ namespace Api.Controllers
 
     #region Manage
 
-    // POST api/account/forgot-password
+    // POST api/account/forgotPassword
     [AllowAnonymous]
     [Route("Register")]
     public async Task<IHttpActionResult> ForgotPassword (ForgotPasswordModel model)

@@ -13,19 +13,24 @@
     // Creates:
     // 
     var directive = {
-      link: link,
       restrict: 'EA',
       template: '<div ng-if="msg" class="alert" ng-class="msg.success ? \'alert-success\' : \'alert-danger\'" ><p ng-bind-html="msg.text"></p></div>',
       scope: {
         res: '='
-      }
-    };
-    return directive;
+      },
+      link: function (scope, element, attrs) {
 
-    function link(scope, element, attrs) {
+        scope.$on('responseError', function (res) {
+          handleError(res);
+        })
 
-      scope.$watch('res', function (value) {
-        if (value) {
+        scope.$watch('res', function (value) {
+          if (value) {
+            handleError(value);
+          }
+        })
+
+        function handleError() {
           scope.msg = {
             text: !scope.res.data ? scope.res : errors(scope.res),
             success: !scope.res.data
@@ -35,8 +40,11 @@
             scope.res = null;
           }, 5000);
         }
-      })
-    }
+      }
+    };
+    return directive;
+
+
 
     function errors(res) {
       var errors = [], validationSummary;

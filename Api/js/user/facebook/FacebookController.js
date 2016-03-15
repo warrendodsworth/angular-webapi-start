@@ -33,13 +33,8 @@
     });
 
     $facebook.api('/' + authData.userId + '/photos').then(function (res) {
-        console.log(res);
+      console.log(res);
     });
 
   }
 })();
-
-
-//$facebook.api('/me', { fields: 'last_name' }).then(function (res) {
-//  $scope.result = res;
-//});

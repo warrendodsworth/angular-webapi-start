@@ -59,8 +59,6 @@
       } else {
         $scope.action = 'register';
       }
-    }, function (res) {
-      $scope.res = res;
     })
 
 
@@ -76,8 +74,6 @@
         });
 
         $window.location.href = '/#/';
-      }, function (res) {
-        $scope.res = res;
       });
     };
   }

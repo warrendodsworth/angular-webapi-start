@@ -1,19 +1,19 @@
 ﻿(function () {
-    'use strict';
+  'use strict';
 
-    angular
-      .module('controllers')
-      .controller('NavbarController', ['$scope', '$location', 'AccountService', NavbarController]);
+  angular
+    .module('controllers')
+    .controller('NavbarController', ['$scope', '$location', 'AccountService', NavbarController]);
 
-    function NavbarController($scope, $location, AccountService) {
+  function NavbarController($scope, $location, AccountService) {
 
-        $scope.identity = AccountService.identity;
+    //$scope.identity = AccountService.identity;
 
-        $scope.logout = function () {
-            AccountService.logout();
-            $location.path('/');
-        }
+    $scope.logout = function () {
+      AccountService.logout();
+      $location.path('/');
     }
+  }
 })();
 
 
