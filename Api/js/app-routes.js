@@ -17,12 +17,11 @@
           .when('/notes/create', { templateUrl: 'js/user/notes/create.html', controller: 'Notes.CreateController' });
 
         $routeProvider
-          .when('/facebook', { templateUrl: 'js/user/facebook.html', controller: 'FacebookController' });
+          .when('/facebook', { templateUrl: 'js/user/facebook/facebook.html', controller: 'FacebookController' });
 
         $routeProvider
           .when('/', { templateUrl: 'js/home/index.html', controller: 'IndexController' })
           .otherwise({ redirectTo: '/' });
 
-      }])
-  ;
+      }]);
 })();

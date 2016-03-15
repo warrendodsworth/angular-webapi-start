@@ -295,8 +295,8 @@
     <Content Include="test\labs\angular.spec.js" />
     <Content Include="test\labs\download.js" />
     <Content Include="test\labs\tutorial.spec.js" />
-    <Content Include="js\user\facebook.html" />
-    <Content Include="js\user\FacebookController.js" />
+    <Content Include="js\user\facebook\facebook.html" />
+    <Content Include="js\user\facebook\FacebookController.js" />
     <Content Include="js\user\notes\create.html" />
     <Content Include="js\user\notes\CreateController.js" />
   </ItemGroup>
