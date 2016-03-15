@@ -22,7 +22,7 @@ var paths = {
 
 gulp.task('default', ['css', 'js', 'bower']);
 
-gulp.task('watch', ['livereload'], function () {
+gulp.task('watch', ['default', 'livereload'], function () {
   gulp.watch(paths.css, ['css']);
   gulp.watch(paths.js, ['js']);
 });
