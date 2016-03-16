@@ -64,11 +64,6 @@
       service.identity.username = '';
       service.identity.name = '';
 
-      //service.identity = {  
-      //    isAuth: false,
-      //    username: ''
-      //};
-
       //$rootScope.$broadcast('user:logout', service.identity);   
       //Only required if you overwrite an entire service object, modifying the individual properties removes the need for broadcast
     };
