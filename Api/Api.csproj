@@ -201,7 +201,6 @@
     <Content Include="gulpfile.js" />
     <Content Include="bower.json" />
     <Content Include="package.json" />
-    <Content Include=".bowerrc" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
