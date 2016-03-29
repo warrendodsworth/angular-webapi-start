@@ -3,18 +3,18 @@ using System.Data.Entity;
 
 namespace Api.Models
 {
-  public class AppContext : IdentityDbContext<User>
+  public class Db : IdentityDbContext<User>
   {
-    public AppContext()
+    public Db()
       : base("DefaultConnection", throwIfV1Schema: false)
     {
     }
 
     public DbSet<Note> Notes { get; set; }
 
-    public static AppContext Create()
+    public static Db Create()
     {
-      return new AppContext();
+      return new Db();
     }
   }
 }

@@ -6,14 +6,14 @@ namespace Api.Migrations
   using System.Linq;
   using Microsoft.AspNet.Identity;
   using Models;
-  internal sealed class Configuration : DbMigrationsConfiguration<Api.Models.AppContext>
+  internal sealed class Configuration : DbMigrationsConfiguration<Api.Models.Db>
   {
     public Configuration()
     {
       AutomaticMigrationsEnabled = true;
     }
 
-    protected override void Seed(Api.Models.AppContext db)
+    protected override void Seed(Api.Models.Db db)
     {
       var UserManager = new UserManager(db);
       var user = UserManager.FindByName("user");

@@ -12,7 +12,7 @@ namespace Api.Controllers
   [RoutePrefix("api/notes")]
   public class NotesController : ApiController
   {
-    private AppContext db = new AppContext();
+    private Db db = new Db();
 
     // GET api/notes
     [AllowAnonymous]
