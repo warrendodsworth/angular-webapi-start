@@ -1,0 +1,25 @@
+﻿
+<h4>Notes</h4>
+<br />
+
+<div class="v-lg">
+  <a ng-show="identity.isAuth" href="#/notes/create" class="btn btn-primary">CREATE</a>
+</div>
+
+<div>
+  <div ng-repeat="note in notes">
+    <div class="pull-right">
+      <a ng-click="delete( note, $index )">Delete</a>
+    </div>
+    <div>
+      <h4>{{note.title}}</h4>
+      <p class="text-muted">{{note.text}}</p>
+    </div>
+    <hr />
+  </div>
+
+  <uib-pagination total-items="total" ng-model="filters.page" items-per-page="filters.show" 
+                  ng-show="total > filters.show" ng-change="pageChanged()"></uib-pagination>
+</div>
+
+<result res="res"></result>

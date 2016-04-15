@@ -5,6 +5,9 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Linq;
+using Api.Models.Bind;
+using PagedList;
+using PagedList.EntityFramework;
 
 namespace Api.Controllers
 {
@@ -16,23 +19,30 @@ namespace Api.Controllers
 
     // GET api/notes
     [AllowAnonymous]
-    public async Task<IEnumerable<Note>> Get (string search = null)
+    public async Task<object> Get(string search = null, int page = 1, int show = 10)
     {
-      var q = db.Notes.AsQueryable();
+      var q = db.Notes.Include(n => n.User).AsQueryable();
 
-      if ( search != null )
+      if (search != null)
       {
         q = q.Where(x => x.Text.Contains(search) || x.Title.Contains(search));
       }
 
-      return await q.ToListAsync();
+      var res = await q.OrderByDescending(n => n.Text).ToPagedListAsync(page, show);
+
+      return new
+      {
+        items = res,
+        total = res.TotalItemCount
+      };
     }
 
     // GET api/notes/5
-    public async Task<IHttpActionResult> Get (int id)
+    [AllowAnonymous]
+    public async Task<IHttpActionResult> Get(int id)
     {
       var note = await db.Notes.FindAsync(id);
-      if ( note == null )
+      if (note == null)
       {
         return NotFound();
       }
@@ -41,9 +51,9 @@ namespace Api.Controllers
     }
 
     // POST api/notes
-    public async Task<IHttpActionResult> Post (Note note)
+    public async Task<IHttpActionResult> Post(Note note)
     {
-      if ( !ModelState.IsValid )
+      if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
@@ -55,29 +65,34 @@ namespace Api.Controllers
     }
 
     // PUT api/notes/5
-    public async Task<IHttpActionResult> Put (int id, Note note)
+    public async Task<IHttpActionResult> Put(int id, NoteBindingModel note)
     {
-      if ( !ModelState.IsValid )
+      if (!ModelState.IsValid)
       {
         return BadRequest();
       }
 
-      if ( id != note.Id )
+      if (id != note.Id)
       {
         return BadRequest();
       }
 
-      db.Entry<Note>(note).State = EntityState.Modified;
+      var oldNote = await db.Notes.FindAsync(id);
+
+      var m = Mapper.CreateMapper();
+      m.Map(note, oldNote);
+
+      db.Entry<Note>(oldNote).State = EntityState.Modified;
       await db.SaveChangesAsync();
 
       return StatusCode(HttpStatusCode.NoContent);
     }
 
     // DELETE api/notes/5
-    public async Task<IHttpActionResult> Delete (int id)
+    public async Task<IHttpActionResult> Delete(int id)
     {
       var note = await db.Notes.FindAsync(id);
-      if ( note == null )
+      if (note == null)
       {
         return NotFound();
       }
@@ -88,9 +103,9 @@ namespace Api.Controllers
       return Ok();
     }
 
-    protected override void Dispose (bool disposing)
+    protected override void Dispose(bool disposing)
     {
-      if ( disposing )
+      if (disposing)
       {
         db.Dispose();
       }

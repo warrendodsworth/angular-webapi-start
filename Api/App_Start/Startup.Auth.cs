@@ -11,6 +11,7 @@ using Owin;
 using Api.Providers;
 using Api.Models;
 using Microsoft.Owin.Security.Facebook;
+using AutoMapper;
 
 namespace Api
 {

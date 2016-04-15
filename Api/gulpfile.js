@@ -85,6 +85,7 @@ gulp.task('bower', ['install'], function (done) {
     .pipe(cssFilter.restore)
 
     .pipe(fontFilter)
+    .on('error', onError)
     .pipe(gulp.dest(paths.font))
     .pipe(fontFilter.restore)
 

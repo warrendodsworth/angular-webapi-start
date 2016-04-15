@@ -13,10 +13,7 @@
 
     //ACCOUNT
 
-    service.identity = {
-      isAuth: false,
-      username: ''
-    };
+    $rootScope.identity = service.identity = { isAuth: false, username: '' };
 
     //Register
     service.register = function (model) {
@@ -44,7 +41,6 @@
         service.identity.isAuth = true;
         service.identity.username = res.data.username;
         service.identity.name = res.data.name;
-        $rootScope.identity = service.identity;
 
         deferred.resolve(res);
       }, function (res) {
@@ -58,7 +54,6 @@
     //Logout
     service.logout = function () {
       localStorageService.remove('authorizationData');
-
 
       service.identity.isAuth = false;
       service.identity.username = '';

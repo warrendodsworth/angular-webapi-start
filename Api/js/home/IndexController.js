@@ -8,9 +8,11 @@
   IndexController.$inject = ['$scope', '$http', '$location'];
 
   function IndexController($scope, $http, $location) {
+    var vm = $scope;
 
     $http.get('/api/notes').then(function (res) {
-      $scope.notes = res.data;
+      vm.notes = res.data.items;
+      vm.total = res.data.total;
     });
 
   }
