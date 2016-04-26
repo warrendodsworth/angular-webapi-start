@@ -31,6 +31,8 @@
     .run(['$rootScope', 'AccountService', function ($rootScope, AccountService) {
       AccountService.getIdentity();
 
+      $rootScope.year = new Date().getFullYear();
+
       // Cut and paste the "Load the SDK" code from the facebook javascript sdk page.
       // Load the facebook SDK asynchronously
       (function (d, s, id) {

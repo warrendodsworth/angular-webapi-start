@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
-  <title>@ViewBag.Title</title>
+  <title>Home</title>
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
-  <link href="~/lib/bower.css" rel="stylesheet" />
-  <link href="~/lib/app.css" rel="stylesheet" />
+  <link href="/lib/bower.css" rel="stylesheet" />
+  <link href="/lib/app.css" rel="stylesheet" />
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavbarController">
@@ -50,31 +50,17 @@
   </nav>
 
   <div class="container body-content">
-    @RenderBody()
+    <div ng-view></div>
     <br />
     <footer class="text-right text-muted">
       <ul class="list-unstyled list-inline">
         <li><a href="https://angular.github.io/protractor/#/">Protractor</a></li>
-        <li>@DateTime.Now.Year</li>
+        <li>{{year}}</li>
       </ul>
     </footer>
   </div>
 
-  <script src="~/lib/bower.js"></script>
-  <script src="~/lib/app.js"></script>
+  <script src="/lib/bower.js"></script>
+  <script src="/lib/app.js"></script>
 </body>
 </html>
-
-
-<!--
-    <form name="searchForm" class="navbar-form navbar-left" role="search" novalidate>
-        <div class="input-group">
-        <input type="text" ng-model="model.q" name="q" required class="form-control search" placeholder="Search">
-        <span class="input-group-btn">
-            <button type="submit" ng-click="searchForm.$valid && search( model )" class="btn btn-primary">
-            <i class="fa fa-search h-sm"></i>
-            </button>
-        </span>
-        </div>
-    </form>
--->
