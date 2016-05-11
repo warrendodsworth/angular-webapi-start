@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Common;
 using System.Data.Entity;
 
 namespace Api.Models
@@ -8,6 +9,11 @@ namespace Api.Models
     public Db()
       : base("DefaultConnection", throwIfV1Schema: false)
     {
+    }
+
+    public Db(string connection): base(connection)
+    {
+
     }
 
     public DbSet<Note> Notes { get; set; }
