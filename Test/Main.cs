@@ -1,35 +1,29 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Effort.DataLoaders;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Effort;
 using Api.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
-using System.Data;
+using System.Data.Entity.Core.EntityClient;
 
 namespace Test
 {
   [TestClass]
   public class Main
   {
-    private Db _db;
+    private Db db;
 
     [TestInitialize]
     public void Initialize()
     {
-      var connection = DbConnectionFactory.CreateTransient();
-      _db = new Db(connection.ConnectionString);
+      //Effort cannot use a data loader with a standard connection string.
+      EntityConnection connection = EntityConnectionFactory.CreateTransient("name=DefaultConnection");
+
+      db = new Db(connection.ConnectionString);
     }
 
     [TestMethod]
-    public void TestMethod1()
+    public void Notes_GetList()
     {
-      //IDataLoader loader = new EntityDataLoader("name=DefaultConnection");
-
-      //using (Db db = ObjectContextFactory.CreateTransient<Db>(loader))
-      //{
-      //  var items = db.Notes.ToList();
-      //}
+      var items = db.Notes.ToList();
 
       Assert.IsFalse(false);
     }
