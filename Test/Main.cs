@@ -7,7 +7,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
 using System.Data;
 
-
 namespace Test
 {
   [TestClass]
@@ -25,12 +24,14 @@ namespace Test
     [TestMethod]
     public void TestMethod1()
     {
-      IDataLoader loader = new EntityDataLoader("name=DefaultConnection");
+      //IDataLoader loader = new EntityDataLoader("name=DefaultConnection");
 
       //using (Db db = ObjectContextFactory.CreateTransient<Db>(loader))
       //{
       //  var items = db.Notes.ToList();
       //}
+
+      Assert.IsFalse(false);
     }
   }
 }
