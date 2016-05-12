@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width" />
   <title>Home</title>
   <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
-  <link href="lib/bower.css" rel="stylesheet" />
-  <link href="lib/app.css" rel="stylesheet" />
+  <link href="/app/lib/bower.css" rel="stylesheet" />
+  <link href="/app/lib/app.css" rel="stylesheet" />
 </head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavbarController">
@@ -62,5 +62,8 @@
 
   <script src="lib/bower.js"></script>
   <script src="lib/app.js"></script>
+  <script>
+        document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+  </script>
 </body>
 </html>

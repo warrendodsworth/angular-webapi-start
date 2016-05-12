@@ -234,8 +234,6 @@
     <Content Include="app\shared\result.js" />
     <Content Include="app\user\facebook\facebook.html" />
     <Content Include="app\user\facebook\FacebookController.js" />
-    <Content Include="app\user\notes\create.html" />
-    <Content Include="app\user\notes\CreateController.js" />
     <Content Include="app\user\notes\notes.html" />
     <Content Include="app\user\notes\NotesController.js" />
     <Content Include="app\user\svc\NoteService.js" />
@@ -252,7 +250,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="index.html" />
     <Content Include="app\lib\app.css" />
     <Content Include="app\lib\app.js" />
     <Content Include="app\lib\app.min.css" />
@@ -308,11 +305,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53233</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51562/</IISUrl>
+          <IISUrl>http://localhost:53233/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
