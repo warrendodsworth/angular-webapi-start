@@ -18,6 +18,7 @@
     <DnxInvisibleContent Include=".bowerrc" />
   </ItemGroup>
   <ItemGroup>
+    <DnxInvisibleFolder Include="bower_components\" />
     <DnxInvisibleFolder Include="wwwroot\lib\angular-bootstrap\" />
     <DnxInvisibleFolder Include="wwwroot\lib\angular-route\" />
     <DnxInvisibleFolder Include="wwwroot\lib\angular-sanitize\" />
