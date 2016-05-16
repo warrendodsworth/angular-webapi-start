@@ -19,7 +19,7 @@ var mainBowerFiles = require('main-bower-files');
 //http://www.sitepoint.com/simple-gulpy-workflow-sass/
 var paths = {
   css: ['./scss/**/*.scss', './wwwroot/css/**/*.css'],
-  js: ['./wwwroot/js/app.js', './wwwroot/js/**/*.js'],
+  js: ['./wwwroot/app.js', './wwwroot/**/*.js', '!./wwwroot/lib/*'],
   font: './wwwroot/fonts/',
   lib: './wwwroot/lib/'
 };
