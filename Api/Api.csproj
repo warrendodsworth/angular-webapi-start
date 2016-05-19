@@ -212,36 +212,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\account\externalLogin.html" />
-    <Content Include="app\account\ExternalLoginController.js" />
-    <Content Include="app\account\login.html" />
-    <Content Include="app\account\LoginController.js" />
-    <Content Include="app\account\manage\forgotPassword.html" />
-    <Content Include="app\account\manage\manage.html" />
-    <Content Include="app\account\manage\ManageControllers.js" />
-    <Content Include="app\account\manage\manageLogins.html" />
-    <Content Include="app\account\register.html" />
-    <Content Include="app\account\RegisterController.js" />
-    <Content Include="app\account\svc\AccountService.js" />
-    <Content Include="app\account\svc\HttpInterceptorService.js" />
-    <Content Include="app\app-routes.js" />
-    <Content Include="app\app.js" />
-    <Content Include="app\home\index.html" />
-    <Content Include="app\home\IndexController.js" />
-    <Content Include="app\index.html" />
-    <Content Include="app\shared\NavbarController.js" />
-    <Content Include="app\shared\QuerystringService.js" />
-    <Content Include="app\shared\result.js" />
-    <Content Include="app\user\facebook\facebook.html" />
-    <Content Include="app\user\facebook\FacebookController.js" />
-    <Content Include="app\user\notes\notes.html" />
-    <Content Include="app\user\notes\NotesController.js" />
-    <Content Include="app\user\svc\NoteService.js" />
     <Content Include="favicon.ico" />
-    <Content Include="app\fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
     <Content Include="bower.json" />
+    <Content Include="index.html" />
     <Content Include="package.json" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -250,18 +225,44 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="app\lib\app.css" />
-    <Content Include="app\lib\app.js" />
-    <Content Include="app\lib\app.min.css" />
-    <Content Include="app\lib\app.min.js" />
-    <Content Include="app\lib\bower.css" />
-    <Content Include="app\lib\bower.js" />
     <Content Include="test\conf.js" />
     <Content Include="test\e2e\create.spec.js" />
     <Content Include="test\e2e\index.spec.js" />
     <Content Include="test\labs\angular.spec.js" />
     <Content Include="test\labs\download.js" />
     <Content Include="test\labs\tutorial.spec.js" />
+    <Content Include="www\account\externalLogin.html" />
+    <Content Include="www\account\ExternalLoginController.js" />
+    <Content Include="www\account\login.html" />
+    <Content Include="www\account\LoginController.js" />
+    <Content Include="www\account\manage\forgotPassword.html" />
+    <Content Include="www\account\manage\manage.html" />
+    <Content Include="www\account\manage\ManageControllers.js" />
+    <Content Include="www\account\manage\manageLogins.html" />
+    <Content Include="www\account\register.html" />
+    <Content Include="www\account\RegisterController.js" />
+    <Content Include="www\account\svc\AccountService.js" />
+    <Content Include="www\account\svc\HttpInterceptorService.js" />
+    <Content Include="www\app-routes.js" />
+    <Content Include="www\app.js" />
+    <Content Include="www\fonts\fontawesome-webfont.svg" />
+    <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="www\home\index.html" />
+    <Content Include="www\home\IndexController.js" />
+    <Content Include="www\lib\app.css" />
+    <Content Include="www\lib\app.js" />
+    <Content Include="www\lib\app.min.css" />
+    <Content Include="www\lib\app.min.js" />
+    <Content Include="www\lib\bower.css" />
+    <Content Include="www\lib\bower.js" />
+    <Content Include="www\shared\NavbarController.js" />
+    <Content Include="www\shared\QuerystringService.js" />
+    <Content Include="www\shared\result.js" />
+    <Content Include="www\user\facebook\facebook.html" />
+    <Content Include="www\user\facebook\FacebookController.js" />
+    <Content Include="www\user\notes\notes.html" />
+    <Content Include="www\user\notes\NotesController.js" />
+    <Content Include="www\user\svc\NoteService.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="typings.json" />
@@ -284,11 +285,15 @@
     <Content Include="scss\var.scss" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\fonts\fontawesome-webfont.eot" />
-    <Content Include="app\fonts\fontawesome-webfont.ttf" />
-    <Content Include="app\fonts\fontawesome-webfont.woff" />
-    <Content Include="app\fonts\fontawesome-webfont.woff2" />
-    <Content Include="app\fonts\FontAwesome.otf" />
+    <Content Include="www\fonts\fontawesome-webfont.eot" />
+    <Content Include="www\fonts\fontawesome-webfont.ttf" />
+    <Content Include="www\fonts\fontawesome-webfont.woff" />
+    <Content Include="www\fonts\fontawesome-webfont.woff2" />
+    <Content Include="www\fonts\FontAwesome.otf" />
+    <Content Include="www\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="www\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="www\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="www\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
