@@ -1,0 +1,17 @@
+{
+    "version": "0.1.0",
+    "command": "gulp",
+    "isShellCommand": true,
+    "args": [
+        ""
+    ],
+    "tasks": [
+         {
+            "taskName": "default",
+            "args": [],
+            "showOutput": "silent",
+            "isBuildCommand": true,
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

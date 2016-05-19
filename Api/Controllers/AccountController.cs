@@ -508,6 +508,39 @@ namespace Api.Controllers
 
     #endregion
 
+    #region Manage
+
+    // POST api/account/forgotPassword
+    [AllowAnonymous]
+    [Route("Register")]
+    public async Task<IHttpActionResult> ForgotPassword (ForgotPasswordModel model)
+    {
+      if ( !ModelState.IsValid )
+      {
+        return BadRequest(ModelState);
+      }
+
+      User user = await UserManager.FindByNameAsync(model.Username);
+      if ( user == null )
+      {
+        return NotFound();
+      }
+
+      string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
+    
+
+      //if ( !result.Succeeded )
+      //{
+      //  return GetErrorResult(result);
+      //}
+
+      return Ok();
+    }
+
+
+    #endregion
+
     #region Helpers
 
     private IAuthenticationManager Authentication

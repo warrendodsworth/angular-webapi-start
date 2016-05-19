@@ -1,111 +1,116 @@
-/// <binding AfterBuild='lib' Clean='default' ProjectOpened='default, watch' />
-/// <vs AfterBuild='lib' SolutionOpened='default' />
-//https://github.com/JustMaier/angular-signalr-hub - IMP
-
+/// <binding Clean='default' ProjectOpened='watch' />
 var gulp = require('gulp');
-var bower = require('gulp-bower');
+var gutil = require('gulp-util');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
-var merge = require('gulp-merge');
-//var sass = require('gulp-sass');
+var filter = require('gulp-filter');
+var uglify = require('gulp-uglify');
+var less = require('gulp-less');
+var sass = require('gulp-sass');
+var sh = require('shelljs');
+var bower = require('bower');
+var livereload = require('livereload');
+var mainBowerFiles = require('main-bower-files');
 
-var project = { webroot: '' };
 var paths = {
-    webroot: './',
-    bower: './bower_components/',
-    lib: './lib/'
+  css: ['./scss/**/*.scss', './css/**/*.css', '!./www/lib/**.*'],
+  js: ['./www/app.js', './www/**/*.js', '!./www/lib/**.*'],
+  font: './www/fonts/',
+  lib: './www/lib/'
 };
 
-gulp.task('default', ['src-js', 'src-css', 'watch']);
+gulp.task('default', ['css', 'js', 'bower']);
 
-
-//SRC
-gulp.task('src-js', function () {
-    return gulp.src(['./js/**/*.js', '!./js/**/*.min.js', '!./js/test/**/*.js'])
-                 .pipe(concat('src.js'))
-                 .pipe(gulp.dest('./build'))
-                 .pipe(rename({ suffix: '.min' }))
-                 .pipe(uglify())
-                 .pipe(gulp.dest('./build'));
+gulp.task('watch', ['default', 'livereload'], function () {
+  gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.js, ['js']);
 });
 
-gulp.task('src-css', function () { //, ['sass']
-    return gulp.src('./css/**/*.css')
-           .pipe(concat('src.css'))
-           .pipe(gulp.dest('./build'))
-           .pipe(rename({ suffix: '.min' }))
-           .pipe(minifyCss())
-           .pipe(gulp.dest('./build'));
+gulp.task('livereload', function () {
+  var server = livereload.createServer();
+  server.watch([paths.css, paths.js]);
+});
+
+gulp.task('css', function (done) {
+  gulp.src(paths.css)
+    .pipe(sass())
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest(paths.lib))
+    .pipe(minifyCss({
+      keepSpecialComments: 0
+    }))
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(gulp.dest(paths.lib))
+    .on('end', done);
+});
+
+gulp.task('js', function (done) {
+  gulp.src(paths.js)
+    .pipe(filter('**/*.js'))
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(paths.lib))
+    .pipe(uglify())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest(paths.lib))
+    .on('end', done);
+});
+
+gulp.task('bower', ['install'], function (done) {
+  var files = mainBowerFiles(),
+    jsFilter = filter('**/*.js', { restore: true }),
+    cssFilter = filter(['**/*.css'], { restore: true }),
+    fontFilter = filter(['**/*.{eot,woff,woff2,svg,ttf,otf}'], { restore: true }),
+    everythingElseFilter = filter(['**/*.!{js,css}'], { restore: true }),
+    onError = function (err) {
+      console.log(err);
+    };
+
+  if (!files.length) {
+    return done();
+  }
+
+  gulp.src(mainBowerFiles())
+    .pipe(jsFilter)
+    .pipe(concat('bower.js'))
+    .on('error', onError)
+    .pipe(gulp.dest(paths.lib))
+    .pipe(jsFilter.restore)
+
+    .pipe(cssFilter)
+    .pipe(less())
+    .pipe(concat('bower.css'))
+    .on('error', onError)
+    .pipe(gulp.dest(paths.lib))
+    .pipe(cssFilter.restore)
+
+    .pipe(fontFilter)
+    .on('error', onError)
+    .pipe(gulp.dest(paths.font))
+    .pipe(fontFilter.restore)
+
+    .pipe(everythingElseFilter)
+    .pipe(gulp.dest(paths.lib))
+    .on('end', done);
+});
+
+gulp.task('install', ['git-check'], function () {
+  return bower.commands.install()
+    .on('log', function (data) {
+      gutil.log('bower', gutil.colors.cyan(data.id), data.message);
+    });
+});
+
+gulp.task('git-check', function (done) {
+  if (!sh.which('git')) {
+    console.log(
+      '  ' + gutil.colors.red('Git is not installed.'),
+      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
+      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
+      );
+    process.exit(1);
+  }
+  done();
 });
 
 
-//gulp.task('sass', function () {
-//  return gulp.src('./scss/**/*.scss')
-//    .pipe(sass()) // Converts Sass to CSS with gulp-sass
-//    .pipe(gulp.dest('./css'));
-//});
-
-
-//LIB
-gulp.task("lib", function () {
-    var bower = {
-        "angular": "angular/**/*.+(js|css)",
-        "angular-route": "angular-route/**/*.+(js|css)",
-        "angular-sanitize": "angular-sanitize/**/*.+(js|css)",
-        "angular-mocks": "angular-mocks/**/*.+(js|css)",
-        "angular-local-storage": "angular-local-storage/dist/**/*.+(js|css)",
-        "angular-ui-bootstrap": "angular-bootstrap/**/*.+(js|css)",
-        "ng-facebook": "ng-facebook/ngFacebook.+(js|css)",
-        "bootstrap": "bootstrap/dist/**/*.+(map|css|ttf|svg|woff|eot)", //Dont load bootstrap js 
-        "jquery": "jquery/dist/**/*.+(js|map)",
-    }
-
-    for (var destinationDir in bower) {
-        gulp.src(paths.bower + bower[destinationDir])
-            .pipe(gulp.dest(paths.lib + destinationDir));
-
-        console.log('Copying from ' + paths.bower + bower[destinationDir] + ' to ' + paths.lib + destinationDir);
-    }
-
-    var js = gulp.src('./lib/**/*.min.js')
-         .pipe(concat('lib.js'))
-         .pipe(gulp.dest('./build'))
-         .pipe(rename({ suffix: '.min' }))
-         .pipe(uglify())
-         .pipe(gulp.dest('./build'));
-
-    var css = gulp.src('./lib/**/*.css')
-            .pipe(concat('lib.css'))
-            .pipe(gulp.dest('./build'))
-            .pipe(rename({ suffix: '.min' }))
-            .pipe(minifyCss())
-            .pipe(gulp.dest('./build'));
-
-    return merge(js, css);
-});
-
-
-//WATCH
-gulp.task('watch', function () {
-
-    gulp.watch('./js/**/*.js', ['src-js']);
-
-    gulp.watch('./css/**/*.css', ['src-css']);
-
-    gulp.watch('/scss/**/*.scss', ['sass']);
-});
-
-
-
-
-//gulp.task('test', function () {
-//  console.log('Testing gulp on the cmd');
-//})
-
-//"jquery": "jquery/jquery*.{js,map}",
-//"bootstrap-touch-carousel": "bootstrap-touch-carousel/dist/**/*.{js,css}",
-//"hammer.js": "hammer.js/hammer*.{js,map}",
-//"jquery-validation": "jquery-validation/jquery.validate.js",
-//"jquery-validation-unobtrusive": "jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"

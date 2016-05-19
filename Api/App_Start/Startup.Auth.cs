@@ -11,6 +11,7 @@ using Owin;
 using Api.Providers;
 using Api.Models;
 using Microsoft.Owin.Security.Facebook;
+using AutoMapper;
 
 namespace Api
 {
@@ -24,7 +25,7 @@ namespace Api
     public void ConfigureAuth (IAppBuilder app)
     {
       // Configure the db context and user manager to use a single instance per request
-      app.CreatePerOwinContext(AppContext.Create);
+      app.CreatePerOwinContext(Db.Create);
       app.CreatePerOwinContext<UserManager>(UserManager.Create);
 
       // Enable the application to use a cookie to store information for the signed in user
