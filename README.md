@@ -9,7 +9,7 @@ From what I've read, I've put together the account section with a Facebook login
 and tried to use as many of the existing components as possible, for people who don't want or need 
 to recode the wheel as the case may be.
 
-Contributions welcome, I'd like to turn this into an account and social template with Webapi 2 using Identity and Angualar
+Contributions welcome, I'd like to turn this into an account and social template with Webapi 2 using Identity and Angular
 
 
 ##Overview
@@ -21,3 +21,10 @@ Using local storage for token persistence
  - External login
  - Manage External logins
  - Account lockout
+
+##Structure
+Frontal files in /www
+
+node and gulp used for pre processor tasks, compiled files go into /www/lib
+
+bower used for client side script libs
