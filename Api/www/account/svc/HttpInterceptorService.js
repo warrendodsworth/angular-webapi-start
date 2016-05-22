@@ -5,9 +5,9 @@
     .module('app')
     .factory('HttpInterceptorService', HttpInterceptorService);
 
-  HttpInterceptorService.$inject = ['$q', '$location', '$rootScope', 'localStorageService'];
+  HttpInterceptorService.$inject = ['$q', '$location', '$rootScope', '$injector', 'localStorageService'];
 
-  function HttpInterceptorService($q, $location, $rootScope, localStorageService) {
+  function HttpInterceptorService($q, $location, $rootScope, $injector, localStorageService) {
 
     var service = {};
 
@@ -23,14 +23,19 @@
       return config;
     };
 
-    service.responseError = function (rejection) {
-      if (rejection.status === 401) {
+    service.responseError = function (res) {
+      var rootScope;
+
+      if (res.status === 401) {
         $location.path('/login');
       } else {
-        $rootScope.$broadcast('responseError', rejection);
+
+        rootScope = $rootScope || $injector.get('$rootScope');
+
+        rootScope.$broadcast('responseError', res);
       }
 
-      return $q.reject(rejection);
+      return $q.reject(res);
     };
 
     return service;

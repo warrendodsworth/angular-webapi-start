@@ -9,12 +9,11 @@
 
   function NotesController($scope, $http, $location, Qs, NoteService) {
     var vm = $scope;
-    vm.action = 'list';
     vm.filters = Qs.toFilters();
 
-    vm.$watch('action', function (val) {
-      console.log(val);
-    })
+    vm.$watch('filters', function (val) {
+      Qs.toQs(vm.filters);
+    }, true);
 
     vm.pageChanged = function () {
       NoteService.getNotes(vm.filters).then(function (res) {
@@ -27,7 +26,7 @@
     vm.create = function (model) {
       NoteService.postNote(model).then(function (res) {
         vm.res = 'Note Created';
-        vm.action = 'list';
+        vm.filters.action = 'list';
       });
     };
 

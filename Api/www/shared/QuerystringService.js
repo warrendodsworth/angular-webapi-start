@@ -13,6 +13,7 @@
         filterObj.search = filterObj.search || '';
         filterObj.page = filterObj.page || 1;
         filterObj.show = filterObj.show || 10;
+        filterObj.action = filterObj.action || 'list';
 
         var qs = $location.search();
         for (var param in filterObj) {
@@ -28,6 +29,7 @@
         for (var f in filters) {
           qs += f + '=' + filters[f] + '&';
         }
+        $location.search(filters);
         return qs.slice(0, -1);
       };
 

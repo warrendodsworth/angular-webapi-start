@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models
 {
@@ -9,8 +6,11 @@ namespace Api.Models
   {
     public int Id { get; set; }
 
+    [Required(ErrorMessage = "Please add a title")]
+    [StringLength(100)]
     public string Title { get; set; }
 
+    [Required(ErrorMessage = "Please add your note")]
     public string Text { get; set; }
 
 

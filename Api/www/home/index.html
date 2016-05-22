@@ -3,18 +3,12 @@
   <h4>Notes</h4>
 </div>
 
-<div class="v-m" ng-show="identity.isAuth">
-  <a href="#/notes/create" class="btn btn-primary">CREATE</a>
-  <a href="#/notes" class="btn btn-default">Notes</a>
-</div>
-
 <div>
   <div ng-repeat="note in notes">
     <h4>{{note.title}}</h4>
     <p class="text-muted">{{note.text}}</p>
     <hr />
   </div>
-
 
   <uib-pagination total-items="total" ng-model="filters.page" items-per-page="filters.show"
                   ng-show="total > filters.show" ng-change="pageChanged()"></uib-pagination>

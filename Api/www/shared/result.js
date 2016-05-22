@@ -5,18 +5,15 @@
       .module('app')
       .directive('result', result);
 
-  result.$inject = ['$window', '$timeout'];
+  result.$inject = ['toasty'];
 
-  function result($window, $timeout) {
+  function result(toasty) {
     // Usage:
     //     <result></result>
-    // Creates:
-    // 
+    //      res: text value success msg passed in
     var directive = {
       restrict: 'EA',
-      template: '<div ng-if="messages" class="alert" ng-class="success ? \'alert-success\' : \'alert-danger\'" >' +
-                  '<p ng-repeat="msg in messages">{{msg}}</p>' +
-                '</div>',
+      template: '<toasty></toasty>',
       scope: {
         res: '='
       },
@@ -28,24 +25,25 @@
         })
 
         //watch for incoming changes
-        scope.$watch('res', function (value) {
-          if (value) {
-            handleError(value);
+        scope.$watch('res', function (res) {
+          if (res) {
+            handleError(res);
           }
         })
 
-        function handleError() {
-          scope.messages = !scope.res.data ? [scope.res] : errors(scope.res);
-          scope.success = !scope.res.data;
-
-          $timeout(function () {
-            scope.messages = null;
-          }, 5000);
+        function handleError(res) {
+          console.log(res);
+          if (!res.data) {
+            toasty.success({ title: 'Success!', msg: res });
+          } else {
+            angular.forEach(errors(res), function (error, key) {
+              toasty.warning({ title: 'Oops!', msg: error });
+            })
+          }
         }
       }
     };
     return directive;
-
 
 
     function errors(res) {

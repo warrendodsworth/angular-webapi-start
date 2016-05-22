@@ -27,6 +27,8 @@
           <li><a href="#/login">Login</a></li>
         </ul>
         <ul ng-show="identity.isAuth" class="nav navbar-nav navbar-right">
+          <li><a href="#/notes/create"><i class="fa fa-plus"></i></a></li>
+          <li><a href="#/notes">Notes</a></li>
           <li><a href="#/manage">{{identity.name}}</a></li>
           <li class="dropdown" uib-dropdown>
             <a uib-dropdown-toggle class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
@@ -63,7 +65,7 @@
   <script src="/www/lib/bower.js"></script>
   <script src="/www/lib/app.js"></script>
   <script>
-        document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
+    document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')
   </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-﻿<div ng-show="action == 'list'">
+﻿<div ng-show="filters.action == 'list'">
   <h4>My Notes</h4>
-  <p><a ng-show="identity.isAuth" ng-click="action = 'create'" class="btn btn-primary btn-sm">CREATE</a></p>
+  <p><a ng-show="identity.isAuth" ng-click="filters.action = 'create'" class="btn btn-primary btn-sm">CREATE</a></p>
   <br />
 
   <div ng-repeat="note in notes">
@@ -18,7 +18,7 @@
                   ng-show="total > filters.show" ng-change="pageChanged()"></uib-pagination>
 </div>
 
-<div ng-show="action == 'create'">
+<div ng-show="filters.action == 'create'">
   <h4>Create</h4>
   <br />
 
@@ -36,8 +36,8 @@
           <textarea ng-model="model.text" name="text" required class="form-control" cols="3" placeholder="Enter your note here"></textarea>
         </div>
 
-        <input type="submit" ng-click="form.$valid && create( model )" value="Create" class="btn btn-primary" />&nbsp;
-        <a ng-click="action = 'list'">Cancel</a>
+        <input type="submit" ng-click="create( model )" value="Create" class="btn btn-primary" />&nbsp;
+        <a ng-click="filters.action = 'list'">Cancel</a>
       </form>
       <br />
 
