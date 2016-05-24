@@ -5,9 +5,9 @@
     .module('app')
     .factory('HttpInterceptorService', HttpInterceptorService);
 
-  HttpInterceptorService.$inject = ['$q', '$location', '$injector', 'localStorageService'];
+  HttpInterceptorService.$inject = ['$q', '$location', '$injector', 'notifySvc', 'localStorageService'];
 
-  function HttpInterceptorService($q, $location, $injector, localStorageService) {
+  function HttpInterceptorService($q, $location, $injector, notifySvc, localStorageService) {
 
     var service = {};
     var $http, rootScope;
@@ -39,7 +39,8 @@
           // get $rootScope via $injector because of circular dependency problem
           rootScope = rootScope || $injector.get('$rootScope');
           // send a notification with response errors
-          rootScope.$broadcast('responseError', res);
+          //rootScope.$broadcast('responseError', res);
+          notifySvc.handleErrors(res);
         }
       }
 

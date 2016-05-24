@@ -257,7 +257,6 @@
     <Content Include="www\shared\NavbarCtrl.js" />
     <Content Include="www\shared\notifySvc.js" />
     <Content Include="www\shared\QsSvc.js" />
-    <Content Include="www\shared\result.js" />
     <Content Include="www\user\facebook\facebook.html" />
     <Content Include="www\user\facebook\FacebookController.js" />
     <Content Include="www\user\notes\notes.html" />
