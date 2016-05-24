@@ -5,13 +5,13 @@
       .module('controllers')
       .controller('RegisterController', RegisterController);
 
-  RegisterController.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
+  RegisterController.$inject = ['$scope', '$location', '$timeout', 'notifySvc', 'AccountService'];
 
-  function RegisterController($scope, $location, $timeout, AccountService) {
+  function RegisterController($scope, $location, $timeout, notifySvc, AccountService) {
 
     $scope.register = function (model) {
       AccountService.register(model).then(function (res) {
-        $scope.res = "Account created.";
+        notifySvc.success('Account created');
 
         $timeout(function () {
           $location.path('/login');

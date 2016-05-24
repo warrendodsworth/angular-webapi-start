@@ -254,8 +254,9 @@
     <Content Include="www\lib\app.min.js" />
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
-    <Content Include="www\shared\NavbarController.js" />
-    <Content Include="www\shared\QuerystringService.js" />
+    <Content Include="www\shared\NavbarCtrl.js" />
+    <Content Include="www\shared\notifySvc.js" />
+    <Content Include="www\shared\QsSvc.js" />
     <Content Include="www\shared\result.js" />
     <Content Include="www\user\facebook\facebook.html" />
     <Content Include="www\user\facebook\FacebookController.js" />

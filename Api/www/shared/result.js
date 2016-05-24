@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-      .module('app')
+      .module('directives')
       .directive('result', result);
 
-  result.$inject = ['toasty'];
+  result.$inject = ['notifySvc'];
 
-  function result(toasty) {
+  function result(notifySvc) {
     var directive = {
       restrict: 'EA',
       template: '<toasty></toasty>',
@@ -29,24 +29,22 @@
         })
 
         function notify(res) {
-          console.log(res);
-
           if (res.status === -1) return; //ERR_CONNECTION_REFUSED
 
-          if (!res.data) {
-            toasty.success({ title: 'Success!', msg: res });
+          if (!res.data && angular.isString(res)) {
+            notifySvc.success(res);
           }
-          else if (res.data.modelState) {
+          else if (res.data.modelState) { //400 bad request model state errs
             angular.forEach(res.data.modelState, function (propertyErrors, key) {
               angular.forEach(propertyErrors, function (error, key) {
-                toasty.warning({ title: 'Oops!', msg: error });
+                notifySvc.warning(error);
               })
             });
           }
-          else if (res.data.message || res.data.error_description) {
-            toasty.error({ title: 'Error :(', msg: res.data.message || res.data.error_description });
+          else if (res.data.message || res.data.error_description) { //500 or 400 auth special case
+            notifySvc.error(res.data.message || res.data.error_description);
           }
-         
+
         }
       }
     };

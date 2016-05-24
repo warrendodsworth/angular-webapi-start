@@ -5,10 +5,10 @@
       .module('controllers')
       .controller('ExternalLoginController', ExternalLoginController);
 
-  ExternalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'localStorageService', 'AccountService'];
+  ExternalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'notifySvc', 'localStorageService', 'AccountService'];
 
   //Return from Facebook to this view, which should read #params and get the access token
-  function ExternalLoginController($http, $scope, $location, $window, localStorageService, AccountService) {
+  function ExternalLoginController($http, $scope, $location, $window, notifySvc, localStorageService, AccountService) {
 
     //Callback access_token
     var hash = $location.path().split(/[=&]+/);
@@ -43,8 +43,6 @@
           //Add login (user already registered)
           AccountService.addExternalLogin({ externalAccessToken: accessToken }).then(function (res) {
             $window.location.href = '/#/manage/logins?m=added';
-          }, function (res) {
-            $scope.res = res;
           });
 
         } else {
@@ -64,7 +62,7 @@
 
     $scope.registerExternal = function (model) {
       AccountService.registerExternal(model, accessToken).then(function (res) {
-        $scope.res = 'You\'ve registered successfully';
+        notifySvc.success('You\'ve registered successfully');
         console.log(res);
 
         localStorageService.set('authorizationData', {

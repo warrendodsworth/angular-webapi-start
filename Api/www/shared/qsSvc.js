@@ -5,7 +5,7 @@
   //http://www.metaltoad.com/blog/managing-querystring-angular-location
   angular
     .module('services')
-    .service('QuerystringService', function ($location) {
+    .service('QsSvc', function ($location) {
 
       this.toFilters = function (filterObj) {
         //Set defaults
@@ -32,18 +32,6 @@
         $location.search(filters);
         return qs.slice(0, -1);
       };
-
+       
     });
 })();
-
-
-
-//this.updateQs = function(fld) {
-//  // update the query string with the new filters
-//  if ($scope.filters[fld] != '') {
-//    $location.search(fld, $scope.filters[fld]);
-//  } else {
-//    // remove empty filters
-//    $location.search(fld, null);
-//  }
-//}
