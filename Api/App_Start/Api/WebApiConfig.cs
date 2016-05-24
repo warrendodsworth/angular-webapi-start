@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
@@ -23,6 +20,8 @@ namespace Api
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            config.Filters.Add(new HandleLogErrorApiAttribute());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -188,7 +188,6 @@
     <Compile Include="Models\Dto\NoteDto.cs" />
     <Compile Include="Services\ClaimsExtensions.cs" />
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
     <Compile Include="Services\UserManager.cs" />
@@ -271,13 +270,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="typings\browser.d.ts" />
-    <TypeScriptCompile Include="typings\browser\ambient\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\main.d.ts" />
-    <TypeScriptCompile Include="typings\main\ambient\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\node\node.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +295,13 @@
     <Folder Include="Areas\HelpPage\SampleGeneration\" />
     <Folder Include="Areas\HelpPage\Views\Help\DisplayTemplates\" />
     <Folder Include="Areas\HelpPage\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="typings\browser.d.ts" />
+    <TypeScriptCompile Include="typings\browser\ambient\angular\index.d.ts" />
+    <TypeScriptCompile Include="typings\main.d.ts" />
+    <TypeScriptCompile Include="typings\main\ambient\angular\index.d.ts" />
+    <TypeScriptCompile Include="typings\node\node.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

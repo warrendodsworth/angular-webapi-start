@@ -13,7 +13,8 @@ namespace Api.Models
     [Required(ErrorMessage = "Please add your note")]
     public string Text { get; set; }
 
-
+    [Required]
+    [StringLength(128)]
     public string UserId { get; set; }
 
     public virtual User User { get; set; }

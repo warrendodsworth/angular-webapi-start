@@ -1,13 +1,12 @@
 ﻿using Api.Models;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Linq;
 using Api.Models.Bind;
-using PagedList;
 using PagedList.EntityFramework;
+using Microsoft.AspNet.Identity;
 
 namespace Api.Controllers
 {
@@ -53,6 +52,8 @@ namespace Api.Controllers
     // POST api/notes
     public async Task<IHttpActionResult> Post(Note note)
     {
+      note.UserId = User.Identity.GetUserId();
+
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
@@ -82,7 +83,7 @@ namespace Api.Controllers
       var m = Mapper.CreateMapper();
       m.Map(note, oldNote);
 
-      db.Entry<Note>(oldNote).State = EntityState.Modified;
+      db.Entry(oldNote).State = EntityState.Modified;
       await db.SaveChangesAsync();
 
       return StatusCode(HttpStatusCode.NoContent);

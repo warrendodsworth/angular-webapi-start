@@ -8,9 +8,6 @@
   result.$inject = ['toasty'];
 
   function result(toasty) {
-    // Usage:
-    //     <result></result>
-    //      res: text value success msg passed in
     var directive = {
       restrict: 'EA',
       template: '<toasty></toasty>',
@@ -20,47 +17,40 @@
       link: function (scope, element, attrs) {
 
         //global error handler
-        scope.$on('responseError', function (res) {
-          handleError(res);
+        scope.$on('responseError', function (event, res) {
+          notify(res);
         })
 
         //watch for incoming changes
         scope.$watch('res', function (res) {
           if (res) {
-            handleError(res);
+            notify(res);
           }
         })
 
-        function handleError(res) {
+        function notify(res) {
           console.log(res);
+
+          if (res.status === -1) return; //ERR_CONNECTION_REFUSED
+
           if (!res.data) {
             toasty.success({ title: 'Success!', msg: res });
-          } else {
-            angular.forEach(errors(res), function (error, key) {
-              toasty.warning({ title: 'Oops!', msg: error });
-            })
           }
+          else if (res.data.modelState) {
+            angular.forEach(res.data.modelState, function (propertyErrors, key) {
+              angular.forEach(propertyErrors, function (error, key) {
+                toasty.warning({ title: 'Oops!', msg: error });
+              })
+            });
+          }
+          else if (res.data.message || res.data.error_description) {
+            toasty.error({ title: 'Error :(', msg: res.data.message || res.data.error_description });
+          }
+         
         }
       }
     };
     return directive;
-
-
-    function errors(res) {
-      var errors = [], validationSummary;
-      if (res.data.modelState) {
-        $.each(res.data.modelState, function (i, propertyErrors) {
-          errors.push.apply(errors, propertyErrors);
-        });
-
-        validationSummary = errors;
-      } else {
-        errors.push(res.data.message || res.data.error_description);
-        validationSummary = errors;
-      }
-
-      return validationSummary;
-    }
   }
 
 })();
