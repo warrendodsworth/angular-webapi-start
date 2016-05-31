@@ -3,11 +3,11 @@
 
   //Index
   angular.module('controllers')
-         .controller('IndexController', IndexController);
+         .controller('IndexController', indexController);
 
-  IndexController.$inject = ['$scope', '$http', '$location'];
+  indexController.$inject = ['$scope', '$http', '$location'];
 
-  function IndexController($scope, $http, $location) {
+  function indexController($scope, $http, $location) {
     var vm = $scope;
 
     $http.get('/api/notes').then(function (res) {

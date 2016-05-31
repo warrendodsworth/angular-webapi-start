@@ -13,11 +13,11 @@ namespace Api.Controllers.Admin
   [RoutePrefix("api/users")]
   public class UsersController : ApiController
   {
-    private Db db;
+    private Db _db;
 
     public UsersController()
     {
-      db = new Db();
+      _db = new Db();
     }
 
     //public IList<UserDto> GetUsers()

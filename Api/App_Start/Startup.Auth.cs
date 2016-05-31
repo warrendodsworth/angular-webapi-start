@@ -48,16 +48,16 @@ namespace Api
       // Enable the application to use bearer tokens to authenticate users
       app.UseOAuthBearerTokens(OAuthOptions );
 
-      var FacebookOptions = new FacebookAuthenticationOptions
+      var facebookOptions = new FacebookAuthenticationOptions
       {
         AppId = "292179600807388",
         AppSecret = "2ccc6fd1bada1fddbdb6577d47b93996",
       };
-      FacebookOptions.Scope.Add("email");
-      FacebookOptions.Scope.Add("user_hometown");
-      FacebookOptions.Scope.Add("user_location");
+      facebookOptions.Scope.Add("email");
+      facebookOptions.Scope.Add("user_hometown");
+      facebookOptions.Scope.Add("user_location");
 
-      app.UseFacebookAuthentication(FacebookOptions);
+      app.UseFacebookAuthentication(facebookOptions);
 
 
       // Uncomment the following lines to enable logging in with third party login providers

@@ -3,14 +3,14 @@
 
   angular
       .module('controllers')
-      .controller('RegisterController', RegisterController);
+      .controller('RegisterController', registerController);
 
-  RegisterController.$inject = ['$scope', '$location', '$timeout', 'notifySvc', 'AccountService'];
+  registerController.$inject = ['$scope', '$location', '$timeout', 'notifySvc', 'AccountService'];
 
-  function RegisterController($scope, $location, $timeout, notifySvc, AccountService) {
+  function registerController($scope, $location, $timeout, notifySvc, accountService) {
 
     $scope.register = function (model) {
-      AccountService.register(model).then(function (res) {
+      accountService.register(model).then(function (res) {
         notifySvc.success('Account created');
 
         $timeout(function () {

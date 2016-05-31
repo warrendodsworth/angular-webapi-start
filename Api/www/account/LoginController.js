@@ -3,16 +3,16 @@
 
   angular
       .module('controllers')
-      .controller('LoginController', ['$scope', '$location', 'AccountService', LoginController]);
+      .controller('LoginController', ['$scope', '$location', 'AccountService', loginController]);
 
-  function LoginController($scope, $location, AccountService) {
+  function loginController($scope, $location, accountService) {
 
-    AccountService.getExternalLogins().then(function (res) {
+    accountService.getExternalLogins().then(function (res) {
       $scope.logins = res.data;
     });
 
     $scope.login = function (model) {
-      AccountService.login(model).then(function (res) {
+      accountService.login(model).then(function (res) {
         $location.path('/').search('m', 'welcome');
       });
     };

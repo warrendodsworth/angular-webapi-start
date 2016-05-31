@@ -3,12 +3,12 @@
 
   angular
     .module('services')
-    .service('NoteService', ['$http', 'QsSvc', NoteService]);
+    .service('NoteService', ['$http', 'QsSvc', noteService]);
 
-  function NoteService($http, Qs) {
+  function noteService($http, qs) {
 
     this.getNotes = function (filter) {
-      return $http.get('/api/notes' + Qs.toQs(filter));
+      return $http.get('/api/notes' + qs.toQs(filter));
     }
 
     this.postNote = function (model) {

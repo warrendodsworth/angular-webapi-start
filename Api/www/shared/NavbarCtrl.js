@@ -3,12 +3,12 @@
 
   angular
     .module('controllers')
-    .controller('NavbarController', ['$scope', '$location', 'AccountService', NavbarController]);
+    .controller('NavbarController', ['$scope', '$location', 'AccountService', navbarController]);
 
-  function NavbarController($scope, $location, AccountService) {
+  function navbarController($scope, $location, accountService) {
     
     $scope.logout = function () {
-      AccountService.logout();
+      accountService.logout();
       $location.path('/');
     }
   }

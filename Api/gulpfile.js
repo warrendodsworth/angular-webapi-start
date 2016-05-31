@@ -13,11 +13,12 @@ var bower = require('bower');
 var livereload = require('livereload');
 var mainBowerFiles = require('main-bower-files');
 
+var root = './www/';
 var paths = {
-  css: ['./scss/**/*.scss', './css/**/*.css', '!./www/lib/**.*'],
-  js: ['./www/app.js', './www/**/*.js', '!./www/lib/**.*'],
-  font: './www/fonts/',
-  lib: './www/lib/'
+  css: ['./scss/**/*.scss', root + 'css/**/*.css', '!' + root + 'lib/**.*'],
+  js: [root + 'app.js', root + '**/*.js', '!' + root + 'lib/**.*'],
+  font: root + 'fonts/',
+  lib: root + 'lib/'
 };
 
 gulp.task('default', ['css', 'js', 'bower']);
@@ -40,6 +41,7 @@ gulp.task('css', function (done) {
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
+    .on('error', handleError)
     .pipe(rename({ extname: '.min.css' }))
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
@@ -51,6 +53,7 @@ gulp.task('js', function (done) {
     .pipe(concat('app.js'))
     .pipe(gulp.dest(paths.lib))
     .pipe(uglify())
+    .on('error', handleError)
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
@@ -113,4 +116,8 @@ gulp.task('git-check', function (done) {
   done();
 });
 
+function handleError(err) {
+  console.log(err);
+  this.emit('end');
+}
 

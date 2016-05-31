@@ -3,11 +3,11 @@
 
   angular
     .module('services')
-    .factory('AccountService', AccountService);
+    .factory('AccountService', accountService);
 
-  AccountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
+  accountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
 
-  function AccountService($q, $http, $rootScope, localStorageService) {
+  function accountService($q, $http, $rootScope, localStorageService) {
 
     var service = {};
 
@@ -79,6 +79,7 @@
     service.getCurrentUser = function () {
       return $http.get('/api/account/me');
     }
+
 
     //EXTERNAL LOGINS
 

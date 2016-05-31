@@ -35,8 +35,8 @@
       });
     }])
 
-   .run(['$rootScope', 'AccountService', function ($rootScope, AccountService) {
-     AccountService.getIdentity();
+   .run(['$rootScope', 'AccountService', function ($rootScope, accountService) {
+     accountService.getIdentity();
 
      $rootScope.year = new Date().getFullYear();
 

@@ -3,18 +3,18 @@
 
   angular
     .module('controllers')
-    .controller('ManageLoginsController', ManageLoginsController);
+    .controller('ManageLoginsController', manageLoginsController);
 
-  ManageLoginsController.$inject = ['$scope', 'AccountService'];
+  manageLoginsController.$inject = ['$scope', 'AccountService'];
 
-  function ManageLoginsController($scope, AccountService) {
-    AccountService.getManageLogins().then(function (res) {
+  function manageLoginsController($scope, accountService) {
+    accountService.getManageLogins().then(function (res) {
       $scope.logins = res.data.logins;
       $scope.externalLoginProviders = res.data.externalLoginProviders;
     });
 
     $scope.removeLogin = function (login, index) {
-      AccountService.removeLogin(login).then(function (res) {
+      accountService.removeLogin(login).then(function (res) {
         $scope.res = 'Removed';
         $scope.logins.splice(index, 1);
       });
@@ -23,19 +23,19 @@
 
   angular
      .module('controllers')
-     .controller('ManageController', ManageController);
+     .controller('ManageController', manageController);
 
-  ManageController.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
+  manageController.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
 
-  function ManageController($scope, $location, $timeout, AccountService) {
-    AccountService.getCurrentUser().then(function (res) {
+  function manageController($scope, $location, $timeout, accountService) {
+    accountService.getCurrentUser().then(function (res) {
       $scope.user = res.data;
     });
 
     $scope.deactivate = function () {
-      AccountService.deactivateAccount().then(function (res) {
+      accountService.deactivateAccount().then(function (res) {
         $scope.res = 'Account Deactivated';
-        AccountService.logout();
+        accountService.logout();
 
         $timeout(function () {
           $location.path('/');
@@ -46,14 +46,14 @@
 
   angular
         .module('controllers')
-        .controller('ForgotPasswordController', ForgotPassword);
+        .controller('ForgotPasswordController', forgotPassword);
 
-  ForgotPassword.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
+  forgotPassword.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
 
-  function ForgotPassword($scope, $location, $timeout, AccountService) {
+  function forgotPassword($scope, $location, $timeout, accountService) {
 
     $scope.forgotPassword = function (model) {
-      AccountService.forgotPassword(model).then(function (res) {
+      accountService.forgotPassword(model).then(function (res) {
         $scope.res = 'We\'ve sent you a link';
 
         $timeout(function () {

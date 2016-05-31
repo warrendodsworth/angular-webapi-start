@@ -14,13 +14,13 @@ namespace Api.Controllers
   [RoutePrefix("api/notes")]
   public class NotesController : ApiController
   {
-    private Db db = new Db();
+    private Db _db = new Db();
 
     // GET api/notes
     [AllowAnonymous]
     public async Task<object> Get(string search = null, int page = 1, int show = 10)
     {
-      var q = db.Notes.Include(n => n.User).AsQueryable();
+      var q = _db.Notes.Include(n => n.User).AsQueryable();
 
       if (search != null)
       {
@@ -40,7 +40,7 @@ namespace Api.Controllers
     [AllowAnonymous]
     public async Task<IHttpActionResult> Get(int id)
     {
-      var note = await db.Notes.FindAsync(id);
+      var note = await _db.Notes.FindAsync(id);
       if (note == null)
       {
         return NotFound();
@@ -59,8 +59,8 @@ namespace Api.Controllers
         return BadRequest(ModelState);
       }
 
-      db.Notes.Add(note);
-      await db.SaveChangesAsync();
+      _db.Notes.Add(note);
+      await _db.SaveChangesAsync();
 
       return Ok();
     }
@@ -78,13 +78,13 @@ namespace Api.Controllers
         return BadRequest();
       }
 
-      var oldNote = await db.Notes.FindAsync(id);
+      var oldNote = await _db.Notes.FindAsync(id);
 
       var m = Mapper.CreateMapper();
       m.Map(note, oldNote);
 
-      db.Entry(oldNote).State = EntityState.Modified;
-      await db.SaveChangesAsync();
+      _db.Entry(oldNote).State = EntityState.Modified;
+      await _db.SaveChangesAsync();
 
       return StatusCode(HttpStatusCode.NoContent);
     }
@@ -92,14 +92,14 @@ namespace Api.Controllers
     // DELETE api/notes/5
     public async Task<IHttpActionResult> Delete(int id)
     {
-      var note = await db.Notes.FindAsync(id);
+      var note = await _db.Notes.FindAsync(id);
       if (note == null)
       {
         return NotFound();
       }
 
-      db.Notes.Remove(note);
-      await db.SaveChangesAsync();
+      _db.Notes.Remove(note);
+      await _db.SaveChangesAsync();
 
       return Ok();
     }
@@ -108,7 +108,7 @@ namespace Api.Controllers
     {
       if (disposing)
       {
-        db.Dispose();
+        _db.Dispose();
       }
       base.Dispose(disposing);
     }

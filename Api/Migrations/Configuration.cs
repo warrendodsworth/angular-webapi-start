@@ -16,11 +16,11 @@ namespace Api.Migrations
 
     protected override void Seed(Api.Models.Db db)
     {
-      var UserManager = new UserManager(db);
-      var user = UserManager.FindByName("user");
+      var userManager = new UserManager(db);
+      var user = userManager.FindByName("user");
       if(user == null)
       {
-        UserManager.Create(new User { Name = "Test", UserName = "user" }, "password");
+        userManager.Create(new User { Name = "Test", UserName = "user" }, "password");
       }
     }
   }
