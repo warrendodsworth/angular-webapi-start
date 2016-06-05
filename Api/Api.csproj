@@ -256,7 +256,7 @@
     <Content Include="www\lib\bower.js" />
     <Content Include="www\shared\navbarCtrl.js" />
     <Content Include="www\shared\notifySvc.js" />
-    <Content Include="www\shared\QsSvc.js" />
+    <Content Include="www\shared\qsSvc.js" />
     <Content Include="www\user\facebook\facebook.html" />
     <Content Include="www\user\facebook\facebookController.js" />
     <Content Include="www\user\notes\notes.html" />

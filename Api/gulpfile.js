@@ -6,6 +6,9 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
+var fixmyjs = require('gulp-fixmyjs');
+var stylish = require('jshint-stylish');
 var less = require('gulp-less');
 var sass = require('gulp-sass');
 var sh = require('shelljs');
@@ -50,6 +53,11 @@ gulp.task('css', function (done) {
 gulp.task('js', function (done) {
   gulp.src(paths.js)
     .pipe(filter('**/*.js'))
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
+    .pipe(fixmyjs({
+      //Jshint options      
+    }))
     .pipe(concat('app.js'))
     .pipe(gulp.dest(paths.lib))
     .pipe(uglify())
