@@ -5,20 +5,21 @@
   angular
       .module('app')
       .config(['$routeProvider', function ($routeProvider) {
+        var root = '/www/';
 
         //Account
-        $routeProvider.when('/login', { templateUrl: '/www/account/login.html', controller: 'LoginController' })
-            .when('/register', { templateUrl: '/www/account/register.html', controller: 'RegisterController' })
-            .when('/manage', { templateUrl: '/www/account/manage/manage.html', controller: 'ManageController' })
-            .when('/manage/logins', { templateUrl: '/www/account/manage/manageLogins.html', controller: 'ManageLoginsController' });
+        $routeProvider.when('/login', { templateUrl: root+ 'account/login.html', controller: 'loginController' })
+            .when('/register', { templateUrl: root + 'account/register.html', controller: 'registerController' })
+            .when('/manage', { templateUrl: root + 'account/manage/manage.html', controller: 'manageController' })
+            .when('/manage/logins', { templateUrl: root + 'account/manage/manageLogins.html', controller: 'manageLoginsController' });
 
         //User
         $routeProvider
-          .when('/notes', { templateUrl: '/www/user/notes/notes.html', controller: 'Notes.IndexController' })
-          .when('/facebook', { templateUrl: '/www/user/facebook/facebook.html', controller: 'FacebookController' });
+          .when('/notes', { templateUrl: root + 'user/notes/notes.html', controller: 'notes.indexController' })
+          .when('/facebook', { templateUrl: root + 'user/facebook/facebook.html', controller: 'facebookController' });
 
         $routeProvider
-          .when('/', { templateUrl: '/www/home/index.html', controller: 'IndexController' })
+          .when('/', { templateUrl: root + 'home/index.html', controller: 'indexController' })
           .otherwise({ redirectTo: '/' });
 
       }]);

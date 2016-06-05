@@ -23,7 +23,7 @@
      .module('app')
 
      .config(['$httpProvider', '$facebookProvider', function ($httpProvider, $facebookProvider) {
-       $httpProvider.interceptors.push('HttpInterceptorService');
+       $httpProvider.interceptors.push('httpInterceptorService');
 
        $facebookProvider.setAppId('292179600807388')
                      .setPermissions("email,user_likes");
@@ -35,7 +35,7 @@
       });
     }])
 
-   .run(['$rootScope', 'AccountService', function ($rootScope, accountService) {
+   .run(['$rootScope', 'accountService', function ($rootScope, accountService) {
      accountService.getIdentity();
 
      $rootScope.year = new Date().getFullYear();

@@ -5,7 +5,7 @@
       .module('controllers')
       .controller('ExternalLoginController', externalLoginController);
 
-  externalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'notifySvc', 'localStorageService', 'AccountService'];
+  externalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'notifySvc', 'localStorageService', 'accountService'];
 
   //Return from Facebook to this view, which should read #params and get the access token
   function externalLoginController($http, $scope, $location, $window, notifySvc, localStorageService, accountService) {

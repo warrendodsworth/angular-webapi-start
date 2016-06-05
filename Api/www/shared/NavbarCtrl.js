@@ -3,7 +3,7 @@
 
   angular
     .module('controllers')
-    .controller('NavbarController', ['$scope', '$location', 'AccountService', navbarController]);
+    .controller('NavbarController', ['$scope', '$location', 'accountService', navbarController]);
 
   function navbarController($scope, $location, accountService) {
     

@@ -3,9 +3,9 @@
 
   angular
       .module('controllers')
-      .controller('RegisterController', registerController);
+      .controller('registerController', registerController);
 
-  registerController.$inject = ['$scope', '$location', '$timeout', 'notifySvc', 'AccountService'];
+  registerController.$inject = ['$scope', '$location', '$timeout', 'notifySvc', 'accountService'];
 
   function registerController($scope, $location, $timeout, notifySvc, accountService) {
 

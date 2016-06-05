@@ -3,7 +3,7 @@
 
   //Index
   angular.module('controllers')
-         .controller('IndexController', indexController);
+         .controller('indexController', indexController);
 
   indexController.$inject = ['$scope', '$http', '$location'];
 

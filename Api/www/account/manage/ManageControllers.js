@@ -3,9 +3,9 @@
 
   angular
     .module('controllers')
-    .controller('ManageLoginsController', manageLoginsController);
+    .controller('manageLoginsController', manageLoginsController);
 
-  manageLoginsController.$inject = ['$scope', 'AccountService'];
+  manageLoginsController.$inject = ['$scope', 'accountService'];
 
   function manageLoginsController($scope, accountService) {
     accountService.getManageLogins().then(function (res) {
@@ -23,9 +23,9 @@
 
   angular
      .module('controllers')
-     .controller('ManageController', manageController);
+     .controller('manageController', manageController);
 
-  manageController.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
+  manageController.$inject = ['$scope', '$location', '$timeout', 'accountService'];
 
   function manageController($scope, $location, $timeout, accountService) {
     accountService.getCurrentUser().then(function (res) {
@@ -48,7 +48,7 @@
         .module('controllers')
         .controller('ForgotPasswordController', forgotPassword);
 
-  forgotPassword.$inject = ['$scope', '$location', '$timeout', 'AccountService'];
+  forgotPassword.$inject = ['$scope', '$location', '$timeout', 'accountService'];
 
   function forgotPassword($scope, $location, $timeout, accountService) {
 

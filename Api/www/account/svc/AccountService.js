@@ -3,7 +3,7 @@
 
   angular
     .module('services')
-    .factory('AccountService', accountService);
+    .factory('accountService', accountService);
 
   accountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
 

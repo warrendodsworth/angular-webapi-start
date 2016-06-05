@@ -5,7 +5,7 @@
   //http://www.metaltoad.com/blog/managing-querystring-angular-location
   angular
     .module('services')
-    .service('QsSvc', function ($location) {
+    .service('qsSvc', function ($location) {
 
       this.toFilters = function (filterObj) {
         //Set defaults

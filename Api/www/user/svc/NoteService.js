@@ -3,7 +3,7 @@
 
   angular
     .module('services')
-    .service('NoteService', ['$http', 'QsSvc', noteService]);
+    .service('noteService', ['$http', 'qsSvc', noteService]);
 
   function noteService($http, qs) {
 

@@ -3,9 +3,9 @@
 
   angular
     .module('controllers')
-    .controller('Notes.IndexController', notesController);
+    .controller('notes.indexController', notesController);
 
-  notesController.$inject = ['$scope', '$http', '$location', 'notifySvc', 'QsSvc', 'NoteService'];
+  notesController.$inject = ['$scope', '$http', '$location', 'notifySvc', 'qsSvc', 'noteService'];
 
   function notesController($scope, $http, $location, notifySvc, qs, noteService) {
     var vm = $scope;

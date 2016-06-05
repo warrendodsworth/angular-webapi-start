@@ -3,7 +3,7 @@
 
   angular
       .module('app')
-      .controller('FacebookController', facebookController);
+      .controller('facebookController', facebookController);
 
   facebookController.$inject = ['$scope', '$http', '$facebook'];
 
