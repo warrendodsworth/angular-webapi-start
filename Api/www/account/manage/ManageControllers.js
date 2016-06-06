@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   angular.module('controllers').controller('manageLoginsController', manageLoginsController);
   manageLoginsController.$inject = [
@@ -6,12 +6,12 @@
     'accountService'
   ];
   function manageLoginsController($scope, accountService) {
-    accountService.getManageLogins().then(function (res) {
+    accountService.getManageLogins().then(function(res) {
       $scope.logins = res.data.logins;
       $scope.externalLoginProviders = res.data.externalLoginProviders;
     });
-    $scope.removeLogin = function (login, index) {
-      accountService.removeLogin(login).then(function (res) {
+    $scope.removeLogin = function(login, index) {
+      accountService.removeLogin(login).then(function(res) {
         $scope.res = 'Removed';
         $scope.logins.splice(index, 1);
       });
@@ -25,14 +25,14 @@
     'accountService'
   ];
   function manageController($scope, $location, $timeout, accountService) {
-    accountService.getCurrentUser().then(function (res) {
+    accountService.getCurrentUser().then(function(res) {
       $scope.user = res.data;
     });
-    $scope.deactivate = function () {
-      accountService.deactivateAccount().then(function (res) {
+    $scope.deactivate = function() {
+      accountService.deactivateAccount().then(function(res) {
         $scope.res = 'Account Deactivated';
         accountService.logout();
-        $timeout(function () {
+        $timeout(function() {
           $location.path('/');
         }, 2000);
       });
@@ -46,10 +46,10 @@
     'accountService'
   ];
   function forgotPassword($scope, $location, $timeout, accountService) {
-    $scope.forgotPassword = function (model) {
-      accountService.forgotPassword(model).then(function (res) {
+    $scope.forgotPassword = function(model) {
+      accountService.forgotPassword(model).then(function(res) {
         $scope.res = 'We\'ve sent you a link';
-        $timeout(function () {
+        $timeout(function() {
           $location.path('/');
         }, 4000);
       });

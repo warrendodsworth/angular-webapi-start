@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   angular.module('app').factory('httpInterceptorService', httpInterceptorService);
   httpInterceptorService.$inject = [
@@ -11,7 +11,7 @@
   function httpInterceptorService($q, $location, $injector, notifySvc, localStorageService) {
     var service = {};
     var $http, rootScope;
-    service.request = function (config) {
+    service.request = function(config) {
       config.headers = config.headers || {};
       config.headers['X-Requested-With'] = 'XMLHttpRequest';
       var authData = localStorageService.get('authorizationData');
@@ -21,10 +21,10 @@
       return config;
     };
     //Redirect to Login if not authenticated
-    service.responseError = function (res) {
+    service.responseError = function(res) {
       if (res.status === 401) {
         var returnUrl = $location.path();
-        $location.path('/login').search({ returnUrl: returnUrl });
+        $location.path('/login').search({returnUrl: returnUrl});
       } else {
         // get $http via $injector because of circular dependency problem
         $http = $http || $injector.get('$http');

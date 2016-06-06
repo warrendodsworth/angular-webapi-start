@@ -46,8 +46,8 @@ gulp.task('js', function (done) {
       //Jshint options   
       esversion: 5
     }))
-    //.pipe(jscs({ fix: true, preset: "google" }))
-    //.pipe(jscs.reporter('console'))
+    .pipe(jscs({ fix: true }))
+    .pipe(jscs.reporter('console'))
 
     .pipe(gulp.dest(root))
     .pipe(concat('app.js'))

@@ -1,9 +1,9 @@
-(function () {
+(function() {
   'use strict';
   // This service reads data from the query string into a filter object.
   //http://www.metaltoad.com/blog/managing-querystring-angular-location
-  angular.module('services').service('qsSvc', function ($location) {
-    this.toFilters = function (filterObj) {
+  angular.module('services').service('qsSvc', function($location) {
+    this.toFilters = function(filterObj) {
       //Set defaults
       filterObj = filterObj || {};
       filterObj.search = filterObj.search || '';
@@ -18,7 +18,7 @@
       }
       return filterObj;
     };
-    this.toQs = function (filters) {
+    this.toQs = function(filters) {
       var qs = '?';
       for (var f in filters) {
         qs += f + '=' + filters[f] + '&';

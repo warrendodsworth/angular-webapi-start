@@ -1,9 +1,9 @@
-(function () {
+(function() {
   'use strict';
   //Routes
   angular.module('app').config([
     '$routeProvider',
-    function ($routeProvider) {
+    function($routeProvider) {
       var root = '/www/';
       //Account
       $routeProvider.when('/login', {
@@ -30,7 +30,7 @@
       $routeProvider.when('/', {
         templateUrl: root + 'home/index.html',
         controller: 'indexController'
-      }).otherwise({ redirectTo: '/' });
+      }).otherwise({redirectTo: '/'});
     }
   ]);
 }());

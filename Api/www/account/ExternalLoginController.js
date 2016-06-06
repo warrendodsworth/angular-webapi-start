@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   angular.module('controllers').controller('ExternalLoginController', externalLoginController);
   externalLoginController.$inject = [
@@ -22,7 +22,7 @@
     var expiresIn = hash[3];
     var tokenType = hash[5];
     console.log('Access token');
-    accountService.getUserInfo(accessToken).then(function (res) {
+    accountService.getUserInfo(accessToken).then(function(res) {
       console.log('Get User Info');
       console.log(res.data);
       //1st time user - register local account
@@ -37,7 +37,7 @@
         $scope.action = 'process';
         if (accountService.identity.isAuth) {
           //Add login (user already registered)
-          accountService.addExternalLogin({ externalAccessToken: accessToken }).then(function (res) {
+          accountService.addExternalLogin({externalAccessToken: accessToken}).then(function(res) {
             $window.location.href = '/#/manage/logins?m=added';
           });
         } else {
@@ -53,8 +53,8 @@
         $scope.action = 'register';
       }
     });
-    $scope.registerExternal = function (model) {
-      accountService.registerExternal(model, accessToken).then(function (res) {
+    $scope.registerExternal = function(model) {
+      accountService.registerExternal(model, accessToken).then(function(res) {
         notifySvc.success('You\'ve registered successfully');
         console.log(res);
         localStorageService.set('authorizationData', {

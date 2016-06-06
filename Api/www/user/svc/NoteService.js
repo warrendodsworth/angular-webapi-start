@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
   angular.module('services').service('noteService', [
     '$http',
@@ -6,14 +6,16 @@
     noteService
   ]);
   function noteService($http, qs) {
-    this.getNotes = function (filter) {
+    var service = {};
+    service.getNotes = function(filter) {
       return $http.get('/api/notes' + qs.toQs(filter));
     };
-    this.postNote = function (model) {
+    service.postNote = function(model) {
       return $http.post('/api/notes', model);
     };
-    this.deleteNote = function (id) {
+    service.deleteNote = function(id) {
       return $http.delete('/api/notes/' + id);
     };
+    return service;
   }
 }());
