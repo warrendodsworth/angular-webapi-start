@@ -9,6 +9,7 @@ var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var fixmyjs = require('gulp-fixmyjs');
 var stylish = require('jshint-stylish');
+var jscs = require('gulp-jscs');
 var less = require('gulp-less');
 var sass = require('gulp-sass');
 var sh = require('shelljs');
@@ -36,6 +37,28 @@ gulp.task('livereload', function () {
   server.watch([paths.css, paths.js]);
 });
 
+gulp.task('js', function (done) {
+  gulp.src(paths.js)
+    .pipe(filter('**/*.js'))
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
+    .pipe(fixmyjs({
+      //Jshint options   
+      esversion: 5
+    }))
+    //.pipe(jscs({ fix: true, preset: "google" }))
+    //.pipe(jscs.reporter('console'))
+
+    .pipe(gulp.dest(root))
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(paths.lib))
+    .pipe(uglify())
+    .on('error', handleError)
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest(paths.lib))
+    .on('end', done);
+});
+
 gulp.task('css', function (done) {
   gulp.src(paths.css)
     .pipe(sass())
@@ -46,23 +69,6 @@ gulp.task('css', function (done) {
     }))
     .on('error', handleError)
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest(paths.lib))
-    .on('end', done);
-});
-
-gulp.task('js', function (done) {
-  gulp.src(paths.js)
-    .pipe(filter('**/*.js'))
-    .pipe(jshint())
-    .pipe(jshint.reporter(stylish))
-    .pipe(fixmyjs({
-      //Jshint options      
-    }))
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest(paths.lib))
-    .pipe(uglify())
-    .on('error', handleError)
-    .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
 });
