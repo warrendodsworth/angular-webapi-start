@@ -18,7 +18,7 @@
   "requireRightStickedOperators": [ "!" ],
   "requireLeftStickedOperators": [ "," ],
   "disallowKeywords": [ "with" ],
-  "disallowMultipleLineBreaks": true,
+  "disallowMultipleLineBreaks": false,
   "disallowKeywordsOnNewLine": [ "else" ],
   "requireLineFeedAtFileEnd": true,
   "disallowSpaceAfterObjectKeys": true,
