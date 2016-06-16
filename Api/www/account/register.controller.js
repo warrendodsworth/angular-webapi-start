@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
   angular.module('controllers').controller('registerController', registerController);
   registerController.$inject = [
@@ -9,10 +9,10 @@
     'accountService'
   ];
   function registerController($scope, $location, $timeout, notifySvc, accountService) {
-    $scope.register = function(model) {
-      accountService.register(model).then(function(res) {
+    $scope.register = function (model) {
+      accountService.register(model).then(function (res) {
         notifySvc.success('Account created');
-        $timeout(function() {
+        $timeout(function () {
           $location.path('/login');
         }, 2000);
       });

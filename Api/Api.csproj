@@ -216,6 +216,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="bower.json" />
     <Content Include="index.html" />
+    <Content Include="karma.conf.js" />
     <Content Include="package.json" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -231,37 +232,40 @@
     <Content Include="test\labs\download.js" />
     <Content Include="test\labs\tutorial.spec.js" />
     <Content Include="www\account\externalLogin.html" />
-    <Content Include="www\account\externalLoginController.js" />
+    <Content Include="www\account\externalLogin.controller.js" />
     <Content Include="www\account\login.html" />
-    <Content Include="www\account\loginController.js" />
+    <Content Include="www\account\login.controller.js" />
+    <Content Include="www\account\login.spec.js" />
     <Content Include="www\account\manage\forgotPassword.html" />
+    <Content Include="www\account\manage\manage.controller.js" />
     <Content Include="www\account\manage\manage.html" />
-    <Content Include="www\account\manage\manageControllers.js" />
+    <Content Include="www\account\manage\forgotPassword.controller.js" />
+    <Content Include="www\account\manage\manageLogins.controller.js" />
     <Content Include="www\account\manage\manageLogins.html" />
     <Content Include="www\account\register.html" />
-    <Content Include="www\account\registerController.js" />
-    <Content Include="www\account\svc\accountService.js" />
-    <Content Include="www\account\svc\httpInterceptorService.js" />
-    <Content Include="www\app-routes.js" />
+    <Content Include="www\account\register.controller.js" />
+    <Content Include="www\account\svc\account.service.js" />
+    <Content Include="www\account\svc\httpInterceptor.service.js" />
+    <Content Include="www\app.routes.js" />
     <Content Include="www\app.js" />
     <Content Include="www\fonts\fontawesome-webfont.svg" />
     <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="www\home\index.html" />
-    <Content Include="www\home\indexController.js" />
+    <Content Include="www\home\index.controller.js" />
     <Content Include="www\lib\app.css" />
     <Content Include="www\lib\app.js" />
     <Content Include="www\lib\app.min.css" />
     <Content Include="www\lib\app.min.js" />
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
-    <Content Include="www\shared\navbarCtrl.js" />
-    <Content Include="www\shared\notifySvc.js" />
-    <Content Include="www\shared\qsSvc.js" />
+    <Content Include="www\shared\navbar.controller.js" />
+    <Content Include="www\shared\notify.service.js" />
+    <Content Include="www\shared\qs.service.js" />
     <Content Include="www\user\facebook\facebook.html" />
-    <Content Include="www\user\facebook\facebookController.js" />
+    <Content Include="www\user\facebook\facebook.controller.js" />
     <Content Include="www\user\notes\notes.html" />
-    <Content Include="www\user\notes\notesController.js" />
-    <Content Include="www\user\svc\noteService.js" />
+    <Content Include="www\user\notes\notes.controller.js" />
+    <Content Include="www\user\svc\note.service.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="typings.json" />
@@ -273,8 +277,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scss\app.scss" />
-    <Content Include="scss\var.scss" />
+    <None Include="less\app.less" />
+    <None Include="less\var.less" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />
@@ -302,6 +306,9 @@
     <TypeScriptCompile Include="typings\main.d.ts" />
     <TypeScriptCompile Include="typings\main\ambient\angular\index.d.ts" />
     <TypeScriptCompile Include="typings\node\node.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="jscs.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

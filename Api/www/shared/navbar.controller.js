@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
   angular.module('controllers').controller('NavbarController', navbarController);
   navbarController.$inject = [
@@ -7,7 +7,7 @@
     'accountService'
   ];
   function navbarController($scope, $location, accountService) {
-    $scope.logout = function() {
+    $scope.logout = function () {
       accountService.logout();
       $location.path('/');
     };

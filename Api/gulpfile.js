@@ -11,19 +11,27 @@ var fixmyjs = require('gulp-fixmyjs');
 var stylish = require('jshint-stylish');
 var jscs = require('gulp-jscs');
 var less = require('gulp-less');
-var sass = require('gulp-sass');
 var sh = require('shelljs');
 var bower = require('bower');
 var livereload = require('livereload');
 var mainBowerFiles = require('main-bower-files');
+var Server = require('karma').Server;
 
 var root = './www/';
 var paths = {
-  css: ['./scss/**/*.scss', root + 'css/**/*.css', '!' + root + 'lib/**.*'],
+  css: ['./less/**/*.less', root + 'css/**/*.css', '!' + root + 'lib/**.*'],
   js: [root + 'app.js', root + '**/*.js', '!' + root + 'lib/**.*'],
   font: root + 'fonts/',
   lib: root + 'lib/'
 };
+
+//Run test once and exit
+gulp.task('test', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
 
 gulp.task('default', ['css', 'js', 'bower']);
 
@@ -46,8 +54,8 @@ gulp.task('js', function (done) {
       //Jshint options   
       esversion: 5
     }))
-    .pipe(jscs({ fix: true }))
-    .pipe(jscs.reporter('console'))
+    //.pipe(jscs({ fix: true }))
+    //.pipe(jscs.reporter('console'))
 
     .pipe(gulp.dest(root))
     .pipe(concat('app.js'))
@@ -61,7 +69,7 @@ gulp.task('js', function (done) {
 
 gulp.task('css', function (done) {
   gulp.src(paths.css)
-    .pipe(sass())
+    .pipe(less())
     .pipe(concat('app.css'))
     .pipe(gulp.dest(paths.lib))
     .pipe(minifyCss({
