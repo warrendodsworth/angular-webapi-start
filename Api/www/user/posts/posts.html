@@ -1,5 +1,5 @@
 ﻿<div ng-show="filters.action == 'list'">
-  <h4>My posts</h4>
+  <h4>Me</h4>
   <p><a ng-show="identity.auth" ng-click="filters.action = 'create'" class="btn btn-primary btn-sm">CREATE</a></p>
   <br />
 
@@ -7,10 +7,12 @@
     <div class="pull-right">
       <a ng-click="delete( post, $index )">Delete</a>
     </div>
-    <div>
-      <p>{{post.text}}</p>
-      <p class="text-muted font-sm">{{post.createDate | fromNow}}</p>
-    </div>
+    <p>
+      <b>{{post.user.name}}</b>
+      <span class="font-sm text-muted">@{{post.user.username}} &middot;</span>
+      <span class="font-xs text-muted">{{post.createDate | fromNow}}</span>
+    </p>
+    <p class="font-lg">{{post.text}}</p>
     <hr />
   </div>
 
