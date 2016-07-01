@@ -50,10 +50,10 @@ gulp.task('js', function (done) {
     .pipe(filter('**/*.js'))
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
-    .pipe(fixmyjs({
-      //Jshint options   
-      esversion: 5
-    }))
+    //.pipe(fixmyjs({
+    //  //Jshint options   
+    //  esversion: 5
+    //}))
     //.pipe(jscs({ fix: true }))
     //.pipe(jscs.reporter('console'))
 

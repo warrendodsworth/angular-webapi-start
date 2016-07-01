@@ -9,16 +9,18 @@
   ];
   function accountService($q, $http, $rootScope, localStorageService) {
     var service = {};
-    //ACCOUNT
+
     $rootScope.identity = service.identity = {
       isAuth: false,
       username: ''
     };
+
     //Register
     service.register = function (model) {
       service.logout();
       return $http.post('/api/account/register', model);
     };
+
     //Login
     service.login = function (model) {
       var data = 'grant_type=password&username=' + model.username + '&password=' + model.password;
@@ -41,6 +43,7 @@
       });
       return deferred.promise;
     };
+
     //Logout
     service.logout = function () {
       localStorageService.remove('authorizationData');
@@ -63,6 +66,7 @@
     service.getCurrentUser = function () {
       return $http.get('/api/account/me');
     };
+
     //EXTERNAL LOGINS
     //Get User Info
     service.getUserInfo = function (accessToken) {

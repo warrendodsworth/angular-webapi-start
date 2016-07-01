@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Api.Providers;
 using Api.Models;
 using Microsoft.Owin.Security.Facebook;
-using AutoMapper;
 
 namespace Api
 {
@@ -21,8 +16,9 @@ namespace Api
 
     public static string PublicClientId { get; private set; }
 
+
     // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
-    public void ConfigureAuth (IAppBuilder app)
+    public void ConfigureAuth(IAppBuilder app)
     {
       // Configure the db context and user manager to use a single instance per request
       app.CreatePerOwinContext(Db.Create);
@@ -33,20 +29,21 @@ namespace Api
       app.UseCookieAuthentication(new CookieAuthenticationOptions());
       app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-      // Configure the application for OAuth based flow
+
+      //OAuth config
       PublicClientId = "self";
       OAuthOptions = new OAuthAuthorizationServerOptions
       {
-        TokenEndpointPath = new PathString("/Token"),
+        TokenEndpointPath = new PathString("/token"),
         Provider = new ApplicationOAuthProvider(PublicClientId),
-        AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+        AuthorizeEndpointPath = new PathString("/api/account/externalLogin"),
         AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
         // In production mode set AllowInsecureHttp = false
         AllowInsecureHttp = true
       };
 
-      // Enable the application to use bearer tokens to authenticate users
-      app.UseOAuthBearerTokens(OAuthOptions );
+      app.UseOAuthBearerTokens(OAuthOptions); //OAuth enable
+
 
       var facebookOptions = new FacebookAuthenticationOptions
       {
@@ -57,23 +54,7 @@ namespace Api
       facebookOptions.Scope.Add("user_hometown");
       facebookOptions.Scope.Add("user_location");
 
-      app.UseFacebookAuthentication(facebookOptions);
-
-
-      // Uncomment the following lines to enable logging in with third party login providers
-      //app.UseMicrosoftAccountAuthentication(
-      //    clientId: "",
-      //    clientSecret: "");
-
-      //app.UseTwitterAuthentication(
-      //    consumerKey: "",
-      //    consumerSecret: "");
-
-      //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-      //{
-      //    ClientId = "",
-      //    ClientSecret = ""
-      //});
+      app.UseFacebookAuthentication(facebookOptions); //Facebook OAuth enable
     }
   }
 }

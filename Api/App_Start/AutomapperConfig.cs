@@ -5,21 +5,33 @@ using AutoMapper;
 
 namespace Api
 {
-  public class Mapper
+  public class AutomapperConfig
   {
-    public static MapperConfiguration Config = new MapperConfiguration(cfg =>
+    public AutomapperConfig()
     {
-      //Notes
-      cfg.CreateMap<Note, NoteDto>();
-      cfg.CreateMap<NoteBindingModel, Note>();
+      Mapper.Initialize(c =>
+      {
+        c.AddProfile<NoteProfile>();
+        c.AddProfile<UserProfile>();
+      });
+    }
+  }
 
-      //Users
-      cfg.CreateMap<User, UserDto>();
-    });
-
-    public static IMapper CreateMapper()
+  public class NoteProfile : Profile
+  {
+    public NoteProfile()
     {
-      return Config.CreateMapper();
+      CreateMap<Note, NoteDto>();
+      CreateMap<NoteBindingModel, Note>();
+    }
+  }
+
+
+  public class UserProfile : Profile
+  {
+    public UserProfile()
+    {
+      CreateMap<User, UserDto>();
     }
   }
 }

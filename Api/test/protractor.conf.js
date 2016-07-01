@@ -1,9 +1,9 @@
 ﻿
-exports.config = {
-  framework: 'jasmine',
-  specs: ['./e2e/**/*.spec.js', './labs/**/*.spec.js'],
-  baseUrl: 'http://localhost:53233/',
-};
+//exports.config = {
+//  framework: 'jasmine',
+//  specs: ['./e2e/**/*.spec.js', './labs/**/*.spec.js'],
+//  baseUrl: 'http://localhost:53233/',
+//};
 
 
 //https://angular.github.io/protractor/#/tutorial   //Tutorial

@@ -7,6 +7,7 @@ using System.Linq;
 using Api.Models.Bind;
 using PagedList.EntityFramework;
 using Microsoft.AspNet.Identity;
+using AutoMapper;
 
 namespace Api.Controllers
 {
@@ -50,14 +51,16 @@ namespace Api.Controllers
     }
 
     // POST api/notes
-    public async Task<IHttpActionResult> Post(Note note)
+    public async Task<IHttpActionResult> Post(NoteBindingModel item)
     {
-      note.UserId = User.Identity.GetUserId();
+      item.UserId = User.Identity.GetUserId();
 
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
+
+      Note note = Mapper.Map<Note>(item);
 
       _db.Notes.Add(note);
       await _db.SaveChangesAsync();
@@ -80,8 +83,7 @@ namespace Api.Controllers
 
       var oldNote = await _db.Notes.FindAsync(id);
 
-      var m = Mapper.CreateMapper();
-      m.Map(note, oldNote);
+      Mapper.Map(note, oldNote);
 
       _db.Entry(oldNote).State = EntityState.Modified;
       await _db.SaveChangesAsync();

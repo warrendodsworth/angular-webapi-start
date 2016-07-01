@@ -49,13 +49,13 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=5.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.0.0\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
@@ -218,6 +218,7 @@
     <Content Include="index.html" />
     <Content Include="karma.conf.js" />
     <Content Include="package.json" />
+    <Content Include="test\labs\basic.spec.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -225,17 +226,16 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="test\conf.js" />
-    <Content Include="test\e2e\create.spec.js" />
-    <Content Include="test\e2e\index.spec.js" />
-    <Content Include="test\labs\angular.spec.js" />
-    <Content Include="test\labs\download.js" />
-    <Content Include="test\labs\tutorial.spec.js" />
+    <Content Include="test\protractor.conf.js" />
+    <Content Include="test\protractor\index.spec.js" />
+    <Content Include="test\protractor\angular.spec.js" />
+    <Content Include="test\protractor\download.js" />
+    <Content Include="test\protractor\tutorial.spec.js" />
     <Content Include="www\account\externalLogin.html" />
     <Content Include="www\account\externalLogin.controller.js" />
     <Content Include="www\account\login.html" />
     <Content Include="www\account\login.controller.js" />
-    <Content Include="www\account\login.spec.js" />
+    <Content Include="test\account\login.spec.js" />
     <Content Include="www\account\manage\forgotPassword.html" />
     <Content Include="www\account\manage\manage.controller.js" />
     <Content Include="www\account\manage\manage.html" />
@@ -254,8 +254,12 @@
     <Content Include="www\home\index.controller.js" />
     <Content Include="www\lib\app.css" />
     <Content Include="www\lib\app.js" />
-    <Content Include="www\lib\app.min.css" />
-    <Content Include="www\lib\app.min.js" />
+    <Content Include="www\lib\app.min.css">
+      <DependentUpon>app.css</DependentUpon>
+    </Content>
+    <Content Include="www\lib\app.min.js">
+      <DependentUpon>app.js</DependentUpon>
+    </Content>
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
     <Content Include="www\shared\navbar.controller.js" />
@@ -268,9 +272,6 @@
     <Content Include="www\user\svc\note.service.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="typings.json" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +280,8 @@
   <ItemGroup>
     <None Include="less\app.less" />
     <None Include="less\var.less" />
+    <Content Include="typings.json" />
+    <Content Include="typings\globals\angular\typings.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />
@@ -301,14 +304,11 @@
     <Folder Include="Areas\HelpPage\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="typings\browser.d.ts" />
-    <TypeScriptCompile Include="typings\browser\ambient\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\main.d.ts" />
-    <TypeScriptCompile Include="typings\main\ambient\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\node\node.d.ts" />
+    <Content Include="jscs.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="jscs.json" />
+    <TypeScriptCompile Include="typings\globals\angular\index.d.ts" />
+    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

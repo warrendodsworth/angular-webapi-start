@@ -1,5 +1,10 @@
 {
-  "ambientDependencies": {
-    "angular": "registry:dt/angular#1.5.0+20160412133217"
+  "name": "angular-webapi",
+  "dependencies": {},
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20160627105203",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
+    "jquery": "registry:dt/jquery#1.10.0+20160628074423",
+    "moment": "registry:dt/moment#2.8.0+20160316155526"
   }
 }

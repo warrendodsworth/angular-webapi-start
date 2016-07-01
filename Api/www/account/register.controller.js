@@ -5,13 +5,13 @@
     '$scope',
     '$location',
     '$timeout',
-    'notifySvc',
+    'notifyService',
     'accountService'
   ];
-  function registerController($scope, $location, $timeout, notifySvc, accountService) {
+  function registerController($scope, $location, $timeout, notifyService, accountService) {
     $scope.register = function (model) {
       accountService.register(model).then(function (res) {
-        notifySvc.success('Account created');
+        notifyService.success('Account created');
         $timeout(function () {
           $location.path('/login');
         }, 2000);

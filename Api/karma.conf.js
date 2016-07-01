@@ -15,12 +15,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'www/**/*.spec.js'
+      'www/lib/bower.js',
+      'www/lib/app.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'test/**/*.spec.js'
     ],
 
 
     // list of files to exclude
     exclude: [
+      'test/protractor/*'
     ],
 
 
