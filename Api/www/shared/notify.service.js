@@ -1,11 +1,11 @@
 (function () {
   'use strict';
 
-  angular.module('services').factory('notifyService', notifyService);
+  angular.module('services').factory('NotifyService', NotifyService);
 
-  notifyService.$inject = ['toasty'];
+  NotifyService.$inject = ['toasty'];
 
-  function notifyService(toasty) {
+  function NotifyService(toasty) {
     var service = {};
     service.success = function (msg) {
       toasty.success({

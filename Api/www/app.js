@@ -11,14 +11,14 @@
     'services'
   ]).run([
     '$rootScope',
-    'accountService',
+    'AccountService',
     function ($rootScope, AccountService) {
       AccountService.getIdentity();
     }
   ]).config([
     '$httpProvider',
     function ($httpProvider) {
-      $httpProvider.interceptors.push('httpInterceptorService');
+      $httpProvider.interceptors.push('HttpInterceptorService');
     }
   ])
 

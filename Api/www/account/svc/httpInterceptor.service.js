@@ -1,17 +1,17 @@
 (function () {
   'use strict';
 
-  angular.module('app').factory('httpInterceptorService', httpInterceptorService);
+  angular.module('app').factory('HttpInterceptorService', HttpInterceptorService);
 
-  httpInterceptorService.$inject = [
+  HttpInterceptorService.$inject = [
     '$q',
     '$location',
     '$injector',
-    'notifyService',
+    'NotifyService',
     'localStorageService'
   ];
 
-  function httpInterceptorService($q, $location, $injector, notifyService, localStorageService) {
+  function HttpInterceptorService($q, $location, $injector, NotifyService, localStorageService) {
     var service = {};
     var $http, rootScope;
 
@@ -38,7 +38,7 @@
           rootScope = rootScope || $injector.get('$rootScope');
           // send a notification with response errors
           //rootScope.$broadcast('responseError', res);
-          notifyService.handleErrors(res);
+          NotifyService.handleErrors(res);
         }
       }
       //See more at: http://codingsmackdown.tv/blog/2013/04/20/using-response-interceptors-to-show-and-hide-a-loading-widget-redux/#sthash.QBl0n2Pf.dpuf

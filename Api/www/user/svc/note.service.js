@@ -1,11 +1,13 @@
 (function () {
   'use strict';
-  angular.module('services').service('noteService', [
-    '$http',
-    'qsSvc',
-    noteService
-  ]);
-  function noteService($http, qs) {
+
+  angular
+    .module('services')
+    .service('NoteService', NoteService);
+
+  NoteService.$inject = ['$http', 'QsService'];
+
+  function NoteService($http, qs) {
     var service = {};
     service.getNotes = function (filter) {
       return $http.get('/api/notes' + qs.toQs(filter));

@@ -1,13 +1,13 @@
 (function () {
   'use strict';
-  angular.module('services').factory('accountService', accountService);
-  accountService.$inject = [
+  angular.module('services').factory('AccountService', AccountService);
+  AccountService.$inject = [
     '$q',
     '$http',
     '$rootScope',
     'localStorageService'
   ];
-  function accountService($q, $http, $rootScope, localStorageService) {
+  function AccountService($q, $http, $rootScope, localStorageService) {
     var service = {};
 
     $rootScope.identity = service.identity = {

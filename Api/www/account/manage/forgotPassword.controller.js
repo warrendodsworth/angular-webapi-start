@@ -5,11 +5,11 @@
     '$scope',
     '$location',
     '$timeout',
-    'accountService'
+    'AccountService'
   ];
-  function forgotPassword($scope, $location, $timeout, accountService) {
+  function forgotPassword($scope, $location, $timeout, AccountService) {
     $scope.forgotPassword = function (model) {
-      accountService.forgotPassword(model).then(function (res) {
+      AccountService.forgotPassword(model).then(function (res) {
         $scope.res = 'We\'ve sent you a link';
         $timeout(function () {
           $location.path('/');

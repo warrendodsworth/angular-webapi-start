@@ -1,17 +1,17 @@
 (function () {
   'use strict';
-  angular.module('controllers').controller('loginController', [
+  angular.module('controllers').controller('LoginController', [
     '$scope',
     '$location',
-    'accountService',
-    loginController
+    'AccountService',
+    LoginController
   ]);
-  function loginController($scope, $location, accountService) {
-    accountService.getExternalLogins().then(function (res) {
+  function LoginController($scope, $location, AccountService) {
+    AccountService.getExternalLogins().then(function (res) {
       $scope.logins = res.data;
     });
     $scope.login = function (model) {
-      accountService.login(model).then(function (res) {
+      AccountService.login(model).then(function (res) {
         $location.path('/').search('m', 'welcome');
       });
     };

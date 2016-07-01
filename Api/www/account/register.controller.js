@@ -1,17 +1,17 @@
 (function () {
   'use strict';
-  angular.module('controllers').controller('registerController', registerController);
-  registerController.$inject = [
+  angular.module('controllers').controller('RegisterController', RegisterController);
+  RegisterController.$inject = [
     '$scope',
     '$location',
     '$timeout',
-    'notifyService',
-    'accountService'
+    'NotifyService',
+    'AccountService'
   ];
-  function registerController($scope, $location, $timeout, notifyService, accountService) {
+  function RegisterController($scope, $location, $timeout, NotifyService, AccountService) {
     $scope.register = function (model) {
-      accountService.register(model).then(function (res) {
-        notifyService.success('Account created');
+      AccountService.register(model).then(function (res) {
+        NotifyService.success('Account created');
         $timeout(function () {
           $location.path('/login');
         }, 2000);

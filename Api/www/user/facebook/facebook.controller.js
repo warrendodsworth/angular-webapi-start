@@ -1,12 +1,12 @@
 (function () {
   'use strict';
-  angular.module('app').controller('facebookController', facebookController);
-  facebookController.$inject = [
+  angular.module('app').controller('FacebookController', FacebookController);
+  FacebookController.$inject = [
     '$scope',
     '$http',
     '$facebook'
   ];
-  function facebookController($scope, $http, $facebook) {
+  function FacebookController($scope, $http, $facebook) {
     $scope.title = 'Facebook';
     var authData, connected;
     $facebook.getLoginStatus().then(function (res) {

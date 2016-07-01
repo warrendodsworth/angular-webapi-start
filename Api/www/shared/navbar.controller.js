@@ -4,11 +4,11 @@
   navbarController.$inject = [
     '$scope',
     '$location',
-    'accountService'
+    'AccountService'
   ];
-  function navbarController($scope, $location, accountService) {
+  function navbarController($scope, $location, AccountService) {
     $scope.logout = function () {
-      accountService.logout();
+      AccountService.logout();
       $location.path('/');
     };
   }

@@ -1,15 +1,13 @@
 (function () {
   'use strict';
-  angular.module('controllers').controller('notes.indexController', notesController);
-  notesController.$inject = [
-    '$scope',
-    '$http',
-    '$location',
-    'notifyService',
-    'qsSvc',
-    'noteService'
-  ];
-  function notesController($scope, $http, $location, notifyService, qs, noteService) {
+
+  angular
+    .module('controllers')
+    .controller('notes.IndexController', notesController);
+
+  notesController.$inject = ['$scope', '$http', '$location', 'NotifyService', 'QsService', 'noteService'];
+
+  function notesController($scope, $http, $location, NotifyService, qs, noteService) {
     var vm = $scope;
     vm.filters = qs.toFilters();
     vm.$watch('filters', function (val) {
@@ -24,14 +22,14 @@
     vm.pageChanged();
     vm.create = function (model) {
       noteService.postNote(model).then(function (res) {
-        notifyService.success('Note Created');
+        NotifyService.success('Note Created');
         vm.filters.action = 'list';
       });
     };
     vm.delete = function (note, index) {
       noteService.deleteNote(note.id).then(function (res) {
         vm.notes.splice(index, 1);
-        notifyService.success('Deleted');
+        NotifyService.success('Deleted');
       });
     };
   }
