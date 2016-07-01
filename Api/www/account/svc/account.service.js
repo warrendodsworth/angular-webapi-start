@@ -11,7 +11,7 @@
     var service = {};
 
     $rootScope.identity = service.identity = {
-      isAuth: false,
+      auth: false,
       username: ''
     };
 
@@ -25,15 +25,11 @@
     service.login = function (model) {
       var data = 'grant_type=password&username=' + model.username + '&password=' + model.password;
       var deferred = $q.defer();
+
       $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
-        localStorageService.set('authorizationData', {
-          token: res.data.access_token,
-          tokenType: res.data.token_type,
-          expiresIn: res.data.expires_in,
-          name: res.data.name,
-          username: res.data.username
-        });
-        service.identity.isAuth = true;
+        localStorageService.set('authorizationData', res.data);
+
+        service.identity.auth = true;
         service.identity.username = res.data.username;
         service.identity.name = res.data.name;
         deferred.resolve(res);
@@ -47,15 +43,15 @@
     //Logout
     service.logout = function () {
       localStorageService.remove('authorizationData');
-      service.identity.isAuth = false;
+      service.identity.auth = false;
       service.identity.username = '';
       service.identity.name = '';  //$rootScope.$broadcast('user:logout', service.identity);
-                                   //Only required if you overwrite an entire service object, modifying the individual properties removes the need for broadcast
+      //Only required if you overwrite an entire service object, modifying the individual properties removes the need for broadcast
     };
     service.getIdentity = function () {
       var authData = localStorageService.get('authorizationData');
       if (authData) {
-        service.identity.isAuth = true;
+        service.identity.auth = true;
         service.identity.username = authData.username;
         service.identity.name = authData.name;
       }

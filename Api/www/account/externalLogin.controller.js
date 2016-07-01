@@ -39,7 +39,7 @@
       if (res.data.hasRegistered) {
         $scope.action = 'process';
 
-        if (AccountService.identity.isAuth) {
+        if (AccountService.identity.auth) {
           //Add login (user already registered)
           AccountService.addExternalLogin({ externalAccessToken: accessToken }).then(function (res) {
             $window.location.href = '/#/manage/logins?m=added';
@@ -50,9 +50,9 @@
         } else {
           //Log user in
           localStorageService.set('authorizationData', {
-            token: accessToken,
-            tokenType: tokenType,
-            expiresIn: expiresIn
+            access_token: accessToken,
+            token_type: tokenType,
+            expires_in: expiresIn
           });
           $window.location.href = '/#/';
         }
@@ -67,11 +67,7 @@
         $scope.res = 'You\'ve registered successfully';
         console.log(res);
 
-        localStorageService.set('authorizationData', {
-          token: res.data.access_token,
-          tokenType: res.data.token_type,
-          expiresIn: res.data.expires_in
-        });
+        localStorageService.set('authorizationData', res.data );
 
         $window.location.href = '/#/';
       });
@@ -79,3 +75,16 @@
   }
 
 })();
+
+
+//{
+//  access_token: res.data.access_token,
+//  token_type: res.data.token_type,
+//  expires_in: res.data.expires_in
+//}
+
+//access_token: res.data.access_token,
+//token_type: res.data.token_type,
+//expires_in: res.data.expires_in,
+//name: res.data.name,
+//username: res.data.username

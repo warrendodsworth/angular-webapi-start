@@ -3,13 +3,7 @@
 
   angular.module('app').factory('HttpInterceptorService', HttpInterceptorService);
 
-  HttpInterceptorService.$inject = [
-    '$q',
-    '$location',
-    '$injector',
-    'NotifyService',
-    'localStorageService'
-  ];
+  HttpInterceptorService.$inject = ['$q', '$location', '$injector', 'NotifyService', 'localStorageService'];
 
   function HttpInterceptorService($q, $location, $injector, NotifyService, localStorageService) {
     var service = {};
@@ -20,7 +14,7 @@
       config.headers['X-Requested-With'] = 'XMLHttpRequest';
       var authData = localStorageService.get('authorizationData');
       if (authData) {
-        config.headers.Authorization = 'Bearer ' + authData.token;
+        config.headers.Authorization = 'Bearer ' + authData.access_token;
       }
       return config;
     };

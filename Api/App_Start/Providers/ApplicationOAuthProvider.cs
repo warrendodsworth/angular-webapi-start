@@ -96,7 +96,7 @@ namespace Api.Providers
     {
       if ( context.ClientId == _publicClientId )
       {
-        Uri expectedRootUri = new Uri(context.Request.Uri, "/js/account/externalLogin.html");
+        Uri expectedRootUri = new Uri(context.Request.Uri, "/www/account/externalLogin.html");
 
         if ( expectedRootUri.AbsoluteUri == context.RedirectUri )
         {

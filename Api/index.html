@@ -23,10 +23,10 @@
         <ul class="nav navbar-nav">
           <li></li>
         </ul>
-        <ul ng-hide="identity.isAuth" class="nav navbar-nav navbar-right">
+        <ul ng-show="!identity.auth" class="nav navbar-nav navbar-right">
           <li><a href="#/login">Login</a></li>
         </ul>
-        <ul ng-show="identity.isAuth" class="nav navbar-nav navbar-right">
+        <ul ng-show="identity.auth" class="nav navbar-nav navbar-right">
           <li><a href="#/notes/create"><i class="fa fa-plus"></i></a></li>
           <li><a href="#/notes">Notes</a></li>
           <li><a href="#/manage">{{identity.name}}</a></li>

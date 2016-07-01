@@ -49,7 +49,7 @@ gulp.task('js', function (done) {
   gulp.src(paths.js)
     .pipe(filter('**/*.js'))
     .pipe(jshint())
-    .pipe(jshint.reporter(stylish))
+    .pipe(jshint.reporter('default'))
     //.pipe(fixmyjs({
     //  //Jshint options   
     //  esversion: 5

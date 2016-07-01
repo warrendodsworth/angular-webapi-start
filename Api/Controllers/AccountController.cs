@@ -230,7 +230,7 @@ namespace Api.Controllers
     {
       if ( error != null )
       {
-        return Redirect(Url.Content("~/js/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
+        return Redirect(Url.Content("~/www/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
       }
 
       //1st time - send user to external provider to login
