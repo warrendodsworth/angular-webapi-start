@@ -23,7 +23,7 @@ namespace Test
     [TestMethod]
     public void Notes_GetList()
     {
-      var items = db.Notes.ToList();
+      var items = db.Posts.ToList();
 
       Assert.IsFalse(false);
     }

@@ -8,8 +8,8 @@
   function IndexController($scope, $http, $location) {
     var vm = $scope;
 
-    $http.get('/api/notes').then(function (res) {
-      vm.notes = res.data.items;
+    $http.get('/api/posts').then(function (res) {
+      vm.posts = res.data.items;
       vm.total = res.data.total;
     });
   }

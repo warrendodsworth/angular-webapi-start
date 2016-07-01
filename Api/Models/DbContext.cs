@@ -16,7 +16,7 @@ namespace Api.Models
 
     }
 
-    public DbSet<Note> Notes { get; set; }
+    public DbSet<Post> Posts { get; set; }
 
     public static Db Create()
     {

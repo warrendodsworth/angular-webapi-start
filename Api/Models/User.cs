@@ -13,7 +13,7 @@ namespace Api.Models
 
     public UserStatus Status { get; set; }
 
-    public virtual IList<Note> Notes { get; set; }
+    public virtual IList<Post> Posts { get; set; }
 
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
     {

@@ -8,50 +8,51 @@ using Api.Models.Bind;
 using PagedList.EntityFramework;
 using Microsoft.AspNet.Identity;
 using AutoMapper;
+using Api.Models.Dto;
 
 namespace Api.Controllers
 {
   [Authorize]
-  [RoutePrefix("api/notes")]
-  public class NotesController : ApiController
+  [RoutePrefix("api/posts")]
+  public class PostsController : ApiController
   {
     private Db _db = new Db();
 
-    // GET api/notes
+    // GET api/posts
     [AllowAnonymous]
     public async Task<object> Get(string search = null, int page = 1, int show = 10)
     {
-      var q = _db.Notes.Include(n => n.User).AsQueryable();
+      var q = _db.Posts.Include(n => n.User).AsQueryable();
 
       if (search != null)
       {
-        q = q.Where(x => x.Text.Contains(search) || x.Title.Contains(search));
+        q = q.Where(x => x.Text.Contains(search));
       }
 
-      var res = await q.OrderByDescending(n => n.Text).ToPagedListAsync(page, show);
+      var res = await q.OrderByDescending(n => n.CreateDate).ToPagedListAsync(page, show);
 
       return new
       {
-        items = res,
+        items = res.Select(x => Mapper.Map<PostDto>(x)),
         total = res.TotalItemCount
       };
     }
 
-    // GET api/notes/5
+    // GET api/posts/5
     [AllowAnonymous]
     public async Task<IHttpActionResult> Get(int id)
     {
-      var note = await _db.Notes.FindAsync(id);
-      if (note == null)
+      var post = await _db.Posts.FindAsync(id);
+      if (post == null)
       {
         return NotFound();
       }
 
-      return Ok(note);
+      return Ok(post);
     }
 
-    // POST api/notes
-    public async Task<IHttpActionResult> Post(NoteBindingModel item)
+    // POST api/posts
+    public async Task<IHttpActionResult> Post(PostBindingModel item)
     {
       item.UserId = User.Identity.GetUserId();
 
@@ -60,47 +61,47 @@ namespace Api.Controllers
         return BadRequest(ModelState);
       }
 
-      Note note = Mapper.Map<Note>(item);
+      Post post = Mapper.Map<Post>(item);
 
-      _db.Notes.Add(note);
+      _db.Posts.Add(post);
       await _db.SaveChangesAsync();
 
       return Ok();
     }
 
-    // PUT api/notes/5
-    public async Task<IHttpActionResult> Put(int id, NoteBindingModel note)
+    // PUT api/posts/5
+    public async Task<IHttpActionResult> Put(int id, PostBindingModel item)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest();
       }
 
-      if (id != note.Id)
+      if (id != item.Id)
       {
         return BadRequest();
       }
 
-      var oldNote = await _db.Notes.FindAsync(id);
+      var post = await _db.Posts.FindAsync(id);
 
-      Mapper.Map(note, oldNote);
+      Mapper.Map(item, post);
 
-      _db.Entry(oldNote).State = EntityState.Modified;
+      _db.Entry(post).State = EntityState.Modified;
       await _db.SaveChangesAsync();
 
       return StatusCode(HttpStatusCode.NoContent);
     }
 
-    // DELETE api/notes/5
+    // DELETE api/posts/5
     public async Task<IHttpActionResult> Delete(int id)
     {
-      var note = await _db.Notes.FindAsync(id);
+      var note = await _db.Posts.FindAsync(id);
       if (note == null)
       {
         return NotFound();
       }
 
-      _db.Notes.Remove(note);
+      _db.Posts.Remove(note);
       await _db.SaveChangesAsync();
 
       return Ok();

@@ -184,8 +184,8 @@
   <ItemGroup>
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
-    <Compile Include="Models\Bind\NoteBindingModel.cs" />
-    <Compile Include="Models\Dto\NoteDto.cs" />
+    <Compile Include="Models\Bind\PostBindingModel.cs" />
+    <Compile Include="Models\Dto\PostDto.cs" />
     <Compile Include="Services\ClaimsExtensions.cs" />
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
@@ -195,15 +195,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Api\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\NotesController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bind\AccountBindingModels.cs" />
-    <Compile Include="Models\Bind\AccountViewModels.cs" />
+    <Compile Include="Models\Dto\AccountViewModels.cs" />
     <Compile Include="Models\DbContext.cs" />
-    <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Providers\ApplicationOAuthProvider.cs" />
@@ -262,14 +262,15 @@
     </Content>
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
+    <Content Include="www\shared\dir\fromNow.js" />
     <Content Include="www\shared\navbar.controller.js" />
     <Content Include="www\shared\notify.service.js" />
     <Content Include="www\shared\qs.service.js" />
     <Content Include="www\user\facebook\facebook.html" />
     <Content Include="www\user\facebook\facebook.controller.js" />
-    <Content Include="www\user\notes\notes.html" />
-    <Content Include="www\user\notes\notes.controller.js" />
-    <Content Include="www\user\svc\note.service.js" />
+    <Content Include="www\user\posts\posts.html" />
+    <Content Include="www\user\posts\posts.controller.js" />
+    <Content Include="www\user\svc\post.service.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

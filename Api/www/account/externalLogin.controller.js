@@ -59,7 +59,7 @@
       } else {
         $scope.action = 'register';
       }
-    })
+    });
 
 
     $scope.registerExternal = function (model) {

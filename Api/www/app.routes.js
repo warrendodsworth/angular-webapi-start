@@ -14,7 +14,7 @@
         .when('/manage/logins', { templateUrl: root + 'account/manage/manageLogins.html', controller: 'manageLoginsController' });
       //User
       $routeProvider
-        .when('/notes', { templateUrl: root + 'user/notes/notes.html', controller: 'notes.IndexController' })
+        .when('/posts', { templateUrl: root + 'user/posts/posts.html', controller: 'posts.IndexController' })
         .when('/facebook', { templateUrl: root + 'user/facebook/facebook.html', controller: 'FacebookController' })
 
         .when('/', { templateUrl: root + 'home/index.html', controller: 'IndexController' })

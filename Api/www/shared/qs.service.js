@@ -1,10 +1,13 @@
 (function () {
   'use strict';
+
   // This service reads data from the query string into a filter object.
   //http://www.metaltoad.com/blog/managing-querystring-angular-location
   angular.module('services').factory('QsService', QsService);
+
   function QsService($location) {
     var service = {};
+
     service.toFilters = function (filterObj) {
       //Set defaults
       filterObj = filterObj || {};
@@ -20,6 +23,7 @@
       }
       return filterObj;
     };
+
     service.toQs = function (filters) {
       var qs = '?';
       for (var f in filters) {
@@ -28,6 +32,7 @@
       $location.search(filters);
       return qs.slice(0, -1);
     };
+
     return service;
   }
 }());

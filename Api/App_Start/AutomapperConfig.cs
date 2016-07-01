@@ -7,22 +7,22 @@ namespace Api
 {
   public class AutomapperConfig
   {
-    public AutomapperConfig()
+    public static void Init()
     {
       Mapper.Initialize(c =>
       {
-        c.AddProfile<NoteProfile>();
         c.AddProfile<UserProfile>();
+        c.AddProfile<PostProfile>();
       });
     }
   }
 
-  public class NoteProfile : Profile
+  public class PostProfile : Profile
   {
-    public NoteProfile()
+    public PostProfile()
     {
-      CreateMap<Note, NoteDto>();
-      CreateMap<NoteBindingModel, Note>();
+      CreateMap<Post, PostDto>();
+      CreateMap<PostBindingModel, Post>();
     }
   }
 
