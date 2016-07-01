@@ -1,18 +1,15 @@
 (function () {
   'use strict';
+
   angular.module('services').factory('AccountService', AccountService);
-  AccountService.$inject = [
-    '$q',
-    '$http',
-    '$rootScope',
-    'localStorageService'
-  ];
+
+  AccountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
+
   function AccountService($q, $http, $rootScope, localStorageService) {
     var service = {};
 
     $rootScope.identity = service.identity = {
-      auth: false,
-      username: ''
+      auth: false
     };
 
     //Register
@@ -45,7 +42,8 @@
       localStorageService.remove('authorizationData');
       service.identity.auth = false;
       service.identity.username = '';
-      service.identity.name = '';  //$rootScope.$broadcast('user:logout', service.identity);
+      service.identity.name = '';
+      //$rootScope.$broadcast('user:logout', service.identity);
       //Only required if you overwrite an entire service object, modifying the individual properties removes the need for broadcast
     };
     service.getIdentity = function () {
