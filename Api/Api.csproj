@@ -190,6 +190,7 @@
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Services\Helpers\EnumHelper.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="App_Start\Mvc\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -282,7 +283,6 @@
     <None Include="less\app.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />
-    <Content Include="typings\globals\angular\typings.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />
@@ -306,10 +306,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="jscs.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="typings\globals\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
