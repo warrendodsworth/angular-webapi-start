@@ -1,6 +1,6 @@
-﻿<div ng-show="action == 'list'">
+﻿<div ng-show="filters.action == 'list'">
   <h4>Me</h4>
-  <p><a ng-show="identity.auth" ng-click="action = 'create'" class="btn btn-primary btn-sm">CREATE</a></p>
+  <p><a ng-show="identity.auth" ng-click="filters.action = 'create'" class="btn btn-primary btn-sm">CREATE</a></p>
   <br />
 
   <div ng-repeat="post in posts.items">
@@ -34,7 +34,7 @@
         </div>
 
         <input type="submit" ng-click="create( model )" value="Post" class="btn btn-primary" />&nbsp;
-        <a ng-click="action = 'list'">Cancel</a>
+        <a ng-click="filters.action = 'list'">Cancel</a>
       </form>
       <br />
 

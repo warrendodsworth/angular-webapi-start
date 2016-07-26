@@ -9,7 +9,7 @@
 
   function postService($http, qs) {
     var service = {};
-    var url = '/api/user/'
+    var url = '/api/user/';
 
     service.getPosts = function (filter) {
       return $http.get(url + 'posts' + qs.toQs(filter));
