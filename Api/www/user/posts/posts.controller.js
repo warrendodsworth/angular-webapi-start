@@ -9,6 +9,7 @@
 
   function notesController($scope, $http, $location, NotifyService, qs, postService) {
     var vm = $scope;
+    vm.action = 'list';
 
     vm.filters = qs.toFilters();
     vm.$watch('filters', function (val) {
@@ -16,23 +17,23 @@
     }, true);
 
     vm.pageChanged = function () {
-      postService.getNotes(vm.filters).then(function (res) {
-        vm.posts = res.data.items;
-        vm.total = res.data.total;
+      postService.getPosts(vm.filters).then(function (res) {
+        vm.posts = res.data;
       });
     };
     vm.pageChanged();
 
     vm.create = function (model) {
-      postService.postNote(model).then(function (res) {
+      postService.postPost(model).then(function (res) {
         NotifyService.success('Note Created');
-        vm.filters.action = 'list';
+        vm.posts.items.push(res.data);
+        vm.action = 'list';
       });
     };
 
-    vm.delete = function (note, index) {
-      postService.deleteNote(note.id).then(function (res) {
-        vm.posts.splice(index, 1);
+    vm.delete = function (item, index) {
+      postService.deletePost(item.id).then(function (res) {
+        vm.posts.items.splice(index, 1);
         NotifyService.success('Deleted');
       });
     };

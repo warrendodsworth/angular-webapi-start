@@ -9,8 +9,7 @@
     var vm = $scope;
 
     $http.get('/api/posts').then(function (res) {
-      vm.posts = res.data.items;
-      vm.total = res.data.total;
+      vm.posts = res.data;
     });
   }
 }());

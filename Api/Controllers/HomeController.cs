@@ -7,17 +7,16 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Data.Entity;
 
-
 namespace Api.Controllers
 {
   [RoutePrefix("api")]
   public class HomeController : ApiController
   {
-    private Db _db = new Db();
+    private Db _db;
 
     public HomeController()
     {
-
+      _db = new Db();
     }
 
     [Route("posts")]

@@ -9,15 +9,20 @@
 
   function postService($http, qs) {
     var service = {};
-    service.getNotes = function (filter) {
-      return $http.get('/api/posts' + qs.toQs(filter));
+    var url = '/api/user/'
+
+    service.getPosts = function (filter) {
+      return $http.get(url + 'posts' + qs.toQs(filter));
     };
-    service.postNote = function (model) {
-      return $http.post('/api/posts', model);
+
+    service.postPost = function (model) {
+      return $http.post(url + 'posts', model);
     };
-    service.deleteNote = function (id) {
-      return $http.delete('/api/posts/' + id);
+
+    service.deletePost = function (id) {
+      return $http.delete(url + 'posts/' + id);
     };
+
     return service;
   }
 }());

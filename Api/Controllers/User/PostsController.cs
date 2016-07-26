@@ -13,14 +13,17 @@ using Api.Models.Dto;
 namespace Api.Controllers
 {
   [Authorize]
-  [RoutePrefix("api/posts")]
-  public class PostsController : ApiController
+  [RoutePrefix("api/user/posts")]
+  public class UserPostsController : ApiController
   {
     private Db _db = new Db();
 
+    [Route("")]
     public async Task<PagedResult<PostDto>> Get(string search = null, int page = 1, int show = 10)
     {
-      var q = _db.Posts.Include(n => n.User).AsQueryable();
+      var userId = User.Identity.GetUserId();
+      var q = _db.Posts.Include(n => n.User)
+                       .Where(x => x.UserId == userId).AsQueryable();
 
       if (search != null)
       {
@@ -36,6 +39,7 @@ namespace Api.Controllers
       };
     }
 
+    [Route("{id:int}", Name = "UserPost")]
     public async Task<IHttpActionResult> Get(int id)
     {
       var post = await _db.Posts.FindAsync(id);
@@ -47,6 +51,7 @@ namespace Api.Controllers
       return Ok(post);
     }
 
+    [Route("")]
     public async Task<IHttpActionResult> Post(PostBindingModel item)
     {
       item.UserId = User.Identity.GetUserId();
@@ -56,14 +61,18 @@ namespace Api.Controllers
         return BadRequest(ModelState);
       }
 
-      Post post = Mapper.Map<Post>(item);
+      var post = Mapper.Map<Post>(item);
 
       _db.Posts.Add(post);
-      await _db.SaveChangesAsync();
+      var created = 1 == await _db.SaveChangesAsync();
+      if (created)
+        return CreatedAtRoute("UserPost", new { id = post.Id }, Mapper.Map<PostDto>(post));
 
-      return Ok();
+
+      return BadRequest(ModelState);
     }
 
+    [Route("{id:int}")]
     public async Task<IHttpActionResult> Put(int id, PostBindingModel item)
     {
       if (!ModelState.IsValid)
@@ -86,6 +95,7 @@ namespace Api.Controllers
       return StatusCode(HttpStatusCode.NoContent);
     }
 
+    [Route("{id:int}")]
     public async Task<IHttpActionResult> Delete(int id)
     {
       var note = await _db.Posts.FindAsync(id);
