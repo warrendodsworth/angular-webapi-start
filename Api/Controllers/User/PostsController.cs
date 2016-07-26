@@ -18,9 +18,7 @@ namespace Api.Controllers
   {
     private Db _db = new Db();
 
-    // GET api/posts
-    [AllowAnonymous]
-    public async Task<object> Get(string search = null, int page = 1, int show = 10)
+    public async Task<PagedResult<PostDto>> Get(string search = null, int page = 1, int show = 10)
     {
       var q = _db.Posts.Include(n => n.User).AsQueryable();
 
@@ -31,15 +29,13 @@ namespace Api.Controllers
 
       var res = await q.OrderByDescending(n => n.CreateDate).ToPagedListAsync(page, show);
 
-      return new
+      return new PagedResult<PostDto>
       {
         items = res.Select(x => Mapper.Map<PostDto>(x)),
         total = res.TotalItemCount
       };
     }
 
-    // GET api/posts/5
-    [AllowAnonymous]
     public async Task<IHttpActionResult> Get(int id)
     {
       var post = await _db.Posts.FindAsync(id);
@@ -51,7 +47,6 @@ namespace Api.Controllers
       return Ok(post);
     }
 
-    // POST api/posts
     public async Task<IHttpActionResult> Post(PostBindingModel item)
     {
       item.UserId = User.Identity.GetUserId();
@@ -69,7 +64,6 @@ namespace Api.Controllers
       return Ok();
     }
 
-    // PUT api/posts/5
     public async Task<IHttpActionResult> Put(int id, PostBindingModel item)
     {
       if (!ModelState.IsValid)
@@ -92,7 +86,6 @@ namespace Api.Controllers
       return StatusCode(HttpStatusCode.NoContent);
     }
 
-    // DELETE api/posts/5
     public async Task<IHttpActionResult> Delete(int id)
     {
       var note = await _db.Posts.FindAsync(id);

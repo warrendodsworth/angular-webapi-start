@@ -184,7 +184,9 @@
   <ItemGroup>
     <Compile Include="App_Start\AutomapperConfig.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Models\Bind\PostBindingModel.cs" />
+    <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\PostDto.cs" />
     <Compile Include="Services\ClaimsExtensions.cs" />
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
@@ -196,7 +198,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Api\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\PostsController.cs" />
+    <Compile Include="Controllers\User\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
