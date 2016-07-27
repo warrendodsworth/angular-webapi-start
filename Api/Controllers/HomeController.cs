@@ -12,11 +12,11 @@ namespace Api.Controllers
   [RoutePrefix("api")]
   public class HomeController : ApiController
   {
-    private Db _db;
+    private IDb _db;
 
-    public HomeController()
+    public HomeController(IDb db)
     {
-      _db = new Db();
+      _db = db;
     }
 
     [Route("posts")]

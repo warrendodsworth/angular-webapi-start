@@ -7,11 +7,11 @@ namespace Api.Controllers.Admin
   [RoutePrefix("api/users")]
   public class AdminUsersController : ApiController
   {
-    private Db _db;
+    private IDb _db;
 
-    public AdminUsersController()
+    public AdminUsersController(IDb db)
     {
-      _db = new Db();
+      _db = db;
     }
 
     [Route("")]
@@ -19,6 +19,5 @@ namespace Api.Controllers.Admin
     {
       return null;
     }
-
   }
 }

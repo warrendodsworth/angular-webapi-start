@@ -16,7 +16,12 @@ namespace Api.Controllers
   [RoutePrefix("api/user/posts")]
   public class UserPostsController : ApiController
   {
-    private Db _db = new Db();
+    private IDb _db;
+
+    public UserPostsController(IDb db)
+    {
+      _db = db;
+    }
 
     [Route("")]
     public async Task<PagedResult<PostDto>> Get(string search = null, int page = 1, int show = 10)
@@ -89,7 +94,7 @@ namespace Api.Controllers
 
       Mapper.Map(item, post);
 
-      _db.Entry(post).State = EntityState.Modified;
+      _db.MarkAsModified(post);
       await _db.SaveChangesAsync();
 
       return StatusCode(HttpStatusCode.NoContent);
@@ -108,15 +113,6 @@ namespace Api.Controllers
       await _db.SaveChangesAsync();
 
       return Ok();
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-      if (disposing)
-      {
-        _db.Dispose();
-      }
-      base.Dispose(disposing);
     }
   }
 }

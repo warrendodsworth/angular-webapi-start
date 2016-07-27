@@ -2,12 +2,21 @@
 using System.Data.Common;
 using System.Data.Entity;
 using System;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Api.Models
 {
   public interface IDb : IDisposable
   {
     DbSet<Post> Posts { get; set; }
+
+    void MarkAsModified(object item);
+
+    int SaveChanges();
+    Task<int> SaveChangesAsync();
+    DbSet Set(Type entityType);
+    DbSet<TEntity> Set<TEntity>() where TEntity : class;
   }
 
   public class Db : IdentityDbContext<User>, IDb
@@ -27,6 +36,16 @@ namespace Api.Models
     public static Db Create()
     {
       return new Db();
+    }
+
+    public void MarkAsModified(object item)
+    {
+      Entry(item).State = EntityState.Modified;
+    }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
     }
   }
 }

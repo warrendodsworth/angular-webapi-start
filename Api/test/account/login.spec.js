@@ -1,5 +1,5 @@
 describe('login', function () {
-  it('should say Hello to the World', function () {
+  it('should say Login', function () {
     expect(greet('World')).toEqual('Hello, World!');
   });
 });

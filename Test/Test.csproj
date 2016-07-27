@@ -102,7 +102,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Controllers\Posts.cs" />
+    <Compile Include="Controllers\HomeControllerTests.cs" />
     <Compile Include="Mocks\MockDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

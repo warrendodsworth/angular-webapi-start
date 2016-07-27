@@ -16,10 +16,8 @@ using Api;
 namespace Test
 {
   [TestClass]
-  public class Posts
+  public class HomeControllerTests
   {
-    private Db db;
-
     [TestInitialize]
     public void Initialize()
     {
@@ -38,11 +36,15 @@ namespace Test
     }
 
     [TestMethod]
-    public async Task Notes_GetList()
+    public async Task Posts_GetAll()
     {
+      //Arrange
       var controller = new HomeController();
+
+      //Act
       var posts = await controller.Get();
 
+      //Assert
       Assert.IsNotNull(posts);
       Assert.IsTrue(posts.items.Count() > 1);
     }
