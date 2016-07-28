@@ -1,47 +1,45 @@
 (function () {
-  'use strict';
+  'use-strict';
 
-  //Modules
-  angular.module('app', ['ngRoute',
+  angular.module('app', [
+    'ngRoute',
+    'ngAnimate',
+    'angular-toasty',
+    'ui.bootstrap',
+    'LocalStorageModule',
+    'controllers',
+    'services'
+  ]).run([
+    '$rootScope',
+    'AccountService',
+    function ($rootScope, AccountService) {
+      AccountService.getIdentity();
+    }
+  ]).config([
+    '$httpProvider',
+    function ($httpProvider) {
+      $httpProvider.interceptors.push('HttpInterceptorService');
+    }
+  ])
 
-                         'controllers',
-                         'directives',
-
-                         'ui.bootstrap',
-                         'ngFacebook',
-                         'LocalStorageModule']);
+  .config(['toastyConfigProvider', function (toastyConfigProvider) {
+    toastyConfigProvider.setConfig({
+      sound: false,
+      shake: false,
+      theme: 'material'
+    });
+  }]);
 
   angular.module('controllers', ['services']);
-
-  angular.module('directives', ['services']);
-
   angular.module('services', []);
 
-  //Plugins
-  angular
-     .module('app')
+}());
 
-     .config(['$httpProvider', '$facebookProvider', function ($httpProvider, $facebookProvider) {
-       $httpProvider.interceptors.push('HttpInterceptorService');
 
-       $facebookProvider.setAppId('292179600807388')
-                     .setPermissions("email,user_likes");
-     }])
-
-    .run(['$rootScope', 'AccountService', function ($rootScope, AccountService) {
-      AccountService.getIdentity();
-
-      $rootScope.year = new Date().getFullYear();
-
-      // Cut and paste the "Load the SDK" code from the facebook javascript sdk page.
-      // Load the facebook SDK asynchronously
-      (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) { return; }
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    }]);
-
-})();
+//var config = {
+//  apiKey: 'AIzaSyC9xO8omc7TxZZ0n4SOQW3bpE-uRryaVD4',
+//  authDomain: 'dazzling-fire-5094.firebaseapp.com',
+//  databaseURL: 'https://dazzling-fire-5094.firebaseio.com/',
+//  storageBucket: 'gs://dazzling-fire-5094.appspot.com'
+//};
+//firebase.initializeApp(config);

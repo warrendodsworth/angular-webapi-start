@@ -6,19 +6,32 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
+var jshint = require('gulp-jshint');
+var fixmyjs = require('gulp-fixmyjs');
+var stylish = require('jshint-stylish');
+var jscs = require('gulp-jscs');
 var less = require('gulp-less');
-var sass = require('gulp-sass');
 var sh = require('shelljs');
 var bower = require('bower');
 var livereload = require('livereload');
 var mainBowerFiles = require('main-bower-files');
+var Server = require('karma').Server;
 
+var root = './www/';
 var paths = {
-  css: ['./scss/**/*.scss', './css/**/*.css', '!./www/lib/**.*'],
-  js: ['./www/app.js', './www/**/*.js', '!./www/lib/**.*'],
-  font: './www/fonts/',
-  lib: './www/lib/'
+  css: ['./less/**/*.less', root + 'css/**/*.css', '!' + root + 'lib/**.*'],
+  js: [root + 'app.js', root + '**/*.js', '!' + root + 'lib/**.*'],
+  font: root + 'fonts/',
+  lib: root + 'lib/'
 };
+
+//Run test once and exit
+gulp.task('test', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
 
 gulp.task('default', ['css', 'js', 'bower']);
 
@@ -32,26 +45,38 @@ gulp.task('livereload', function () {
   server.watch([paths.css, paths.js]);
 });
 
+gulp.task('js', function (done) {
+  gulp.src(paths.js)
+    .pipe(filter('**/*.js'))
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'))
+    //.pipe(fixmyjs({
+    //  //Jshint options   
+    //  esversion: 5
+    //}))
+    //.pipe(jscs({ fix: true }))
+    //.pipe(jscs.reporter('console'))
+
+    .pipe(gulp.dest(root))
+    .pipe(concat('app.js'))
+    .pipe(gulp.dest(paths.lib))
+    .pipe(uglify())
+    .on('error', handleError)
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest(paths.lib))
+    .on('end', done);
+});
+
 gulp.task('css', function (done) {
   gulp.src(paths.css)
-    .pipe(sass())
+    .pipe(less())
     .pipe(concat('app.css'))
     .pipe(gulp.dest(paths.lib))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
+    .on('error', handleError)
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest(paths.lib))
-    .on('end', done);
-});
-
-gulp.task('js', function (done) {
-  gulp.src(paths.js)
-    .pipe(filter('**/*.js'))
-    .pipe(concat('app.js'))
-    .pipe(gulp.dest(paths.lib))
-    .pipe(uglify())
-    .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
 });
@@ -113,4 +138,8 @@ gulp.task('git-check', function (done) {
   done();
 });
 
+function handleError(err) {
+  console.log(err);
+  this.emit('end');
+}
 

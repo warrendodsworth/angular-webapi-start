@@ -1,0 +1,39 @@
+﻿<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="#/" class="navbar-brand">Api</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li></li>
+      </ul>
+      <ul ng-show="!identity.auth" class="nav navbar-nav navbar-right">
+        <li><a href="#/login">Login</a></li>
+      </ul>
+      <ul ng-show="identity.auth" class="nav navbar-nav navbar-right">
+        <li><a href="#/posts">{{identity.name}}</a></li>
+        <li class="dropdown" uib-dropdown>
+          <a uib-dropdown-toggle class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+          <ul uib-dropdown-menu class="dropdown-menu">
+            <li>
+              <a href="#/manage" class="text-muted">
+                {{identity.username}}
+              </a>
+            </li>
+            <li><a href="#/manage">Manage</a></li>
+            <li><a href="#/manage/logins">Manage Logins</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#/facebook" title="Basic Facebook data retrieved">Facebook Api</a></li>
+            <li><a href="/help">API Docs</a></li>
+            <li><a ng-click="logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

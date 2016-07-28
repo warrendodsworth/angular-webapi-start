@@ -49,13 +49,21 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
@@ -182,29 +190,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutomapperConfig.cs" />
+    <Compile Include="App_Start\Autofac.Config.cs" />
+    <Compile Include="App_Start\Automapper.Config.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
-    <Compile Include="Models\Bind\NoteBindingModel.cs" />
-    <Compile Include="Models\Dto\NoteDto.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Models\Bind\PostBindingModel.cs" />
+    <Compile Include="Models\Dto\PagedResult.cs" />
+    <Compile Include="Models\Dto\PostDto.cs" />
     <Compile Include="Services\ClaimsExtensions.cs" />
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
-    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Services\Helpers\EnumHelper.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="App_Start\Mvc\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Api\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\NotesController.cs" />
+    <Compile Include="Controllers\User\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bind\AccountBindingModels.cs" />
-    <Compile Include="Models\Bind\AccountViewModels.cs" />
+    <Compile Include="Models\Dto\AccountViewModels.cs" />
     <Compile Include="Models\DbContext.cs" />
-    <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\Providers\ApplicationOAuthProvider.cs" />
@@ -217,7 +228,9 @@
     <Content Include="gulpfile.js" />
     <Content Include="bower.json" />
     <Content Include="index.html" />
+    <Content Include="karma.conf.js" />
     <Content Include="package.json" />
+    <Content Include="test\labs\basic.spec.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -225,64 +238,65 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="test\conf.js" />
-    <Content Include="test\e2e\create.spec.js" />
-    <Content Include="test\e2e\index.spec.js" />
-    <Content Include="test\labs\angular.spec.js" />
-    <Content Include="test\labs\download.js" />
-    <Content Include="test\labs\tutorial.spec.js" />
+    <Content Include="test\protractor.conf.js" />
+    <Content Include="test\protractor\index.spec.js" />
+    <Content Include="test\protractor\angular.spec.js" />
+    <Content Include="test\protractor\download.js" />
+    <Content Include="test\protractor\tutorial.spec.js" />
     <Content Include="www\account\externalLogin.html" />
-    <Content Include="www\account\ExternalLoginController.js" />
+    <Content Include="www\account\externalLogin.controller.js" />
     <Content Include="www\account\login.html" />
-    <Content Include="www\account\LoginController.js" />
+    <Content Include="www\account\login.controller.js" />
+    <Content Include="test\account\login.spec.js" />
     <Content Include="www\account\manage\forgotPassword.html" />
+    <Content Include="www\account\manage\manage.controller.js" />
     <Content Include="www\account\manage\manage.html" />
-    <Content Include="www\account\manage\ManageControllers.js" />
+    <Content Include="www\account\manage\forgotPassword.controller.js" />
+    <Content Include="www\account\manage\manageLogins.controller.js" />
     <Content Include="www\account\manage\manageLogins.html" />
     <Content Include="www\account\register.html" />
-    <Content Include="www\account\RegisterController.js" />
-    <Content Include="www\account\svc\AccountService.js" />
-    <Content Include="www\account\svc\HttpInterceptorService.js" />
-    <Content Include="www\app-routes.js" />
+    <Content Include="www\account\register.controller.js" />
+    <Content Include="www\account\svc\account.service.js" />
+    <Content Include="www\account\svc\httpInterceptor.service.js" />
+    <Content Include="www\app.routes.js" />
     <Content Include="www\app.js" />
     <Content Include="www\fonts\fontawesome-webfont.svg" />
     <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="www\home\index.html" />
-    <Content Include="www\home\IndexController.js" />
+    <Content Include="www\home\index.controller.js" />
     <Content Include="www\lib\app.css" />
     <Content Include="www\lib\app.js" />
-    <Content Include="www\lib\app.min.css" />
-    <Content Include="www\lib\app.min.js" />
+    <Content Include="www\lib\app.min.css">
+      <DependentUpon>app.css</DependentUpon>
+    </Content>
+    <Content Include="www\lib\app.min.js">
+      <DependentUpon>app.js</DependentUpon>
+    </Content>
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
-    <Content Include="www\shared\NavbarController.js" />
-    <Content Include="www\shared\QuerystringService.js" />
-    <Content Include="www\shared\result.js" />
+    <Content Include="www\shared\dir\fromNow.js" />
+    <Content Include="www\shared\navbar.directive.js" />
+    <Content Include="www\shared\navbar.html" />
+    <Content Include="www\shared\notify.service.js" />
+    <Content Include="www\shared\qs.service.js" />
     <Content Include="www\user\facebook\facebook.html" />
-    <Content Include="www\user\facebook\FacebookController.js" />
-    <Content Include="www\user\notes\notes.html" />
-    <Content Include="www\user\notes\NotesController.js" />
-    <Content Include="www\user\svc\NoteService.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="typings.json" />
+    <Content Include="www\user\facebook\facebook.controller.js" />
+    <Content Include="www\user\posts\posts.html" />
+    <Content Include="www\user\posts\posts.controller.js" />
+    <Content Include="www\user\svc\post.service.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="typings\browser.d.ts" />
-    <TypeScriptCompile Include="typings\browser\ambient\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\main.d.ts" />
-    <TypeScriptCompile Include="typings\main\ambient\angular\index.d.ts" />
-    <TypeScriptCompile Include="typings\node\node.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scss\app.scss" />
-    <Content Include="scss\var.scss" />
+    <Content Include="less\animate.less" />
+    <None Include="less\app.less" />
+    <None Include="less\var.less" />
+    <Content Include="typings.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />
@@ -303,6 +317,9 @@
     <Folder Include="Areas\HelpPage\SampleGeneration\" />
     <Folder Include="Areas\HelpPage\Views\Help\DisplayTemplates\" />
     <Folder Include="Areas\HelpPage\Views\Shared\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="jscs.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

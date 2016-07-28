@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Filters;
 
@@ -12,11 +13,10 @@ namespace Api
   {
     public override void OnException (HttpActionExecutedContext actionExecutedContext)
     {
-
       base.OnException(actionExecutedContext);
     }
 
-    public override System.Threading.Tasks.Task OnExceptionAsync (HttpActionExecutedContext actionExecutedContext, System.Threading.CancellationToken cancellationToken)
+    public override Task OnExceptionAsync (HttpActionExecutedContext actionExecutedContext, System.Threading.CancellationToken cancellationToken)
     {
       return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
     }

@@ -4,8 +4,6 @@ using Newtonsoft.Json;
 
 namespace Api.Models
 {
-  // Models used as parameters to AccountController actions.
-
   public class AddExternalLoginBindingModel
   {
     [Required]
@@ -68,7 +66,6 @@ namespace Api.Models
     public string ConfirmPassword { get; set; }
   }
 
-  //Manage
   public class ForgotPasswordModel
   {
     [Required]

@@ -1,0 +1,46 @@
+﻿<div ng-show="filters.action == 'list'">
+  <h4>Me</h4>
+  <p><a ng-show="identity.auth" ng-click="filters.action = 'create'" class="btn btn-primary btn-sm">CREATE</a></p>
+  <br />
+
+  <div ng-repeat="post in posts.items">
+    <div class="pull-right">
+      <a ng-click="delete( post, $index )">Delete</a>
+    </div>
+    <p>
+      <b>{{post.user.name}}</b>
+      <span class="font-sm text-muted">@{{post.user.username}} &middot;</span>
+      <span class="font-xs text-muted">{{post.createDate | fromNow}}</span>
+    </p>
+    <p class="font-lg">{{post.text}}</p>
+    <hr />
+  </div>
+
+  <uib-pagination total-items="total" ng-model="filters.page" items-per-page="filters.show"
+                  ng-show="posts.total > filters.show" ng-change="pageChanged()"></uib-pagination>
+</div>
+
+<div ng-show="action == 'create'">
+  <h4>Create</h4>
+  <br />
+
+  <div class="row">
+    <div class="col-sm-5">
+
+      <form name="form" novalidate>
+        <div class="form-group">
+          <label>Post</label>
+          <textarea ng-model="model.text" name="text" required class="form-control" cols="3" placeholder="Thoughts away"></textarea>
+        </div>
+
+        <input type="submit" ng-click="create( model )" value="Post" class="btn btn-primary" />&nbsp;
+        <a ng-click="filters.action = 'list'">Cancel</a>
+      </form>
+      <br />
+
+      <h4>{{model.title}}</h4>
+      <p class="text-muted">{{model.text}}</p>
+    </div>
+  </div>
+</div>
+

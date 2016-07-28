@@ -1,29 +1,38 @@
 ﻿using Api.Models;
-using AutoMapper.QueryableExtensions;
-using System;
+using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
 namespace Api.Controllers.Admin
 {
-  //Working on automapper for user crud
   [RoutePrefix("api/users")]
-  public class UsersController : ApiController
+  public class AdminUsersController : ApiController
   {
-    private Db db;
+    private IDb _db;
+    private UserManager _userManager;
 
-    public UsersController()
+    public AdminUsersController(IDb db)
     {
-      db = new Db();
+      _db = db;
     }
 
-    //public IList<UserDto> GetUsers()
-    //{
-    //  //var builder = AutomapperConfig.Config.CreateExpressionBuilder();
-    //  //var users = db.Users.ProjectTo<UserDto>(builder);
-    //}
+    public UserManager UserManager
+    {
+      get
+      {
+        return _userManager ?? Request.GetOwinContext().GetUserManager<UserManager>();
+      }
+      private set
+      {
+        _userManager = value;
+      }
+    }
+
+    [Route("")]
+    public IList<UserDto> GetUsers()
+    {
+      return null;
+    }
   }
 }

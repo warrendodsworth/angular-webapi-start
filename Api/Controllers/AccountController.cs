@@ -59,11 +59,11 @@ namespace Api.Controllers
     // GET api/Account/UserInfo
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [Route("UserInfo")]
-    public UserInfoViewModel GetUserInfo ()
+    public UserInfoDto GetUserInfo ()
     {
       ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
 
-      return new UserInfoViewModel
+      return new UserInfoDto
       {
         Name = externalLogin.Name,
         Email = externalLogin.Email,
@@ -75,7 +75,7 @@ namespace Api.Controllers
 
     // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
     [Route("ManageInfo")]
-    public async Task<ManageInfoViewModel> GetManageInfo (string returnUrl, bool generateState = false)
+    public async Task<ManageInfoDto> GetManageInfo (string returnUrl, bool generateState = false)
     {
       IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
@@ -84,11 +84,11 @@ namespace Api.Controllers
         return null;
       }
 
-      List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
+      List<UserLoginInfoDto> logins = new List<UserLoginInfoDto>();
 
       foreach ( IdentityUserLogin linkedAccount in user.Logins )
       {
-        logins.Add(new UserLoginInfoViewModel
+        logins.Add(new UserLoginInfoDto
         {
           LoginProvider = linkedAccount.LoginProvider,
           ProviderKey = linkedAccount.ProviderKey
@@ -97,14 +97,14 @@ namespace Api.Controllers
 
       if ( user.PasswordHash != null )
       {
-        logins.Add(new UserLoginInfoViewModel
+        logins.Add(new UserLoginInfoDto
         {
           LoginProvider = LocalLoginProvider,
           ProviderKey = user.UserName,
         });
       }
 
-      return new ManageInfoViewModel
+      return new ManageInfoDto
       {
         LocalLoginProvider = LocalLoginProvider,
         Email = user.UserName,
@@ -183,10 +183,10 @@ namespace Api.Controllers
     // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
     [AllowAnonymous]
     [Route("ExternalLogins")]
-    public IEnumerable<ExternalLoginViewModel> GetExternalLogins (string returnUrl, bool generateState = false)
+    public IEnumerable<ExternalLoginDto> GetExternalLogins (string returnUrl, bool generateState = false)
     {
       IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
-      List<ExternalLoginViewModel> logins = new List<ExternalLoginViewModel>();
+      List<ExternalLoginDto> logins = new List<ExternalLoginDto>();
 
       string state;
 
@@ -202,7 +202,7 @@ namespace Api.Controllers
 
       foreach ( AuthenticationDescription description in descriptions )
       {
-        ExternalLoginViewModel login = new ExternalLoginViewModel
+        ExternalLoginDto login = new ExternalLoginDto
         {
           Name = description.Caption,
           Url = Url.Route("ExternalLogin", new
@@ -230,7 +230,7 @@ namespace Api.Controllers
     {
       if ( error != null )
       {
-        return Redirect(Url.Content("~/js/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
+        return Redirect(Url.Content("~/www/account/externalLogin.html") + "#error=" + Uri.EscapeDataString(error));
       }
 
       //1st time - send user to external provider to login
