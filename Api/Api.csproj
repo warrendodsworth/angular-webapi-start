@@ -275,7 +275,8 @@
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
     <Content Include="www\shared\dir\fromNow.js" />
-    <Content Include="www\shared\navbar.controller.js" />
+    <Content Include="www\shared\navbar.directive.js" />
+    <Content Include="www\shared\navbar.html" />
     <Content Include="www\shared\notify.service.js" />
     <Content Include="www\shared\qs.service.js" />
     <Content Include="www\user\facebook\facebook.html" />
