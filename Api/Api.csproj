@@ -292,6 +292,7 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="less\animate.less" />
     <None Include="less\app.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />
