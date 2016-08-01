@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Linq;
 
 namespace Api.Models
 {
@@ -13,11 +14,9 @@ namespace Api.Models
     DbSet<Post> Posts { get; set; }
 
     void MarkAsModified(object item);
-
     int SaveChanges();
     Task<int> SaveChangesAsync();
-    DbSet Set(Type entityType);
-    DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
   }
 
   public class Db : IdentityDbContext<User>, IDb
@@ -28,7 +27,7 @@ namespace Api.Models
     }
 
     //Effort in memory db
-    public Db(string connection): base(connection)
+    public Db(string connection) : base(connection)
     {
 
     }
@@ -48,6 +47,36 @@ namespace Api.Models
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
+    }
+
+    public override int SaveChanges()
+    {
+      DateTime saveTime = DateTime.Now;
+      foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+      {
+        if (typeof(IEntity) == entry.GetType())
+        {
+          var e = ((IEntity) entry.Entity);
+          if (e.CreateDate == null)
+            e.CreateDate = saveTime;
+        }
+      }
+      return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync()
+    {
+      DateTime saveTime = DateTime.Now;
+      foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+      {
+        if (typeof(IEntity) == entry.GetType())
+        {
+          var e = ((IEntity) entry.Entity);
+          if (e.CreateDate == null)
+            e.CreateDate = saveTime;
+        }
+      }
+      return base.SaveChangesAsync();
     }
   }
 }

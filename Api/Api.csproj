@@ -197,6 +197,7 @@
     <Compile Include="Models\Bind\PostBindingModel.cs" />
     <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\PostDto.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Services\ClaimsExtensions.cs" />
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />

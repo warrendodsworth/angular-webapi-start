@@ -12,10 +12,25 @@ namespace Test.Mocks
   {
     public DbSet<Post> Posts { get; set; }
 
+    public IDbSet<User> Users { get; set; }
 
     public void Dispose()
     {
       this.Dispose();
+    }
+
+    public void MarkAsModified(object item)
+    {
+    }
+
+    public int SaveChanges()
+    {
+      return 1;
+    }
+
+    public Task<int> SaveChangesAsync()
+    {
+      return Task.FromResult(SaveChanges());
     }
   }
 }

@@ -1,19 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Api.Models
 {
-  public class Post
+  public class Post : Entity
   {
-    public int Id { get; set; }
-
     [Required(ErrorMessage = "Add your post")]
     public string Text { get; set; }
-
-    public DateTime CreateDate { get; set; } = DateTime.UtcNow;
-
-    [Timestamp]
-    public byte[] RowVersion { get; set; }
 
     [Required]
     [StringLength(128)]

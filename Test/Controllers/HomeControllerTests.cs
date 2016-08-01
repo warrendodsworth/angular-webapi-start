@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using Api;
+using Test.Mocks;
 
 namespace Test
 {
@@ -39,14 +40,28 @@ namespace Test
     public async Task Posts_GetAll()
     {
       //Arrange
-      var controller = new HomeController();
+      var db = new MockDbContext();
+      SeetPosts(db);
+      var controller = new HomeController(db);
 
       //Act
       var posts = await controller.Get();
 
       //Assert
       Assert.IsNotNull(posts);
-      Assert.IsTrue(posts.items.Count() > 1);
+      Assert.IsTrue(posts.items.Count() == 100);
+    }
+
+    private void SeetPosts(IDb db)
+    {
+      for (int i = 0; i < 100; i++)
+      {
+        db.Posts.Add(new Post
+        {
+          Id = i,
+          Text = "Post text "+ i,          
+        });
+      }
     }
   }
 }
