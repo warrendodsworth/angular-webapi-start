@@ -9,6 +9,7 @@ namespace Api.Models
 {
   public interface IDb : IDisposable
   {
+    IDbSet<User> Users { get; set; }
     DbSet<Post> Posts { get; set; }
 
     void MarkAsModified(object item);
@@ -26,6 +27,7 @@ namespace Api.Models
     {
     }
 
+    //Effort in memory db
     public Db(string connection): base(connection)
     {
 
