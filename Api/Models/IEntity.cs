@@ -23,6 +23,6 @@ namespace Api.Models
     public DateTime CreateDate { get; set; }
 
     [Timestamp]
-    public byte[] RowVersion { get; set; }
+    public virtual byte[] RowVersion { get; set; }
   }
 }

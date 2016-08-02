@@ -1,14 +1,12 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Common;
 using System.Data.Entity;
 using System;
 using System.Threading.Tasks;
-using System.Threading;
 using System.Linq;
 
 namespace Api.Models
 {
-  public interface IDb : IDisposable
+  public interface IDb
   {
     IDbSet<User> Users { get; set; }
     DbSet<Post> Posts { get; set; }
@@ -16,7 +14,6 @@ namespace Api.Models
     void MarkAsModified(object item);
     int SaveChanges();
     Task<int> SaveChangesAsync();
-
   }
 
   public class Db : IdentityDbContext<User>, IDb
@@ -29,7 +26,6 @@ namespace Api.Models
     //Effort in memory db
     public Db(string connection) : base(connection)
     {
-
     }
 
     public DbSet<Post> Posts { get; set; }

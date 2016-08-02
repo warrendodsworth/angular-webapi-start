@@ -1,14 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Effort;
 using Api.Models;
 using System.Linq;
-using System.Data.Entity.Core.EntityClient;
-using System.Security.Claims;
-using Moq;
 using Api.Controllers;
-using System.Security.Principal;
-using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using Api;
@@ -22,18 +15,7 @@ namespace Test
     [TestInitialize]
     public void Initialize()
     {
-      AutomapperConfig.Init();
-      //var claim = new Claim("test", "IdOfYourChoosing");
-      //var mockIdentity = Mock.Of<ClaimsIdentity>(ci => ci.FindFirst(It.IsAny<string>()) == claim);
-      //var controller = new HomeController()
-      //{
-      //  User = Mock.Of<IPrincipal>(ip => ip.Identity == mockIdentity)
-      //};
-      //controller.User.Identity.GetUserId(); //returns "IdOfYourChoosing"
-
-      //Effort cannot use a data loader with a standard connection string.
-      //EntityConnection connection = EntityConnectionFactory.CreateTransient("name=DefaultConnection");
-      //db = new Db(connection.ConnectionString);
+      AutomapperConfig.Init();      
     }
 
     [TestMethod]
@@ -41,7 +23,7 @@ namespace Test
     {
       //Arrange
       var db = new MockDbContext();
-      SeetPosts(db);
+      Seed(db);
       var controller = new HomeController(db);
 
       //Act
@@ -49,17 +31,27 @@ namespace Test
 
       //Assert
       Assert.IsNotNull(posts);
-      Assert.IsTrue(posts.items.Count() == 100);
+      Assert.AreEqual(posts.Items.Count(), 10);
+      Assert.AreEqual(posts.Total, 100);
+      Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
     }
 
-    private void SeetPosts(IDb db)
+    private void Seed(IDb db)
     {
+      var user = new User
+      {
+        Id = Guid.NewGuid().ToString(),
+        Name = "Test User",
+      };
+      //db.Users.Add(user);
+
       for (int i = 0; i < 100; i++)
       {
         db.Posts.Add(new Post
         {
           Id = i,
-          Text = "Post text "+ i,          
+          Text = "Post text " + i,
+          UserId = user.Id,
         });
       }
     }

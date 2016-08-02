@@ -39,8 +39,8 @@ namespace Api.Controllers
 
       return new PagedResult<PostDto>
       {
-        items = res.Select(x => Mapper.Map<PostDto>(x)),
-        total = res.TotalItemCount
+        Items = res.Select(x => Mapper.Map<PostDto>(x)),
+        Total = res.TotalItemCount
       };
     }
 
