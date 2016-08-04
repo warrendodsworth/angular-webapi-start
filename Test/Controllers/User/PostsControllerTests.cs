@@ -29,16 +29,16 @@ namespace Test
     public void Should_GetUserId_From_Identity()
     {
       //Arrange
-      var username = "test@test.com";
-      var identity = new GenericIdentity(username, "");
-      var nameIdentifierClaim = new Claim(ClaimTypes.NameIdentifier, username);
-      identity.AddClaim(nameIdentifierClaim);
-
       var mockPrincipal = new Mock<IPrincipal>();
-      mockPrincipal.Setup(x => x.Identity).Returns(identity);
+      mockPrincipal.Setup(p => p.IsInRole("admin")).Returns(true);
+      mockPrincipal.SetupGet(p => p.Identity.Name).Returns("tester");
+      mockPrincipal.SetupGet(p => p.Identity.IsAuthenticated).Returns(true);
       mockPrincipal.Setup(x => x.IsInRole(It.IsAny<string>())).Returns(true);
 
-      //Kernel.Rebind<IPrincipal>().ToConstant(mockPrincipal.Object);
+      var requestContext = new Mock<HttpRequestContext>();
+      requestContext.Setup(x => x.Principal).Returns(mockPrincipal.Object);
+
+      Kernel.Rebind<IPrincipal>().ToConstant(mockPrincipal.Object);
 
       ////Act
       //var principal = Kernel.Get<IPrincipal>();
