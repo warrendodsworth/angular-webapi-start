@@ -20,8 +20,6 @@ namespace Test
   [TestClass]
   public class PostsControllerTests
   {
-    private object x;
-
     public Mock<HttpRequestContext> requestContext { get; set; }
 
     [TestInitialize]
@@ -33,7 +31,6 @@ namespace Test
       identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "test"));
 
       var mockPrincipal = new Mock<IPrincipal>();
-      mockPrincipal.Setup(p => p.IsInRole("admin")).Returns(true);
       mockPrincipal.Setup(p => p.IsInRole(It.IsAny<string>())).Returns(true);
       mockPrincipal.SetupGet(p => p.Identity).Returns(identity);
 
@@ -44,17 +41,6 @@ namespace Test
     [TestMethod]
     public void Should_GetUserId_From_Identity()
     {
-      var identity = new GenericIdentity("test", "");
-      identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "test"));
-
-      var mockPrincipal = new Mock<IPrincipal>();
-      mockPrincipal.Setup(p => p.IsInRole("admin")).Returns(true);
-      mockPrincipal.Setup(p => p.IsInRole(It.IsAny<string>())).Returns(true);
-      mockPrincipal.SetupGet(p => p.Identity).Returns(identity);
-
-      requestContext = new Mock<HttpRequestContext>();
-      requestContext.Setup(x => x.Principal).Returns(mockPrincipal.Object);
-
       var db = new MockDbContext();
       Seed(db);
 
@@ -106,25 +92,9 @@ namespace Test
 
 
 
-////Mock principal - not used
-//var mockPrincipal = new Mock<IPrincipal>();
-//mockPrincipal.Setup(p => p.IsInRole("user")).Returns(true);
-//mockPrincipal.SetupGet(x => x.Identity.Name).Returns("test");
-
-//var httpContext = new Mock<HttpContext>();
-//httpContext.SetupGet(x => x.User).Returns(principal);
-
+//Mock httpcontext tryadd to controller context
+//var context = new Mock<HttpContext>();
+//context.SetupGet(x => x.User).Returns(principal);
 //controller.ControllerContext = new ControllerContext(context.Object, new RouteData(), controller);
-
-//var context = new Mock<HttpContextBase>();
-//var mockIdentity = new Mock<IIdentity>();
-
-//context.SetupGet(x => x.User.Identity).Returns(mockIdentity.Object);
-//mockIdentity.Setup(x => x.Name).Returns("test_name");
-
-//var username = "test@test.com";
-//var principal = new Moq.Mock<IPrincipal>();
-//principal.Setup(p => p.IsInRole("Administrator")).Returns(true);
-//principal.SetupGet(x => x.Identity.Name).Returns(username);
 //controllerContext.SetupGet(x => x.HttpContext.User).Returns(principal.Object);
 //controller.ControllerContext = controllerContext.Object;
