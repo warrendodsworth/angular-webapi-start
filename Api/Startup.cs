@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Hangfire;
 using Microsoft.Owin;
 using Owin;
 
@@ -8,11 +9,13 @@ using Owin;
 
 namespace Api
 {
-    public partial class Startup
+  public partial class Startup
+  {
+    public void Configuration(IAppBuilder app)
     {
-        public void Configuration(IAppBuilder app)
-        {
-            ConfigureAuth(app);
-        }
+      ConfigureAuth(app);
+      GlobalConfiguration.Configuration.UseSqlServerStorage("Hangfire");
+      app.UseHangfireDashboard();
     }
+  }
 }

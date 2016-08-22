@@ -17,6 +17,7 @@ namespace Test.Mocks
     public MockDbContext()
     {
       Posts = new MockPostDbSet();
+      Users = new MockUserDbSet();
     }
 
     public DbSet<Post> Posts { get; set; }
@@ -47,6 +48,15 @@ namespace Test.Mocks
     public override Post Find(params object[] keyValues)
     {
       var id = (int) keyValues.Single();
+      return this.SingleOrDefault(b => b.Id == id);
+    }
+  }
+
+  public class MockUserDbSet : MockDbSet<User>
+  {
+    public override User Find(params object[] keyValues)
+    {
+      var id = (string) keyValues.Single();
       return this.SingleOrDefault(b => b.Id == id);
     }
   }

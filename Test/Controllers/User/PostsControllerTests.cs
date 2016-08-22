@@ -13,61 +13,64 @@ using System.Security.Claims;
 using System.Web.Http;
 using System.Web.Routing;
 using System.Web.Http.Controllers;
+using Microsoft.AspNet.Identity;
 
 namespace Test
 {
   [TestClass]
   public class PostsControllerTests
   {
+    private object x;
+
+    public Mock<HttpRequestContext> requestContext { get; set; }
+
     [TestInitialize]
     public void Initialize()
     {
       AutomapperConfig.Init();
+
+      var identity = new GenericIdentity("test", "");
+      identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "test"));
+
+      var mockPrincipal = new Mock<IPrincipal>();
+      mockPrincipal.Setup(p => p.IsInRole("admin")).Returns(true);
+      mockPrincipal.Setup(p => p.IsInRole(It.IsAny<string>())).Returns(true);
+      mockPrincipal.SetupGet(p => p.Identity).Returns(identity);
+
+      requestContext = new Mock<HttpRequestContext>();
+      requestContext.Setup(x => x.Principal).Returns(mockPrincipal.Object);
     }
 
     [TestMethod]
     public void Should_GetUserId_From_Identity()
     {
-      //Arrange
+      var identity = new GenericIdentity("test", "");
+      identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "test"));
+
       var mockPrincipal = new Mock<IPrincipal>();
       mockPrincipal.Setup(p => p.IsInRole("admin")).Returns(true);
-      mockPrincipal.SetupGet(p => p.Identity.Name).Returns("tester");
-      mockPrincipal.SetupGet(p => p.Identity.IsAuthenticated).Returns(true);
-      mockPrincipal.Setup(x => x.IsInRole(It.IsAny<string>())).Returns(true);
+      mockPrincipal.Setup(p => p.IsInRole(It.IsAny<string>())).Returns(true);
+      mockPrincipal.SetupGet(p => p.Identity).Returns(identity);
 
-      var requestContext = new Mock<HttpRequestContext>();
+      requestContext = new Mock<HttpRequestContext>();
       requestContext.Setup(x => x.Principal).Returns(mockPrincipal.Object);
 
-      Kernel.Rebind<IPrincipal>().ToConstant(mockPrincipal.Object);
+      var db = new MockDbContext();
+      Seed(db);
 
-      ////Act
-      //var principal = Kernel.Get<IPrincipal>();
+      var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
 
-      //Asserts        
-      //Assert.AreEqual(username, principal.Identity.GetUserId());
-      //Assert.IsTrue(principal.Identity.IsAuthenticated);
+      Assert.AreEqual("test", controller.User.Identity.GetUserId());
+      Assert.IsTrue(controller.User.Identity.IsAuthenticated);
     }
 
     [TestMethod]
     public async Task User_Posts_GetAll()
     {
-      //Arrange
       var db = new MockDbContext();
       Seed(db);
 
-      //Identity & Principal
-      var identity = new GenericIdentity("test", "");
-      identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "test"));
-
-      var principal = new GenericPrincipal(identity, new[] { "user" });
-
-      var requestContext = new Mock<HttpRequestContext>();
-      requestContext.Setup(x => x.Principal).Returns(principal);
-
-      var controller = new UserPostsController(db)
-      {
-        RequestContext = requestContext.Object,
-      };
+      var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
 
       //Act
       var posts = await controller.Get();
