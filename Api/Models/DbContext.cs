@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Data.Common;
 
 namespace Api.Models
 {
@@ -24,7 +25,7 @@ namespace Api.Models
     }
 
     //Effort in memory db
-    public Db(string connection) : base(connection)
+    public Db(DbConnection connection) : base(connection, contextOwnsConnection: true)
     {
     }
 
