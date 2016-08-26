@@ -1,24 +1,22 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Api.Models;
+﻿using Api.Models;
 using System.Linq;
 using Api.Controllers;
 using System;
 using System.Threading.Tasks;
 using Api;
 using Test.Mocks;
+using Xunit;
 
 namespace Test
 {
-  [TestClass]
   public class HomeControllerTests
   {
-    [TestInitialize]
-    public void Initialize()
+    public HomeControllerTests()
     {
       AutomapperConfig.Init();      
     }
 
-    [TestMethod]
+    [Fact]
     public async Task Posts_GetAll()
     {
       //Arrange
@@ -30,10 +28,10 @@ namespace Test
       var posts = await controller.Get();
 
       //Assert
-      Assert.IsNotNull(posts);
-      Assert.AreEqual(posts.Items.Count(), 10);
-      Assert.AreEqual(posts.Total, 100);
-      Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
+      Assert.NotNull(posts);
+      Assert.Equal(posts.Items.Count(), 10);
+      Assert.Equal(posts.Total, 100);
+      Assert.Equal("Post text 0", posts.Items.First()?.Text);
     }
 
     private void Seed(IDb db)
