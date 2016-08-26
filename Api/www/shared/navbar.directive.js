@@ -1,26 +1,27 @@
 (function () {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('app')
-    .directive('navbar', navbarDirective)
-    .controller('NavbarController', navbarController);
+    angular
+      .module('app')
+      .directive('navbar', navbarDirective)
+      .controller('NavbarController', navbarController);
 
-  function navbarDirective() {
-    return {
-      restrict: 'E',
-      templateUrl:'/www/shared/navbar.html',
-      scope: {},
-      controller: 'NavbarController'
-    };
-  }
+    function navbarDirective() {
+        return {
+            restrict: 'E',
+            templateUrl: '/www/shared/navbar.html',
+            scope: {},
+            controller: 'NavbarController'
+        };
+    }
 
-  navbarController.$inject = ['$scope', '$location', 'AccountService'];
-  function navbarController($scope, $location, AccountService) {
-    $scope.logout = function () {
-      AccountService.logout();
-      $location.path('/');
-    };
-  }
+    navbarController.$inject = ['$scope', '$location', 'AccountService'];
+    function navbarController($scope, $location, AccountService) {
+        $scope.identity = AccountService.identity;
+        $scope.logout = function () { 
+            AccountService.logout();
+            $location.path('/');
+        };
+    }
 
 }());

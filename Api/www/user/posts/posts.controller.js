@@ -9,7 +9,6 @@
 
   function notesController($scope, $http, $location, NotifyService, qs, postService) {
     var vm = $scope;
-    vm.action = 'list';
 
     vm.filters = qs.toFilters();
     vm.$watch('filters', function (val) {
@@ -27,7 +26,7 @@
       postService.postPost(model).then(function (res) {
         NotifyService.success('Note Created');
         vm.posts.items.push(res.data);
-        vm.action = 'list';
+        vm.filters.action = 'list'; 
       });
     };
 
