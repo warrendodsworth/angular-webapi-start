@@ -13,35 +13,33 @@ namespace Test
   {
     public HomeControllerTests()
     {
-      AutomapperConfig.Init();      
+      AutomapperConfig.Init();
     }
 
     [Fact]
-    public async Task Posts_GetAll()
+    public async Task Home_Posts_GetAll()
     {
-      //Arrange
-      var db = new MockDbContext();
-      Seed(db);
+      var db = Seed();
       var controller = new HomeController(db);
 
-      //Act
       var posts = await controller.Get();
 
-      //Assert
       Assert.NotNull(posts);
       Assert.Equal(posts.Items.Count(), 10);
       Assert.Equal(posts.Total, 100);
       Assert.Equal("Post text 0", posts.Items.First()?.Text);
     }
 
-    private void Seed(IDb db)
+    private IDb Seed(IDb db = null)
     {
+      db = db ?? new MockDbContext();
+
       var user = new User
       {
         Id = Guid.NewGuid().ToString(),
-        Name = "Test User",
+        Name = "User",
       };
-      //db.Users.Add(user);
+      db.Users.Add(user);
 
       for (int i = 0; i < 100; i++)
       {
@@ -52,6 +50,8 @@ namespace Test
           UserId = user.Id,
         });
       }
+
+      return db;
     }
   }
 }

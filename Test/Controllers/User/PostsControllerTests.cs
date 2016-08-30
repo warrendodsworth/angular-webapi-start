@@ -2,16 +2,12 @@
 using Api.Models;
 using System.Linq;
 using Api.Controllers;
-using System;
 using System.Threading.Tasks;
 using Api;
 using Test.Mocks;
 using Moq;
 using System.Security.Principal;
-using System.Web;
 using System.Security.Claims;
-using System.Web.Http;
-using System.Web.Routing;
 using System.Web.Http.Controllers;
 using Microsoft.AspNet.Identity;
 
@@ -39,11 +35,9 @@ namespace Test
     }
 
     [TestMethod]
-    public void Should_GetUserId_From_Identity()
+    public void User_Should_GetUserId_From_Identity()
     {
-      var db = new MockDbContext();
-      Seed(db);
-
+      var db = Seed();
       var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
 
       Assert.AreEqual("test", controller.User.Identity.GetUserId());
@@ -53,23 +47,21 @@ namespace Test
     [TestMethod]
     public async Task User_Posts_GetAll()
     {
-      var db = new MockDbContext();
-      Seed(db);
+     var db =  Seed();
 
       var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
 
-      //Act
       var posts = await controller.Get();
 
-      //Assert
       Assert.IsNotNull(posts);
       Assert.AreEqual(posts.Items.Count(), 10);
       Assert.AreEqual(posts.Total, 100);
       Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
     }
 
-    private void Seed(IDb db)
+    private IDb Seed(IDb db = null)
     {
+      db = db ?? new MockDbContext();
       var user = new User
       {
         Id = "test",
@@ -86,6 +78,8 @@ namespace Test
           UserId = user.Id,
         });
       }
+
+      return db;
     }
   }
 }
