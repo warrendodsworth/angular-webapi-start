@@ -22,7 +22,7 @@ using System.Linq;
 namespace Api.Controllers
 {
   [Authorize]
-  [RoutePrefix("api/Account")]
+  [RoutePrefix("api/account")]
   public class AccountController : ApiController
   {
     private const string LocalLoginProvider = "Local";

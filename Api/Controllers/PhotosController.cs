@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 
 namespace Api.Controllers
@@ -13,19 +11,15 @@ namespace Api.Controllers
   [RoutePrefix("api/photos")]
   public class PhotosController : ApiController
   {
-    public IHttpActionResult Post()
+    public IHttpActionResult PostPhoto()
     {
       if (!Request.Content.IsMimeMultipartContent())
         throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
 
       var context = HttpContext.Current;
 
-      int formID;
-      if (!int.TryParse(context.Request.Form["formID"], out formID))
-        throw new HttpResponseException(HttpStatusCode.BadRequest);
-
       if (context.Request.Files.Count == 0)
-        throw new HttpResponseException(HttpStatusCode.BadRequest);
+        return BadRequest("No files");
 
       var file = context.Request.Files[0];
       var filename = Path.GetFileName(file.FileName);
@@ -33,35 +27,38 @@ namespace Api.Controllers
       var data = new byte[file.ContentLength];
       file.InputStream.Read(data, 0, file.ContentLength);
 
-      //var image = _imageService.SaveImage(new Image
-      //{
-      //  FileName = filename,
-      //  MimeType = file.ContentType,
-      //  ContentLength = file.ContentLength,
-      //  Data = data,
-      //});
+      file.SaveAs(HostingEnvironment.MapPath("~/App_Data") + "\\" + file.FileName);
 
-      //if (image == null || image.ValidationErrors.Any())
-      //  return BadRequest(  "Failed to save image" );
-
-      return Ok(new
-      {
-        ImageID = 1 //image.ID
-      });
+      return Ok();
     }
 
     [HttpDelete, Route("{imageID:int}")]
-    public IHttpActionResult DeleteImage(int imageID)
+    public IHttpActionResult DeletePhoto(int id)
     {
-      if (imageID <= 0)
-        throw new HttpResponseException(HttpStatusCode.BadRequest);
+      if (id <= 0)
+        return BadRequest();
 
-      //var image = _imageService.GetImageByID(imageID);
-      //if (image == null)
-      //  throw new HttpResponseException(HttpStatusCode.NotFound);
-
-      //var success = _imageService.DeleteImage(image, false);
       return Ok();
     }
   }
 }
+
+
+
+//var image = _imageService.GetImageByID(imageID);
+//if (image == null)
+//  throw new HttpResponseException(HttpStatusCode.NotFound);
+
+//var success = _imageService.DeleteImage(image, false);
+
+
+//var image = _imageService.SaveImage(new Image
+//{
+//  FileName = filename,
+//  MimeType = file.ContentType,
+//  ContentLength = file.ContentLength,
+//  Data = data,
+//});
+
+//if (image == null || image.ValidationErrors.Any())
+//  return BadRequest(  "Failed to save image" );
