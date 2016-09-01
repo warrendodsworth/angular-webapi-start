@@ -269,7 +269,9 @@
     <Content Include="www\account\register.controller.js" />
     <Content Include="www\account\svc\account.service.js" />
     <Content Include="www\account\svc\httpInterceptor.service.js" />
-    <Content Include="www\app.routes.js" />
+    <Content Include="www\admin\admin.controller.js" />
+    <Content Include="www\admin\admin.html" />
+    <Content Include="www\app-routes.js" />
     <Content Include="www\app.js" />
     <Content Include="www\fonts\fontawesome-webfont.svg" />
     <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
