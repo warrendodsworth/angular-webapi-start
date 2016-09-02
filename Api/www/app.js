@@ -7,6 +7,8 @@
     'angular-toasty',
     'ui.bootstrap',
     'LocalStorageModule',
+    'ngFileUpload',
+    'ngImgCrop',
     'controllers',
     'services'
   ]).run([

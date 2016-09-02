@@ -27,7 +27,7 @@ namespace Test.Controllers
     }
 
     [TestMethod]
-    public async Task Posts_GetAll()
+    public async Task Effort_Posts_GetAll()
     {
       Seed(db);
       var controller = new HomeController(db);

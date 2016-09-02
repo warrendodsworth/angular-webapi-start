@@ -17,6 +17,9 @@
         .when('/posts', { templateUrl: root + 'user/posts/posts.html', controller: 'posts.IndexController' })
         .when('/facebook', { templateUrl: root + 'user/facebook/facebook.html', controller: 'FacebookController' })
 
+      //Admin
+        .when('/a', { templateUrl: root + 'admin/admin.html', controller: 'AdminController' })
+
         .when('/', { templateUrl: root + 'home/index.html', controller: 'IndexController' })
         .otherwise({ redirectTo: '/' });
     }]);

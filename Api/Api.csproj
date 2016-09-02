@@ -206,6 +206,7 @@
     <Compile Include="App_Start\Automapper.Config.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Bind\PostBindingModel.cs" />
     <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\PostDto.cs" />
@@ -272,7 +273,9 @@
     <Content Include="www\account\register.controller.js" />
     <Content Include="www\account\svc\account.service.js" />
     <Content Include="www\account\svc\httpInterceptor.service.js" />
-    <Content Include="www\app.routes.js" />
+    <Content Include="www\admin\admin.controller.js" />
+    <Content Include="www\admin\admin.html" />
+    <Content Include="www\app-routes.js" />
     <Content Include="www\app.js" />
     <Content Include="www\fonts\fontawesome-webfont.svg" />
     <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
