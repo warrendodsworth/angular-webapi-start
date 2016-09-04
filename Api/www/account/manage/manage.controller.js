@@ -37,7 +37,7 @@
         url: 'api/photos',
         data: {file: file, 'username': $scope.username}
       }).then(function (res) {
-        Notify.success('Success ' + resp.config.data.file.name + 'uploaded');
+        NotifyService.success('Success ' + resp.config.data.file.name + 'uploaded');
         console.log(res.data);
       }, function (res) {
         console.log(res);

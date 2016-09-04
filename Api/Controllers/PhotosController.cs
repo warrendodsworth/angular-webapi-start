@@ -27,7 +27,7 @@ namespace Api.Controllers
       var data = new byte[file.ContentLength];
       file.InputStream.Read(data, 0, file.ContentLength);
 
-      file.SaveAs(HostingEnvironment.MapPath("~/App_Data") + "\\" + file.FileName);
+      file.SaveAs(HostingEnvironment.MapPath("~/App_Data") + "//" + file.FileName);
 
       return Ok();
     }
