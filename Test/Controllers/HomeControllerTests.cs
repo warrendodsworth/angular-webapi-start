@@ -5,18 +5,20 @@ using System;
 using System.Threading.Tasks;
 using Api;
 using Test.Mocks;
-using Xunit;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test
 {
+  [TestClass]
   public class HomeControllerTests
   {
-    public HomeControllerTests()
+    [TestInitialize]
+    public void Init()
     {
       AutomapperConfig.Init();
     }
 
-    [Fact]
+    [TestMethod]
     public async Task Home_Posts_GetAll()
     {
       var db = Seed();
@@ -24,10 +26,23 @@ namespace Test
 
       var posts = await controller.Get();
 
-      Assert.NotNull(posts);
-      Assert.Equal(posts.Items.Count(), 10);
-      Assert.Equal(posts.Total, 100);
-      Assert.Equal("Post text 0", posts.Items.First()?.Text);
+      Assert.IsNotNull(posts);
+      Assert.AreEqual(posts.Items.Count(), 10);
+      Assert.AreEqual(posts.Total, 100);
+      Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
+    }
+
+    [TestMethod]
+    public async Task Home_Posts_GetAll_ShouldReturnSearch ()
+    {
+      var db = Seed();
+      var controller = new HomeController(db);
+
+      var posts = await controller.Get(search: "0");
+
+      Assert.IsNotNull(posts);
+      Assert.AreEqual(10, posts.Items.Count());
+      Assert.AreEqual(10, posts.Total);
     }
 
     private IDb Seed(IDb db = null)
