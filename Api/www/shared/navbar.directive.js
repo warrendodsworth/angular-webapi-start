@@ -1,10 +1,10 @@
 (function () {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('app')
-    .directive('navbar', navbarDirective)
-    .controller('NavbarController', navbarController);
+    angular
+      .module('app')
+      .directive('navbar', navbarDirective)
+      .controller('NavbarController', navbarController);
 
   function navbarDirective() {
     return {

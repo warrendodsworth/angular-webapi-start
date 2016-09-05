@@ -3,6 +3,8 @@ using Api.Models;
 using System.Web.Http;
 using System.Reflection;
 using Autofac.Integration.WebApi;
+using System.Web.Mvc;
+using Autofac.Integration.Mvc;
 
 namespace Api
 {
@@ -10,18 +12,25 @@ namespace Api
   {
     public static void InitApi(HttpConfiguration config)
     {
-      var builder = new ContainerBuilder();
-      builder.RegisterType<Db>()
-             .AsImplementedInterfaces()
-             .InstancePerLifetimeScope();
-  
-      builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+            var builder = new ContainerBuilder();
 
-      var container = builder.Build();
-      var resolver = new AutofacWebApiDependencyResolver(container);
-      config.DependencyResolver = resolver;
+            builder.RegisterControllers(Assembly.GetExecutingAssembly());
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+
+            builder.RegisterFilterProvider();
+            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+
+            builder.RegisterType<Db>()
+                   .AsImplementedInterfaces()
+                   .InstancePerRequest();
+
+
+            var container = builder.Build();
+            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
+        }
     }
-  }
 }
 
 
