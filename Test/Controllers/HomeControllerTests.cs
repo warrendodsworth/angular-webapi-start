@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Api;
 using Test.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Effort;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -33,7 +35,7 @@ namespace Test
     }
 
     [TestMethod]
-    public async Task Home_Posts_GetAll_ShouldReturnSearch ()
+    public async Task Home_Posts_GetAll_ShouldReturnSearch()
     {
       var db = Seed();
       var controller = new HomeController(db);
@@ -47,24 +49,32 @@ namespace Test
 
     private IDb Seed(IDb db = null)
     {
-      db = db ?? new MockDbContext();
+      var connection = DbConnectionFactory.CreateTransient();
+      db = db ?? new Db(connection);  //new MockDbContext();
 
       var user = new User
       {
-        Id = Guid.NewGuid().ToString(),
         Name = "User",
+        Email = "a@test.com",
+        UserName = "user"
       };
       db.Users.Add(user);
+      db.SaveChanges();
 
+      var posts = new List<Post>();
       for (int i = 0; i < 100; i++)
       {
-        db.Posts.Add(new Post
+        posts.Add(new Post
         {
           Id = i,
           Text = "Post text " + i,
-          UserId = user.Id,
+          User = user
         });
       }
+
+      db.Posts.AddRange(posts);
+      db.SaveChanges();
+
 
       return db;
     }
