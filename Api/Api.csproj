@@ -208,6 +208,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Bind\PostBindingModel.cs" />
+    <Compile Include="Models\Bind\UserBindingModel.cs" />
     <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\PostDto.cs" />
     <Compile Include="Models\IEntity.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
     <Compile Include="Services\Helpers\EnumHelper.cs" />
+    <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="App_Start\Mvc\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -263,12 +265,14 @@
     <Content Include="www\account\login.html" />
     <Content Include="www\account\login.controller.js" />
     <Content Include="test\account\login.spec.js" />
-    <Content Include="www\account\manage\forgotPassword.html" />
-    <Content Include="www\account\manage\manage.controller.js" />
-    <Content Include="www\account\manage\manage.html" />
-    <Content Include="www\account\manage\forgotPassword.controller.js" />
-    <Content Include="www\account\manage\manageLogins.controller.js" />
-    <Content Include="www\account\manage\manageLogins.html" />
+    <Content Include="www\account\edit.controller.js" />
+    <Content Include="www\account\edit.html" />
+    <Content Include="www\account\forgotPassword.html" />
+    <Content Include="www\account\manage.controller.js" />
+    <Content Include="www\account\manage.html" />
+    <Content Include="www\account\forgotPassword.controller.js" />
+    <Content Include="www\account\manageLogins.controller.js" />
+    <Content Include="www\account\manageLogins.html" />
     <Content Include="www\account\register.html" />
     <Content Include="www\account\register.controller.js" />
     <Content Include="www\account\svc\account.service.js" />

@@ -1,31 +1,27 @@
 (function () {
   'use strict';
-  angular.module('controllers').controller('manageController', manageController);
-  manageController.$inject = [
-    '$scope',
-    '$location',
-    '$timeout',
-    'Upload',
-    'AccountService',
-    'NotifyService'
-  ];
-  function manageController($scope, $location, $timeout, Upload, AccountService, NotifyService) {
+
+  angular
+    .module('app')
+    .controller('EditController', ['$scope', '$location', 'AccountService', 'NotifyService', EditController]);
+
+  function EditController($scope, $location, AccountService, NotifyService) {
+    var vm = $scope;
+    vm.title = '';
+
     AccountService.getCurrentUser().then(function (res) {
-      $scope.user = res.data;
+      vm.user = res.data;
     });
 
-    $scope.deactivate = function () {
-      AccountService.deactivateAccount().then(function (res) {
-        $scope.res = 'Account Deactivated';
-        AccountService.logout();
-        $timeout(function () {
-          $location.path('/');
-        }, 2000);
+    vm.save = function (model) {
+      AccountService.putCurrentUser(model).then(function (res) {
+        NotifyService.success('Saved');
+        $location.path('/manage');
       });
     };
 
     // upload later on form submit or something similar
-    $scope.submit = function() {
+    vm.submit = function () {
       if ($scope.form.file.$valid && $scope.file) {
         $scope.upload($scope.file);
       }
@@ -35,7 +31,7 @@
     $scope.upload = function (file) {
       Upload.upload({
         url: 'api/photos',
-        data: {file: file, 'username': $scope.username}
+        data: { file: file, 'username': $scope.username }
       }).then(function (res) {
         NotifyService.success('Success ' + resp.config.data.file.name + 'uploaded');
         console.log(res.data);
@@ -51,5 +47,4 @@
     //  Upload.upload({url:'', data: {file: files});
     //}
   }
-
-}());
+})();

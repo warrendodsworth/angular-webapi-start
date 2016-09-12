@@ -12,13 +12,11 @@
       auth: false
     };
 
-    //Register
     service.register = function (model) {
       service.logout();
       return $http.post('/api/account/register', model);
     };
 
-    //Login
     service.login = function (model) {
       var data = 'grant_type=password&username=' + model.username + '&password=' + model.password;
       var deferred = $q.defer();
@@ -37,7 +35,6 @@
       return deferred.promise;
     };
 
-    //Logout
     service.logout = function () {
       localStorageService.remove('authorizationData');
       service.identity.auth = false;
@@ -61,33 +58,38 @@
       return $http.get('/api/account/me');
     };
 
+    service.putCurrentUser = function (userBindingModel) {
+      return $http.put('/api/account/me', );
+    };
+
+
     //EXTERNAL LOGINS
-    //Get User Info
     service.getUserInfo = function (accessToken) {
       var config = accessToken ? { headers: { Authorization: 'Bearer ' + accessToken } } : {};
       return $http.get('/api/account/UserInfo', config);
     };
-    //Get External Logins
+
     service.getExternalLogins = function (returnUrl, generateState) {
       return $http.get('/api/account/externalLogins' + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html') + '&generateState=' + (generateState || false));
     };
-    //Register External Login { email }
+    //model > { email }
     service.registerExternal = function (model, externalAccessToken) {
       var config = externalAccessToken ? { headers: { Authorization: 'Bearer ' + externalAccessToken } } : {};
       return $http.post('/api/account/registerExternal', model, config);
     };
-    //Add External Login { externalAccessToken }
+    //model > { externalAccessToken }
     service.addExternalLogin = function (model) {
       return $http.post('/api/account/addExternalLogin', model);
     };
-    //Remove Login { loginProvider, providerKey }
+    //model > { loginProvider, providerKey }
     service.removeLogin = function (model) {
       return $http.post('/api/account/removeLogin', model);
     };
-    //Manage social logins
+
     service.getManageLogins = function (returnUrl) {
       return $http.get('/api/account/manageInfo' + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html'));
     };
+
     //MANAGE
     service.forgotPassword = function (model) {
       return $http.post('/api/account/forgotPassword', model);

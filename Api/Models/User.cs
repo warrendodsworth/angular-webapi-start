@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Api.Services;
 
 namespace Api.Models
 {
@@ -10,6 +11,10 @@ namespace Api.Models
   public class User : IdentityUser
   {
     public string Name { get; set; }
+
+    public string PhotoId { get; set; }
+
+    public string PhotoUrl { get { return PhotoService.BaseUrl + PhotoId;  } }
 
     public UserStatus Status { get; set; }
 
