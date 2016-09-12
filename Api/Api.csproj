@@ -215,6 +215,7 @@
     <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\Helpers\EnumHelper.cs" />
     <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\UserManager.cs" />
@@ -318,6 +319,7 @@
     <None Include="less\app.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />
+    <Content Include="Settings.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />
