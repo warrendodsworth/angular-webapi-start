@@ -9,25 +9,15 @@ namespace Api
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
   public class HandleLogErrorApiAttribute : ExceptionFilterAttribute
   {
-    public override void OnException(HttpActionExecutedContext actionExecutedContext)
-    {
-      base.OnException(actionExecutedContext);
-    }
-
     public override Task OnExceptionAsync(HttpActionExecutedContext actionExecutedContext, System.Threading.CancellationToken cancellationToken)
     {
-      return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
-    }
-
-    private void Handle(HttpActionExecutedContext context)
-    {
-      if (context != null && context.Exception != null)
+      if (actionExecutedContext != null && actionExecutedContext.Exception != null)
       {
-        var e = context.Exception;
-        var ms = context.ActionContext.ModelState;
+        var e = actionExecutedContext.Exception;
+        var ms = actionExecutedContext.ActionContext.ModelState;
         var ai = new TelemetryClient();
 
-        ai.TrackException(context.Exception);
+        ai.TrackException(e);
 
         if (e is DbEntityValidationException)
         {
@@ -44,6 +34,8 @@ namespace Api
           ms.AddModelError("", e.Message);
         }
       }
+
+      return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
     }
   }
 }

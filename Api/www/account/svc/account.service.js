@@ -59,7 +59,7 @@
     };
 
     service.putCurrentUser = function (userBindingModel) {
-      return $http.put('/api/account/me', );
+      return $http.put('/api/account/me', userBindingModel);
     };
 
 
