@@ -8,6 +8,6 @@ namespace Api
 
     public static string MandrillApiKey = ConfigurationManager.AppSettings["MandrillApiKey"];
 
-    public static string EnableApplicationInsightLogging = ConfigurationManager.AppSettings["EnableApplicationInsightLogging"];
+    public static string ApplicationInsightsKey = ConfigurationManager.AppSettings["ApplicationInsightsKey"];
   }
 }

@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -18,14 +17,17 @@ namespace Api
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       AutomapperConfig.Init();
       Database.SetInitializer(new CreateDatabaseIfNotExists<Db>());
-   
-      bool isAppInsLoggingEnabled = false;
-      bool.TryParse(ConfigurationManager.AppSettings["EnableApplicationInsightLogging"], out isAppInsLoggingEnabled);
 
-      if (!isAppInsLoggingEnabled)
-      {
-        TelemetryConfiguration.Active.DisableTelemetry = true;
-      }
+      TelemetryConfiguration.Active.InstrumentationKey = AppSettings.ApplicationInsightsKey;
     }
   }
 }
+
+
+//bool isAppInsLoggingEnabled = false;
+//bool.TryParse(ConfigurationManager.AppSettings["EnableApplicationInsightLogging"], out isAppInsLoggingEnabled);
+
+//if (!isAppInsLoggingEnabled)
+//{
+//  TelemetryConfiguration.Active.DisableTelemetry = true;
+//}
