@@ -282,6 +282,7 @@
     <Content Include="package.json" />
     <Content Include="scripts\ai.0.22.19-build00125.js" />
     <Content Include="scripts\ai.0.22.19-build00125.min.js" />
+    <Content Include="test\home\index.spec.js" />
     <Content Include="test\labs\basic.spec.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
