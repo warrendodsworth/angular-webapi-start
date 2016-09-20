@@ -240,6 +240,7 @@
     <Compile Include="App_Start\Automapper.Config.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Labs\LabsController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Bind\PostBindingModel.cs" />
     <Compile Include="Models\Bind\UserBindingModel.cs" />
