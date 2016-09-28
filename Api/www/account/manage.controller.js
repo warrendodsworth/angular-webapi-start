@@ -5,12 +5,15 @@
     '$scope',
     '$location',
     '$timeout',
-    'AccountService'
+    'Upload',
+    'AccountService',
+    'NotifyService'
   ];
-  function manageController($scope, $location, $timeout, AccountService) {
+  function manageController($scope, $location, $timeout, Upload, AccountService, NotifyService) {
     AccountService.getCurrentUser().then(function (res) {
       $scope.user = res.data;
     });
+
     $scope.deactivate = function () {
       AccountService.deactivateAccount().then(function (res) {
         $scope.res = 'Account Deactivated';
@@ -19,6 +22,7 @@
           $location.path('/');
         }, 2000);
       });
-    };
+    };   
   }
+
 }());

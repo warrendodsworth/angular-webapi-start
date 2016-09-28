@@ -18,7 +18,6 @@ namespace Api
       var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
       jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-      // Web API routes
       config.MapHttpAttributeRoutes();
 
       config.Filters.Add(new HandleLogErrorApiAttribute());

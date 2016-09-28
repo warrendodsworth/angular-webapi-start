@@ -1,17 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Effort;
-using Api.Models;
+﻿using Api.Models;
 using System.Linq;
-using System.Data.Entity.Core.EntityClient;
-using System.Security.Claims;
-using Moq;
 using Api.Controllers;
-using System.Security.Principal;
-using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
 using Api;
+using Test.Mocks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Effort;
+using System.Collections.Generic;
 
 namespace Test
 {
@@ -19,34 +15,68 @@ namespace Test
   public class HomeControllerTests
   {
     [TestInitialize]
-    public void Initialize()
+    public void Init()
     {
       AutomapperConfig.Init();
-      //var claim = new Claim("test", "IdOfYourChoosing");
-      //var mockIdentity = Mock.Of<ClaimsIdentity>(ci => ci.FindFirst(It.IsAny<string>()) == claim);
-      //var controller = new HomeController()
-      //{
-      //  User = Mock.Of<IPrincipal>(ip => ip.Identity == mockIdentity)
-      //};
-      //controller.User.Identity.GetUserId(); //returns "IdOfYourChoosing"
-
-      //Effort cannot use a data loader with a standard connection string.
-      //EntityConnection connection = EntityConnectionFactory.CreateTransient("name=DefaultConnection");
-      //db = new Db(connection.ConnectionString);
     }
 
     [TestMethod]
-    public async Task Posts_GetAll()
+    public async Task Home_Posts_GetAll()
     {
-      //Arrange
-      var controller = new HomeController();
+      var db = Seed();
+      var controller = new HomeController(db);
 
-      //Act
       var posts = await controller.Get();
 
-      //Assert
       Assert.IsNotNull(posts);
-      Assert.IsTrue(posts.items.Count() > 1);
+      Assert.AreEqual(posts.Items.Count(), 10);
+      Assert.AreEqual(posts.Total, 100);
+      Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
+    }
+
+    [TestMethod]
+    public async Task Home_Posts_GetAll_ShouldReturnSearch()
+    {
+      var db = Seed();
+      var controller = new HomeController(db);
+
+      var posts = await controller.Get(search: "0");
+
+      Assert.IsNotNull(posts);
+      Assert.AreEqual(10, posts.Items.Count());
+      Assert.AreEqual(10, posts.Total);
+    }
+
+    private IDb Seed(IDb db = null)
+    {
+      var connection = DbConnectionFactory.CreateTransient();
+      db = db ?? new Db(connection);  //new MockDbContext();
+
+      var user = new User
+      {
+        Name = "User",
+        Email = "a@test.com",
+        UserName = "user"
+      };
+      db.Users.Add(user);
+      db.SaveChanges();
+
+      var posts = new List<Post>();
+      for (int i = 0; i < 100; i++)
+      {
+        posts.Add(new Post
+        {
+          Id = i,
+          Text = "Post text " + i,
+          User = user
+        });
+      }
+
+      db.Posts.AddRange(posts);
+      db.SaveChanges();
+
+
+      return db;
     }
   }
 }

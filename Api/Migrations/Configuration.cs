@@ -1,6 +1,7 @@
 namespace Api.Migrations
 {
   using System;
+  using System.Collections.Generic;
   using System.Data.Entity;
   using System.Data.Entity.Migrations;
   using System.Linq;
@@ -18,10 +19,23 @@ namespace Api.Migrations
     {
       var userManager = new UserManager(db);
       var user = userManager.FindByName("user");
-      if(user == null)
+      if (user == null)
       {
         userManager.Create(new User { Name = "Test", UserName = "user" }, "password");
       }
+
+      var posts = new List<Post>();
+      for (int i = 1; i <= 500; i++)
+      {
+        posts.Add(new Post
+        {
+          Text = "Thinking " + i,
+          UserId = user.Id,
+          CreateDate = DateTime.UtcNow
+        });
+      }
+      db.Posts.AddOrUpdate(posts.ToArray());
+      db.SaveChanges();
     }
   }
 }

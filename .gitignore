@@ -6,6 +6,8 @@
 *.user
 *.sln.docstates
 lib/
+.vs/
+fonts/
 
 # Build results
 [Dd]ebug/
@@ -190,3 +192,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
+/Api/App_Data
+/Api/www/fonts

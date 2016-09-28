@@ -14,7 +14,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Api</RootNamespace>
     <AssemblyName>Api</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -49,16 +49,60 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.0.0\lib\net451\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.WebApi2.4.0.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AutoMapper, Version=5.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.5.0.2\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.6.2\lib\net45\Hangfire.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.6.2\lib\net45\Hangfire.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.1.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.1.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.1.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.1.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.1.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.1.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights.TraceListener, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.TraceListener.2.1.0\lib\net45\Microsoft.ApplicationInsights.TraceListener.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -82,9 +126,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -190,18 +234,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Mvc\AiHandleErrorAttribute.cs" />
+    <Compile Include="App_Start\AppSettings.Config.cs" />
     <Compile Include="App_Start\Autofac.Config.cs" />
     <Compile Include="App_Start\Automapper.Config.cs" />
     <Compile Include="Controllers\Admin\UsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Labs\LabsController.cs" />
+    <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Bind\PostBindingModel.cs" />
+    <Compile Include="Models\Bind\UserBindingModel.cs" />
     <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\PostDto.cs" />
-    <Compile Include="Services\ClaimsExtensions.cs" />
-    <Compile Include="App_Start\Api\HandleLogErrorApiAttribute.cs" />
+    <Compile Include="Models\IEntity.cs" />
+    <Compile Include="App_Start\Api\ApiHandleErrorAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\Helpers\EnumHelper.cs" />
+    <Compile Include="Services\PhotoService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="App_Start\Mvc\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -230,8 +281,13 @@
     <Content Include="index.html" />
     <Content Include="karma.conf.js" />
     <Content Include="package.json" />
+    <Content Include="scripts\ai.0.22.19-build00125.js" />
+    <Content Include="scripts\ai.0.22.19-build00125.min.js" />
+    <Content Include="test\home\index.spec.js" />
     <Content Include="test\labs\basic.spec.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -248,17 +304,21 @@
     <Content Include="www\account\login.html" />
     <Content Include="www\account\login.controller.js" />
     <Content Include="test\account\login.spec.js" />
-    <Content Include="www\account\manage\forgotPassword.html" />
-    <Content Include="www\account\manage\manage.controller.js" />
-    <Content Include="www\account\manage\manage.html" />
-    <Content Include="www\account\manage\forgotPassword.controller.js" />
-    <Content Include="www\account\manage\manageLogins.controller.js" />
-    <Content Include="www\account\manage\manageLogins.html" />
+    <Content Include="www\account\edit.controller.js" />
+    <Content Include="www\account\edit.html" />
+    <Content Include="www\account\forgotPassword.html" />
+    <Content Include="www\account\manage.controller.js" />
+    <Content Include="www\account\manage.html" />
+    <Content Include="www\account\forgotPassword.controller.js" />
+    <Content Include="www\account\manageLogins.controller.js" />
+    <Content Include="www\account\manageLogins.html" />
     <Content Include="www\account\register.html" />
     <Content Include="www\account\register.controller.js" />
     <Content Include="www\account\svc\account.service.js" />
     <Content Include="www\account\svc\httpInterceptor.service.js" />
-    <Content Include="www\app.routes.js" />
+    <Content Include="www\admin\admin.controller.js" />
+    <Content Include="www\admin\admin.html" />
+    <Content Include="www\app-routes.js" />
     <Content Include="www\app.js" />
     <Content Include="www\fonts\fontawesome-webfont.svg" />
     <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
@@ -286,7 +346,9 @@
     <Content Include="www\user\svc\post.service.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -294,6 +356,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="less\animate.less" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="less\app.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />

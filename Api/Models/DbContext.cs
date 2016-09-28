@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Common;
 using System.Data.Entity;
 using System;
 using System.Threading.Tasks;
-using System.Threading;
+using System.Linq;
+using System.Data.Common;
 
 namespace Api.Models
 {
-  public interface IDb : IDisposable
+  public interface IDb
   {
+    IDbSet<User> Users { get; set; }
     DbSet<Post> Posts { get; set; }
 
     void MarkAsModified(object item);
-
     int SaveChanges();
     Task<int> SaveChangesAsync();
-    DbSet Set(Type entityType);
-    DbSet<TEntity> Set<TEntity>() where TEntity : class;
   }
 
   public class Db : IdentityDbContext<User>, IDb
@@ -26,9 +24,9 @@ namespace Api.Models
     {
     }
 
-    public Db(string connection): base(connection)
+    //Effort in memory db
+    public Db(DbConnection connection) : base(connection, contextOwnsConnection: true)
     {
-
     }
 
     public DbSet<Post> Posts { get; set; }
@@ -46,6 +44,36 @@ namespace Api.Models
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
       base.OnModelCreating(modelBuilder);
+    }
+
+    public override int SaveChanges()
+    {
+      DateTime saveTime = DateTime.Now;
+      foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+      {
+        if (typeof(IEntity) == entry.GetType())
+        {
+          var e = ((IEntity) entry.Entity);
+          if (e.CreateDate == null)
+            e.CreateDate = saveTime;
+        }
+      }
+      return base.SaveChanges();
+    }
+
+    public override Task<int> SaveChangesAsync()
+    {
+      DateTime saveTime = DateTime.Now;
+      foreach (var entry in this.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+      {
+        if (typeof(IEntity) == entry.GetType())
+        {
+          var e = ((IEntity) entry.Entity);
+          if (e.CreateDate == null)
+            e.CreateDate = saveTime;
+        }
+      }
+      return base.SaveChangesAsync();
     }
   }
 }

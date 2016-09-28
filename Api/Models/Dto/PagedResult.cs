@@ -14,8 +14,8 @@ namespace Api.Models.Dto
 
   public class PagedResult<T> where T : class
   {
-    public IEnumerable<T> items { get; set; }
-    public int total { get; set; }
+    public IEnumerable<T> Items { get; set; }
+    public int Total { get; set; }
 
     public PagedResult()
     {
