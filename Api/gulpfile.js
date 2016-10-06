@@ -14,6 +14,7 @@ var less = require('gulp-less');
 var sh = require('shelljs');
 var bower = require('bower');
 var livereload = require('livereload');
+var stripDebug = require('gulp-strip-debug');
 var mainBowerFiles = require('main-bower-files');
 var Server = require('karma').Server;
 
@@ -51,6 +52,7 @@ gulp.task('js', function (done) {
     .pipe(concat('app.js'))
     .pipe(gulp.dest(paths.lib))
     .pipe(uglify())
+	.pipe(stripDebug())
     .on('error', handleError)
     .pipe(rename({ suffix: '.min' }))
     .pipe(gulp.dest(paths.lib))
