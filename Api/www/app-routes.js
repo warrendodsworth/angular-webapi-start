@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  
+
   angular.module('app').config([
     '$routeProvider',
     function ($routeProvider) {
@@ -8,20 +8,20 @@
 
       //Account
       $routeProvider
-        .when('/login', { templateUrl: root + 'account/login.html', controller: 'LoginController' })
-        .when('/register', { templateUrl: root + 'account/register.html', controller: 'RegisterController' })
-        .when('/manage', { templateUrl: root + 'account/manage.html', controller: 'manageController' })
-        .when('/maange/edit', { templateUrl: root + 'account/edit.html', controller: 'EditController' })
-        .when('/manage/logins', { templateUrl: root + 'account/manageLogins.html', controller: 'manageLoginsController' });
+        .when('/login', { title: 'Login', controller: 'LoginController', templateUrl: root + 'account/login.html' })
+        .when('/register', { title: 'Register', controller: 'RegisterController', templateUrl: root + 'account/register.html' })
+        .when('/manage', { title: 'Manage', controller: 'manageController', templateUrl: root + 'account/manage.html' })
+        .when('/maange/edit', { title: 'Edit', controller: 'EditController', templateUrl: root + 'account/edit.html' })
+        .when('/manage/logins', { title: 'Social Logins', controller: 'manageLoginsController', templateUrl: root + 'account/manageLogins.html' })
+
       //User
-      $routeProvider
-        .when('/posts', { templateUrl: root + 'user/posts/posts.html', controller: 'posts.IndexController' })
-        .when('/facebook', { templateUrl: root + 'user/facebook/facebook.html', controller: 'FacebookController' })
+        .when('/posts', { title: 'Posts', controller: 'posts.IndexController', templateUrl: root + 'user/posts/posts.html' })
+        .when('/facebook', { title: 'Facebook', controller: 'FacebookController', templateUrl: root + 'user/facebook/facebook.html' })
 
       //Admin
-        .when('/a', { templateUrl: root + 'admin/admin.html', controller: 'AdminController' })
+        .when('/a', { title: 'Admin', controller: 'AdminController', templateUrl: root + 'admin/admin.html' })
 
-        .when('/', { templateUrl: root + 'home/index.html', controller: 'IndexController' })
+        .when('/', { title: 'Home', controller: 'IndexController', templateUrl: root + 'home/index.html' })
         .otherwise({ redirectTo: '/' });
     }]);
 }());

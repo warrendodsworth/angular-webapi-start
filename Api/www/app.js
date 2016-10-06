@@ -1,5 +1,5 @@
 (function () {
-  'use-strict';
+  'use strict';
 
   angular.module('app', [
     'ngRoute',
@@ -16,6 +16,10 @@
     'AccountService',
     function ($rootScope, AccountService) {
       AccountService.getIdentity();
+
+      $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+        $rootScope.title = current.$$route.title;
+      });
     }
   ]).config([
     '$httpProvider',
