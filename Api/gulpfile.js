@@ -46,17 +46,7 @@ gulp.task('livereload', function () {
 });
 
 gulp.task('js', function (done) {
-  gulp.src(paths.js)
-    .pipe(filter('**/*.js'))
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'))
-    //.pipe(fixmyjs({
-    //  //Jshint options   
-    //  esversion: 5
-    //}))
-    //.pipe(jscs({ fix: true }))
-    //.pipe(jscs.reporter('console'))
-
+  gulp.src(paths.js)    
     .pipe(gulp.dest(root))
     .pipe(concat('app.js'))
     .pipe(gulp.dest(paths.lib))
@@ -143,3 +133,12 @@ function handleError(err) {
   this.emit('end');
 }
 
+
+//.pipe(jshint())
+//.pipe(jshint.reporter('default'))
+//.pipe(fixmyjs({
+//  //Jshint options   
+//  esversion: 5
+//}))
+//.pipe(jscs({ fix: true }))
+//.pipe(jscs.reporter('console'))
