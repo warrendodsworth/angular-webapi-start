@@ -274,6 +274,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-api.mdf" />
+    <Content Include="App_Data\aspnet-api_log.ldf">
+      <DependentUpon>aspnet-api.mdf</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -362,6 +366,7 @@
     <None Include="less\app.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />
+    <Content Include="TODO.md" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />

@@ -36,6 +36,7 @@
     });
   }]);
 
+  //TODO restructure modules by component
   angular.module('controllers', ['services']);
   angular.module('services', []);
 

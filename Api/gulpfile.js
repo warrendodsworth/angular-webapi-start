@@ -15,6 +15,7 @@ var sh = require('shelljs');
 var bower = require('bower');
 var livereload = require('livereload');
 var stripDebug = require('gulp-strip-debug');
+var todo = require('gulp-todo');
 var mainBowerFiles = require('main-bower-files');
 var Server = require('karma').Server;
 
@@ -34,7 +35,7 @@ gulp.task('test', function (done) {
   }, done).start();
 });
 
-gulp.task('default', ['css', 'js', 'bower']);
+gulp.task('default', ['css', 'js', 'bower', 'todo']);
 
 gulp.task('watch', ['default', 'livereload'], function () {
   gulp.watch(paths.css, ['css']);
@@ -109,6 +110,13 @@ gulp.task('bower', ['install'], function (done) {
     .pipe(everythingElseFilter)
     .pipe(gulp.dest(paths.lib))
     .on('end', done);
+});
+
+// -> Will output a TODO.md with your todos 
+gulp.task('todo', function () {
+  gulp.src(paths.js)
+	  .pipe(todo())
+	  .pipe(gulp.dest('./'));
 });
 
 gulp.task('install', ['git-check'], function () {
