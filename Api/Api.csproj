@@ -246,6 +246,7 @@
     <Compile Include="Models\Bind\UserBindingModel.cs" />
     <Compile Include="Models\Dto\PagedResult.cs" />
     <Compile Include="Models\Dto\PostDto.cs" />
+    <Compile Include="Models\Enums\USTimeZones.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="App_Start\Api\ApiHandleErrorAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
