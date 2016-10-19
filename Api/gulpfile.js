@@ -20,6 +20,7 @@ var mainBowerFiles = require('main-bower-files');
 var postcss = require('gulp-postcss');
 var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer');
+var plumber = require('gulp-plumber');
 var Server = require('karma').Server;
 
 var root = './www/';
@@ -52,6 +53,7 @@ gulp.task('livereload', function () {
 
 gulp.task('js', function (done) {
     gulp.src(paths.js)
+        .pipe(plumber())
         .pipe(gulp.dest(root))
         .pipe(concat('app.js'))
         .pipe(gulp.dest(paths.lib))
@@ -65,16 +67,16 @@ gulp.task('js', function (done) {
 
 gulp.task('css', function (done) {
     gulp.src(paths.css)
+        .pipe(plumber())
         .pipe(less())
         .pipe(concat('app.css'))
         .pipe(sourcemaps.init())
         .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
-      
         .pipe(gulp.dest(paths.lib))
         .pipe(minifyCss({
             keepSpecialComments: 0
         }))
-        .on('error', handleError)
+       
         .pipe(rename({ extname: '.min.css' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.lib))
