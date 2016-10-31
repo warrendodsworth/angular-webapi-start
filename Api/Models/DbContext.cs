@@ -18,7 +18,7 @@ namespace Api.Models
   }
 
   public class Db : IdentityDbContext<User>, IDb
-  {
+  { 
     public Db()
       : base("DefaultConnection", throwIfV1Schema: false)
     {

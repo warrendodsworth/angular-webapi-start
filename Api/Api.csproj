@@ -275,10 +275,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-api.mdf" />
-    <Content Include="App_Data\aspnet-api_log.ldf">
-      <DependentUpon>aspnet-api.mdf</DependentUpon>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="gulpfile.js" />
@@ -382,6 +378,7 @@
     <Content Include="www\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\HelpPage\App_Start\" />
     <Folder Include="Areas\HelpPage\Controllers\" />
     <Folder Include="Areas\HelpPage\ModelDescriptions\" />

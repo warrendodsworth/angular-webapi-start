@@ -13,15 +13,19 @@ namespace Api.Migrations
     {
       AutomaticMigrationsEnabled = true;
       AutomaticMigrationDataLossAllowed = true;
+
+#if DEBUG
+      Database.SetInitializer(new DropCreateDatabaseAlways<Db>());
+#endif
     }
 
     protected override void Seed(Api.Models.Db db)
     {
       var userManager = new UserManager(db);
-      var user = userManager.FindByName("user");
+      var user = userManager.FindByName("user") ?? new User { Name = "Test", UserName = "user" };
       if (user == null)
       {
-        userManager.Create(new User { Name = "Test", UserName = "user" }, "password");
+        userManager.Create(user, "password");
       }
 
       var posts = new List<Post>();
