@@ -16,9 +16,9 @@ namespace Api.Controllers
     [RoutePrefix("api/user/posts")]
     public class UserPostsController : ApiController
     {
-        private IDb _db;
+        private IAppDbContext _db;
 
-        public UserPostsController (IDb db)
+        public UserPostsController (IAppDbContext db)
         {
             _db = db;
         }

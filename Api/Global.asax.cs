@@ -16,7 +16,7 @@ namespace Api
       FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       AutomapperConfig.Init();
-      Database.SetInitializer(new CreateDatabaseIfNotExists<Db>());
+      Database.SetInitializer(new CreateDatabaseIfNotExists<AppDbContext>());
 
       TelemetryConfiguration.Active.InstrumentationKey = AppSettings.ApplicationInsightsKey;
     }

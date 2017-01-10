@@ -47,10 +47,10 @@ namespace Test
       Assert.AreEqual(10, posts.Total);
     }
 
-    private IDb Seed(IDb db = null)
+    private IAppDbContext Seed(IAppDbContext db = null)
     {
       var connection = DbConnectionFactory.CreateTransient();
-      db = db ?? new Db(connection);  //new MockDbContext();
+      db = db ?? new AppDbContext(connection);  //new MockDbContext();
 
       var user = new User
       {

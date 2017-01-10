@@ -20,7 +20,7 @@ namespace Api
             builder.RegisterFilterProvider();
             builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
 
-            builder.RegisterType<Db>()
+            builder.RegisterType<AppDbContext>()
                    .AsImplementedInterfaces()
                    .InstancePerRequest();
 

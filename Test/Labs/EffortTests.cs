@@ -14,7 +14,7 @@ namespace Test.Controllers
   [TestClass]
   public class EffortTests
   {
-    private IDb db;
+    private IAppDbContext db;
 
     [TestInitialize]
     public void Initialize()
@@ -22,7 +22,7 @@ namespace Test.Controllers
       AutomapperConfig.Init();
 
       var connection = DbConnectionFactory.CreateTransient();
-      db = new Db(connection);
+      db = new AppDbContext(connection);
       //EntityConnection connection = EntityConnectionFactory.CreateTransient("name=DefaultConnection");
     }
 
@@ -40,7 +40,7 @@ namespace Test.Controllers
       Assert.AreEqual("Post text 1", posts.Items.First()?.Text);
     }
 
-    private void Seed(IDb db)
+    private void Seed(IAppDbContext db)
     {
       var user = new User
       {

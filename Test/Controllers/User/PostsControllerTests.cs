@@ -59,7 +59,7 @@ namespace Test
       Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
     }
 
-    private IDb Seed(IDb db = null)
+    private IAppDbContext Seed(IAppDbContext db = null)
     {
       db = db ?? new MockDbContext();
       var user = new User

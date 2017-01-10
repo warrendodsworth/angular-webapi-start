@@ -9,10 +9,10 @@ namespace Api.Controllers.Admin
   [RoutePrefix("api/users")]
   public class AdminUsersController : ApiController
   {
-    private IDb _db;
+    private IAppDbContext _db;
     private UserManager _userManager;
 
-    public AdminUsersController(IDb db)
+    public AdminUsersController(IAppDbContext db)
     {
       _db = db;
     }

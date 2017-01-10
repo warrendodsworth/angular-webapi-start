@@ -10,14 +10,14 @@ namespace Api
   // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
   public class UserManager : UserManager<User>
   {
-    public UserManager(Db db)
+    public UserManager(AppDbContext db)
         : base(new UserStore<User>(db))
     {
     }
 
     public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context)
     {
-      var manager = new UserManager(context.Get<Db>());
+      var manager = new UserManager(context.Get<AppDbContext>());
       // Configure validation logic for usernames
       manager.UserValidator = new UserValidator<User>(manager)
       {

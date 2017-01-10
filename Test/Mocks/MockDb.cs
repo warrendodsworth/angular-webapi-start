@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 //https://msdn.microsoft.com/en-us/data/dn314431.aspx
 namespace Test.Mocks
 {
-  public class MockDbContext : IDb
+  public class MockDbContext : IAppDbContext
   {
     public MockDbContext()
     {

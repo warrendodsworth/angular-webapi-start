@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace Api.Models
 {
-  public interface IDb
+  public interface IAppDbContext
   {
     IDbSet<User> Users { get; set; }
     DbSet<Post> Posts { get; set; }
@@ -17,23 +17,23 @@ namespace Api.Models
     Task<int> SaveChangesAsync();
   }
 
-  public class Db : IdentityDbContext<User>, IDb
+  public class AppDbContext : IdentityDbContext<User>, IAppDbContext
   { 
-    public Db()
+    public AppDbContext()
       : base("DefaultConnection", throwIfV1Schema: false)
     {
     }
 
     //Effort in memory db
-    public Db(DbConnection connection) : base(connection, contextOwnsConnection: true)
+    public AppDbContext(DbConnection connection) : base(connection, contextOwnsConnection: true)
     {
     }
 
     public DbSet<Post> Posts { get; set; }
 
-    public static Db Create()
+    public static AppDbContext Create()
     {
-      return new Db();
+      return new AppDbContext();
     }
 
     public void MarkAsModified(object item)

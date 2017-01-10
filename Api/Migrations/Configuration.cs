@@ -7,7 +7,7 @@ namespace Api.Migrations
   using System.Linq;
   using Microsoft.AspNet.Identity;
   using Models;
-  internal sealed class Configuration : DbMigrationsConfiguration<Api.Models.Db>
+  internal sealed class Configuration : DbMigrationsConfiguration<Api.Models.AppDbContext>
   {
     public Configuration()
     {
@@ -15,11 +15,11 @@ namespace Api.Migrations
       AutomaticMigrationDataLossAllowed = true;
 
 #if DEBUG
-      Database.SetInitializer(new DropCreateDatabaseAlways<Db>());
+      Database.SetInitializer(new DropCreateDatabaseAlways<AppDbContext>());
 #endif
     }
 
-    protected override void Seed(Api.Models.Db db)
+    protected override void Seed(Api.Models.AppDbContext db)
     {
       var userManager = new UserManager(db);
       var user = userManager.FindByName("user") ?? new User { Name = "Test", UserName = "user" };

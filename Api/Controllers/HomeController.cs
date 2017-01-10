@@ -12,9 +12,9 @@ namespace Api.Controllers
   [RoutePrefix("api")]
   public class HomeController : ApiController
   {
-    private IDb _db;
+    private IAppDbContext _db;
 
-    public HomeController(IDb db)
+    public HomeController(IAppDbContext db)
     {
       _db = db;
     }
