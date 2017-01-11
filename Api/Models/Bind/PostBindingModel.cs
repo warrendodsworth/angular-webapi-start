@@ -1,4 +1,4 @@
-﻿namespace Api.Models.Bind
+﻿namespace Web.Models.Bind
 {
   public class PostBindingModel
   {

@@ -144,9 +144,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj">
+    <ProjectReference Include="..\Api\Web.csproj">
       <Project>{f37f0b0b-de12-444b-9b55-dd494b1d4f18}</Project>
-      <Name>Api</Name>
+      <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

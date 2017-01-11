@@ -1,4 +1,4 @@
-﻿namespace Api.Models
+﻿namespace Web.Models
 {
   public class UserDto
   {

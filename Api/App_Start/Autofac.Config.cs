@@ -1,12 +1,12 @@
 ﻿using Autofac;
-using Api.Models;
+using Web.Models;
 using System.Web.Http;
 using System.Reflection;
 using Autofac.Integration.WebApi;
 using System.Web.Mvc;
 using Autofac.Integration.Mvc;
 
-namespace Api
+namespace Web
 {
   public class AutofacConfig
   {

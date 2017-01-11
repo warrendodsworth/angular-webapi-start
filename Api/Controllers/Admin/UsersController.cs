@@ -1,10 +1,10 @@
-﻿using Api.Models;
+﻿using Web.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Api.Controllers.Admin
+namespace Web.Controllers.Admin
 {
   [RoutePrefix("api/users")]
   public class AdminUsersController : ApiController

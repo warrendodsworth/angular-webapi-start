@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Filters;
 using Microsoft.ApplicationInsights;
 
-namespace Api
+namespace Web
 {
   [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
   public class HandleLogErrorApiAttribute : ExceptionFilterAttribute

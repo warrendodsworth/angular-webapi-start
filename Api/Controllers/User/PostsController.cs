@@ -1,16 +1,16 @@
-﻿using Api.Models;
+﻿using Web.Models;
 using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Linq;
-using Api.Models.Bind;
+using Web.Models.Bind;
 using PagedList.EntityFramework;
 using Microsoft.AspNet.Identity;
 using AutoMapper;
-using Api.Models.Dto;
+using Web.Models.Dto;
 
-namespace Api.Controllers
+namespace Web.Controllers
 {
     [Authorize]
     [RoutePrefix("api/user/posts")]

@@ -9,10 +9,10 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Api.Models;
+using Web.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Api.Providers
+namespace Web.Providers
 {
   public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
   {

@@ -1,9 +1,9 @@
-﻿using Api.Models;
-using Api.Models.Bind;
-using Api.Models.Dto;
+﻿using Web.Models;
+using Web.Models.Bind;
+using Web.Models.Dto;
 using AutoMapper;
 
-namespace Api
+namespace Web
 {
   public class AutomapperConfig
   {

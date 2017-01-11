@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 
-namespace Api.Services
+namespace Web.Services
 {
   public class PhotoService
   {

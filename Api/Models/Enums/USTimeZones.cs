@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Api.Models.Enums
+namespace Web.Models.Enums
 {
   public enum USTimeZones
   {

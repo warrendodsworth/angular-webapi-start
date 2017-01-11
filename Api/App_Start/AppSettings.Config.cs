@@ -1,6 +1,6 @@
 ﻿using System.Configuration;
 
-namespace Api
+namespace Web
 {
   public static class AppSettings
   {

@@ -4,11 +4,11 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using Api.Providers;
-using Api.Models;
+using Web.Providers;
+using Web.Models;
 using Microsoft.Owin.Security.Facebook;
 
-namespace Api
+namespace Web
 {
   public partial class Startup
   {

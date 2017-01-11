@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Api.Models
+namespace Web.Models
 {
   public class ManageInfoDto
   {

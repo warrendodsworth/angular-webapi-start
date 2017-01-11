@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Api.Models.Dto
+namespace Web.Models.Dto
 {
   public interface IPagedResult<out T>: IEnumerable<T>
   {

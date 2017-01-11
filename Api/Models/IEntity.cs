@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace Api.Models
+namespace Web.Models
 {
   public interface IEntity
   {

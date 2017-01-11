@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Http;
-using Api.Services;
+using Web.Services;
 
-namespace Api.Controllers
+namespace Web.Controllers
 {
   [Authorize]
   [RoutePrefix("api/photos")]

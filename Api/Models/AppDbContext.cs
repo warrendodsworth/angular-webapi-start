@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Data.Common;
 
-namespace Api.Models
+namespace Web.Models
 {
   public interface IAppDbContext
   {

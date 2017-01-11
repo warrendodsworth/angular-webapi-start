@@ -13,14 +13,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
-using Api.Models;
-using Api.Providers;
-using Api.Results;
+using Web.Models;
+using Web.Providers;
+using Web.Results;
 using Newtonsoft.Json.Linq;
 using System.Linq;
-using Api.Models.Bind;
+using Web.Models.Bind;
 
-namespace Api.Controllers
+namespace Web.Controllers
 {
   [Authorize]
   [RoutePrefix("api/account")]

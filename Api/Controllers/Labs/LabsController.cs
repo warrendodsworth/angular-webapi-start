@@ -1,12 +1,12 @@
-﻿using Api.Models;
-using Api.Models.Enums;
-using Api.Services.Helpers;
+﻿using Web.Models;
+using Web.Models.Enums;
+using Web.Services.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Api.Controllers.Labs
+namespace Web.Controllers.Labs
 {
   [RoutePrefix("api/labs")]
   public class LabsController : ApiController

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Api.Services.Helpers
+namespace Web.Services.Helpers
 {
   public static class EnumHelper
   {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Api.Models.Dto
+namespace Web.Models.Dto
 {
   public class PostDto
   {

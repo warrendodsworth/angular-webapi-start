@@ -2,10 +2,10 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Api.Models;
+using Web.Models;
 using Microsoft.ApplicationInsights.Extensibility;
 
-namespace Api
+namespace Web
 {
   public class WebApiApplication : System.Web.HttpApplication
   {

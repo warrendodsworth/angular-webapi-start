@@ -1,5 +1,5 @@
-﻿using Api.Models;
-using Api.Models.Dto;
+﻿using Web.Models;
+using Web.Models.Dto;
 using AutoMapper;
 using PagedList.EntityFramework;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Data.Entity;
 
-namespace Api.Controllers
+namespace Web.Controllers
 {
   [RoutePrefix("api")]
   public class HomeController : ApiController

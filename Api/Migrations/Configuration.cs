@@ -1,4 +1,4 @@
-namespace Api.Migrations
+namespace Web.Migrations
 {
   using System;
   using System.Collections.Generic;

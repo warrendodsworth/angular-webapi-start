@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace Api.Models
+namespace Web.Models
 {
   public class AddExternalLoginBindingModel
   {
