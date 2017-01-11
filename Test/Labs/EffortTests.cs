@@ -1,13 +1,13 @@
-﻿using Api;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Api.Models;
 using Effort;
-using Api.Controllers;
+using Web.Models;
+using Web;
+using Web.Controllers;
 
 namespace Test.Controllers
 {

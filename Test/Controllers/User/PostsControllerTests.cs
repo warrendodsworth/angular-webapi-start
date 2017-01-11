@@ -1,15 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Api.Models;
 using System.Linq;
-using Api.Controllers;
 using System.Threading.Tasks;
-using Api;
 using Test.Mocks;
 using Moq;
 using System.Security.Principal;
 using System.Security.Claims;
 using System.Web.Http.Controllers;
 using Microsoft.AspNet.Identity;
+using Web.Models;
+using Web.Controllers;
+using Web;
 
 namespace Test
 {
