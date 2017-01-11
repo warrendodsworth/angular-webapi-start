@@ -7,7 +7,7 @@ namespace Web.Migrations
   using System.Linq;
   using Microsoft.AspNet.Identity;
   using Models;
-  internal sealed class Configuration : DbMigrationsConfiguration<Api.Models.AppDbContext>
+  internal sealed class Configuration : DbMigrationsConfiguration<Web.Models.AppDbContext>
   {
     public Configuration()
     {
@@ -19,13 +19,14 @@ namespace Web.Migrations
 #endif
     }
 
-    protected override void Seed(Api.Models.AppDbContext db)
+    protected override void Seed(Web.Models.AppDbContext db)
     {
       var userManager = new UserManager(db);
-      var user = userManager.FindByName("user") ?? new User { Name = "Test", UserName = "user" };
+      var user = userManager.FindByName("warren");
       if (user == null)
       {
-        userManager.Create(user, "password");
+        user = new User { Name = "W", UserName = "warren" };
+        userManager.Create(user, "daywalker");
       }
 
       var posts = new List<Post>();
