@@ -13,10 +13,6 @@ namespace Web.Migrations
     {
       AutomaticMigrationsEnabled = true;
       AutomaticMigrationDataLossAllowed = true;
-
-#if DEBUG
-      Database.SetInitializer(new DropCreateDatabaseAlways<AppDbContext>());
-#endif
     }
 
     protected override void Seed(Web.Models.AppDbContext db)

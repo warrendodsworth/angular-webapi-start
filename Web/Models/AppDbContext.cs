@@ -20,7 +20,7 @@ namespace Web.Models
   public class AppDbContext : IdentityDbContext<User>, IAppDbContext
   { 
     public AppDbContext()
-      : base("DefaultConnection", throwIfV1Schema: false)
+      : base("name=DefaultConnection", throwIfV1Schema: false)
     {
     }
 
