@@ -2,11 +2,10 @@ namespace Web.Migrations
 {
   using System;
   using System.Collections.Generic;
-  using System.Data.Entity;
   using System.Data.Entity.Migrations;
-  using System.Linq;
   using Microsoft.AspNet.Identity;
   using Models;
+
   internal sealed class Configuration : DbMigrationsConfiguration<Web.Models.AppDbContext>
   {
     public Configuration()
@@ -15,7 +14,7 @@ namespace Web.Migrations
       AutomaticMigrationDataLossAllowed = true;
     }
 
-    protected override void Seed(Web.Models.AppDbContext db)
+    protected override void Seed(AppDbContext db)
     {
       var userManager = new UserManager(db);
       var user = userManager.FindByName("warren");
