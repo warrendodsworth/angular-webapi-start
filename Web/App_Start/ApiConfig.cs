@@ -3,6 +3,8 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
+using System.Web.Configuration;
+using System.Web.Http.Cors;
 
 namespace Web
 {
@@ -10,7 +12,10 @@ namespace Web
   {
     public static void Register(HttpConfiguration config)
     {
-      // Web API configuration and services
+      var appSettings = WebConfigurationManager.AppSettings;
+      var corsPolicy = new EnableCorsAttribute(appSettings["cors:Origins"], appSettings["cors:Headers"], appSettings["cors:Methods"]);
+      config.EnableCors(corsPolicy);
+
       // Configure Web API to use only bearer token authentication.
       config.SuppressDefaultHostAuthentication();
       config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));

@@ -7,30 +7,36 @@ using Owin;
 using Web.Providers;
 using Web.Models;
 using Microsoft.Owin.Security.Facebook;
+using System.Web.Configuration;
+using System.Web.Http.Cors;
+using Microsoft.Owin.Cors;
+using System.Threading.Tasks;
+using System.Web.Cors;
+using System.Threading;
 
 namespace Web
 {
   public partial class Startup
   {
     public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
-
+    public static FacebookAuthenticationOptions FacebookOptions { get; private set; }
     public static string PublicClientId { get; private set; }
 
-
-    // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
     public void ConfigureAuth(IAppBuilder app)
     {
-      // Configure the db context and user manager to use a single instance per request
-      app.CreatePerOwinContext(AppDbContext.Create);
-      app.CreatePerOwinContext<UserManager>(UserManager.Create);
+      var appSettings = WebConfigurationManager.AppSettings;
+      var corsPolicy = new EnableCorsAttribute(appSettings["cors:Origins"], appSettings["cors:Headers"], appSettings["cors:Methods"]);
+      var corsOptions = new CorsOptions
+      {
+        PolicyProvider = new CorsPolicyProvider
+        {
+          PolicyResolver = request =>
+              request.Path.Value == "/token" ?
+              corsPolicy.GetCorsPolicyAsync(null, CancellationToken.None) :
+              Task.FromResult<CorsPolicy>(null)
+        }
+      };
 
-      // Enable the application to use a cookie to store information for the signed in user
-      // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-      app.UseCookieAuthentication(new CookieAuthenticationOptions());
-      app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-
-      //OAuth config
       PublicClientId = "self";
       OAuthOptions = new OAuthAuthorizationServerOptions
       {
@@ -42,19 +48,29 @@ namespace Web
         AllowInsecureHttp = true
       };
 
-      app.UseOAuthBearerTokens(OAuthOptions); //OAuth enable
-
-
-      var facebookOptions = new FacebookAuthenticationOptions
+      FacebookOptions = new FacebookAuthenticationOptions
       {
         AppId = "292179600807388",
         AppSecret = "2ccc6fd1bada1fddbdb6577d47b93996",
       };
-      facebookOptions.Scope.Add("email");
-      facebookOptions.Scope.Add("user_hometown");
-      facebookOptions.Scope.Add("user_location");
+      FacebookOptions.Scope.Add("email");
+      FacebookOptions.Scope.Add("user_hometown");
+      FacebookOptions.Scope.Add("user_location");
 
-      app.UseFacebookAuthentication(facebookOptions); //Facebook OAuth enable
+
+      // Configure the db context and user manager to use a single instance per request
+      app.CreatePerOwinContext(AppDbContext.Create);
+      app.CreatePerOwinContext<UserManager>(UserManager.Create);
+
+      app.UseCors(corsOptions);
+      app.UseOAuthBearerTokens(OAuthOptions);
+      app.UseFacebookAuthentication(FacebookOptions);
+      app.UseCookieAuthentication(new CookieAuthenticationOptions());
+      app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
     }
   }
 }
+
+// For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+// Enable the application to use a cookie to store information for the signed in user
+// and to use a cookie to temporarily store information about a user logging in with a third party login provider
