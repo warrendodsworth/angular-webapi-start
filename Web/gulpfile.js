@@ -6,10 +6,6 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
-var fixmyjs = require('gulp-fixmyjs');
-var stylish = require('jshint-stylish');
-var jscs = require('gulp-jscs');
 var less = require('gulp-less');
 var sh = require('shelljs');
 var bower = require('bower');
@@ -22,6 +18,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('autoprefixer');
 var plumber = require('gulp-plumber');
 var Server = require('karma').Server;
+
 
 var root = './www/';
 var paths = {
