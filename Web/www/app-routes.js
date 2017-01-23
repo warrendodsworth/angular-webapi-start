@@ -15,8 +15,8 @@
         .when('/manage/logins', { title: 'Social Logins', controller: 'manageLoginsController', templateUrl: root + 'account/manageLogins.html' })
 
       //User
-        .when('/posts', { title: 'Posts', controller: 'posts.IndexController', templateUrl: root + 'user/posts/posts.html' })
-        .when('/facebook', { title: 'Facebook', controller: 'FacebookController', templateUrl: root + 'user/facebook/facebook.html' })
+        .when('/posts', { title: 'Posts', controller: 'posts.IndexController', templateUrl: root + 'user/posts.html' })
+        .when('/facebook', { title: 'Facebook', controller: 'FacebookController', templateUrl: root + 'user/facebook.html' })
 
       //Admin
         .when('/a', { title: 'Admin', controller: 'AdminController', templateUrl: root + 'admin/admin.html' })

@@ -5,6 +5,8 @@
   //http://www.metaltoad.com/blog/managing-querystring-angular-location
   angular.module('services').factory('QsService', QsService);
 
+  QsService.$inject = ['$location'];
+
   function QsService($location) {
     var service = {};
 
@@ -27,9 +29,9 @@
     service.toQs = function (filters) {
       var qs = '?';
       for (var f in filters) {
-        qs += f + '=' + filters[f] + '&';
+        qs += f + '=' + filters[f] + '&';                  
       }
-      $location.search(filters);
+      
       return qs.slice(0, -1);
     };
 

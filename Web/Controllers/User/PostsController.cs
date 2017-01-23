@@ -74,19 +74,19 @@ namespace Web.Controllers
         }
 
         [Route("{id:int}")]
-        public async Task<IHttpActionResult> Put (int id, PostBindingModel item)
+        public async Task<IHttpActionResult> Put (int id, PostBindingModel dto)
         {
             if ( !ModelState.IsValid ) {
                 return BadRequest();
             }
 
-            if ( id != item.Id ) {
+            if ( id != dto.Id ) {
                 return BadRequest();
             }
 
             var post = await _db.Posts.FindAsync(id);
 
-            Mapper.Map(item, post);
+            Mapper.Map(dto, post);
 
             _db.MarkAsModified(post);
             await _db.SaveChangesAsync();

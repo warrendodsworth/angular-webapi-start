@@ -16,8 +16,10 @@
     <hr />
   </div>
 
-  <uib-pagination total-items="total" ng-model="filters.page" items-per-page="filters.show"
-                  ng-show="posts.total > filters.show" ng-change="pageChanged()"></uib-pagination>
+  <ul uib-pagination total-items="posts.total" items-per-page="filters.show"
+      ng-model="filters.page" force-ellipses="true" max-size="8"
+      ng-show="posts.total > filters.show"
+      ng-change="getPosts()"></ul>
 </div>
 
 <div ng-show="filters.action == 'create'">

@@ -58,7 +58,7 @@ gulp.task('js', function (done) {
         .pipe(concat('app.js'))
         .pipe(gulp.dest(paths.lib))
         .pipe(uglify())
-        .pipe(stripDebug())
+        //.pipe(stripDebug())
         .on('error', handleError)
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(paths.lib))

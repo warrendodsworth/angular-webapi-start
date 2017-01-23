@@ -355,10 +355,10 @@
     <Content Include="www\shared\navbar.html" />
     <Content Include="www\shared\notify.service.js" />
     <Content Include="www\shared\qs.service.js" />
-    <Content Include="www\user\facebook\facebook.html" />
-    <Content Include="www\user\facebook\facebook.controller.js" />
-    <Content Include="www\user\posts\posts.html" />
-    <Content Include="www\user\posts\posts.controller.js" />
+    <Content Include="www\user\facebook.html" />
+    <Content Include="www\user\facebook.controller.js" />
+    <Content Include="www\user\posts.html" />
+    <Content Include="www\user\posts.controller.js" />
     <Content Include="www\user\svc\post.service.js" />
   </ItemGroup>
   <ItemGroup>

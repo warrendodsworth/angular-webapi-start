@@ -15,6 +15,10 @@
       return $http.get(url + 'posts' + qs.toQs(filter));
     };
 
+    service.putPost = function (model) {
+      return $http.put(url + 'posts/' + model.id, model);
+    };
+
     service.postPost = function (model) {
       return $http.post(url + 'posts', model);
     };
