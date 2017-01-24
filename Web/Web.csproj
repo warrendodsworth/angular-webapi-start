@@ -330,8 +330,8 @@
     <Content Include="www\account\manageLogins.html" />
     <Content Include="www\account\register.html" />
     <Content Include="www\account\register.controller.js" />
-    <Content Include="www\account\svc\account.service.js" />
-    <Content Include="www\account\svc\httpInterceptor.service.js" />
+    <Content Include="www\account\_account.service.js" />
+    <Content Include="www\account\_httpInterceptor.service.js" />
     <Content Include="www\admin\admin.controller.js" />
     <Content Include="www\admin\admin.html" />
     <Content Include="www\app-routes.js" />
@@ -353,13 +353,13 @@
     <Content Include="www\shared\dir\fromNow.js" />
     <Content Include="www\shared\navbar.directive.js" />
     <Content Include="www\shared\navbar.html" />
-    <Content Include="www\shared\notify.service.js" />
-    <Content Include="www\shared\qs.service.js" />
+    <Content Include="www\shared\_notify.service.js" />
+    <Content Include="www\shared\_qs.service.js" />
     <Content Include="www\user\facebook.html" />
     <Content Include="www\user\facebook.controller.js" />
     <Content Include="www\user\posts.html" />
     <Content Include="www\user\posts.controller.js" />
-    <Content Include="www\user\svc\post.service.js" />
+    <Content Include="www\user\_post.service.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
