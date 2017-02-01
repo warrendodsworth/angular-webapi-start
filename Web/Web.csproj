@@ -297,10 +297,7 @@
     <Content Include="index.html" />
     <Content Include="karma.conf.js" />
     <Content Include="package.json" />
-    <Content Include="scripts\ai.0.22.19-build00125.js" />
-    <Content Include="scripts\ai.0.22.19-build00125.min.js" />
     <Content Include="test\home\index.spec.js" />
-    <Content Include="test\labs\basic.spec.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -310,11 +307,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="test\protractor.conf.js" />
-    <Content Include="test\protractor\index.spec.js" />
+    <Content Include="test\protractor\protractor.conf.js" />
     <Content Include="test\protractor\angular.spec.js" />
     <Content Include="test\protractor\download.js" />
-    <Content Include="test\protractor\tutorial.spec.js" />
     <Content Include="www\account\externalLogin.html" />
     <Content Include="www\account\externalLogin.controller.js" />
     <Content Include="www\account\login.html" />
@@ -392,7 +387,9 @@
     <Content Include="www\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="www\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="test\labs\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="jscs.json" />
   </ItemGroup>

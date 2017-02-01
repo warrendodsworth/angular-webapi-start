@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+
   angular.module('controllers').controller('LoginController', [
     '$scope',
     '$location',
@@ -8,12 +9,14 @@
   ]);
 
   function LoginController($scope, $location, AccountService) {
+    var vm = $scope;
+    vm.$parent.title = 'Wow';
 
     AccountService.getExternalLogins().then(function (res) {
-      $scope.logins = res.data;
+      vm.logins = res.data;
     });
 
-    $scope.login = function (model) {
+    vm.login = function (model) {
       AccountService.login(model).then(function (res) {
         $location.path('/').search('m', 'welcome');
       });

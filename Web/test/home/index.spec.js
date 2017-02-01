@@ -1,4 +1,4 @@
-﻿describe('HomeController', function () {
+﻿describe('home.ctrl', function () {
   var $controller, IndexController;
 
   // Load ui.router and our components.users module which we'll create next
@@ -14,5 +14,9 @@
   // Verify our controller exists
   it('should be defined', function () {
     expect(IndexController).toBeDefined();
+  });
+
+  it('should equal true', function () {
+    expect(true).toBe(true);
   });
 });
