@@ -7,18 +7,19 @@ var rename = require('gulp-rename');
 var filter = require('gulp-filter');
 var uglify = require('gulp-uglify');
 var less = require('gulp-less');
-var sh = require('shelljs');
-var bower = require('bower');
-var livereload = require('livereload');
 var stripDebug = require('gulp-strip-debug');
 var todo = require('gulp-todo');
-var mainBowerFiles = require('main-bower-files');
 var postcss = require('gulp-postcss');
 var sourcemaps = require('gulp-sourcemaps');
-var autoprefixer = require('autoprefixer');
 var plumber = require('gulp-plumber');
+var jshint = require('gulp-jshint');
+const stylish = require('jshint-stylish');
+var sh = require('shelljs');
+var livereload = require('livereload');
+var autoprefixer = require('autoprefixer');
+var bower = require('bower');
+var mainBowerFiles = require('main-bower-files');
 var Server = require('karma').Server;
-
 
 var root = './www/';
 var paths = {
@@ -51,11 +52,12 @@ gulp.task('livereload', function () {
 gulp.task('js', function (done) {
     gulp.src(paths.js)
         .pipe(plumber())
-        .pipe(gulp.dest(root))
         .pipe(concat('app.js'))
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish)) 
         .pipe(gulp.dest(paths.lib))
         .pipe(uglify())
-        //.pipe(stripDebug())
+        .pipe(stripDebug())
         .on('error', handleError)
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(paths.lib))
@@ -73,7 +75,6 @@ gulp.task('css', function (done) {
         .pipe(minifyCss({
             keepSpecialComments: 0
         }))
-       
         .pipe(rename({ extname: '.min.css' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(paths.lib))
