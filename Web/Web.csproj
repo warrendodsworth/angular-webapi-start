@@ -266,6 +266,7 @@
     <Compile Include="App_Start\ApiHandleErrorAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
     <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\Helpers\EnumHelper.cs" />
     <Compile Include="Services\PhotoService.cs" />

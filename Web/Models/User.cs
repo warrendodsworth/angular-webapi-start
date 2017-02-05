@@ -20,6 +20,8 @@ namespace Web.Models
 
     public virtual IList<Post> Posts { get; set; }
 
+    public virtual IList<Order> Orders { get; set; }
+
     public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager, string authenticationType)
     {
       // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

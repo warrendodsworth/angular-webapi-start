@@ -31,6 +31,8 @@ namespace Web.Models
 
     public DbSet<Post> Posts { get; set; }
 
+    public DbSet<Order> Orders { get; set; }
+
     public static AppDbContext Create()
     {
       return new AppDbContext();
@@ -43,6 +45,8 @@ namespace Web.Models
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
+      modelBuilder.Entity<Order>().Property(x => x.Amount).HasPrecision(18, 6);
+
       base.OnModelCreating(modelBuilder);
     }
 

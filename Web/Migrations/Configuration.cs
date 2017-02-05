@@ -36,6 +36,21 @@ namespace Web.Migrations
       }
       db.Posts.AddOrUpdate(posts.ToArray());
       db.SaveChanges();
+
+
+      var orders = new List<Order>();
+      for (int i = 1; i <= 5; i++)
+      {
+        orders.Add(new Order
+        {
+          Amount = 0.025m,
+          UserId = user.Id,
+        });
+      }
+      db.Orders.AddOrUpdate(orders.ToArray());
+      db.SaveChanges();
     }
+
+    
   }
 }

@@ -15,7 +15,7 @@ describe('login.ctrl', function () {
   it('should be defined', function () {
     expect(LoginController).toBeDefined();
   });
-
+  
   it('should title Login', function () {
     //expect(scope.$parent.title).toEqual('Login');
   });
