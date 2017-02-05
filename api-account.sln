@@ -20,8 +20,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{3EC30283-931F-4B0F-977E-3465E1EC4EC6}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "..\..\Users\Warren\Documents\Visual Studio 2015\Projects\Database\Database.sqlproj", "{0D1088CE-5A51-40F2-A53B-4CB609AC6975}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{F37F0B0B-DE12-444B-9B55-DD494B1D4F18}"
 EndProject
 Global
@@ -34,12 +32,6 @@ Global
 		{3EC30283-931F-4B0F-977E-3465E1EC4EC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EC30283-931F-4B0F-977E-3465E1EC4EC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EC30283-931F-4B0F-977E-3465E1EC4EC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D1088CE-5A51-40F2-A53B-4CB609AC6975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D1088CE-5A51-40F2-A53B-4CB609AC6975}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D1088CE-5A51-40F2-A53B-4CB609AC6975}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{0D1088CE-5A51-40F2-A53B-4CB609AC6975}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D1088CE-5A51-40F2-A53B-4CB609AC6975}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D1088CE-5A51-40F2-A53B-4CB609AC6975}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{F37F0B0B-DE12-444B-9B55-DD494B1D4F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F37F0B0B-DE12-444B-9B55-DD494B1D4F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F37F0B0B-DE12-444B-9B55-DD494B1D4F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
