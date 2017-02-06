@@ -50,8 +50,8 @@ namespace Web
 
       FacebookOptions = new FacebookAuthenticationOptions
       {
-        AppId = "292179600807388",
-        AppSecret = "2ccc6fd1bada1fddbdb6577d47b93996",
+        AppId = appSettings["FacebookAppId"],
+        AppSecret = appSettings["FacebookAppSecret"],
       };
       FacebookOptions.Scope.Add("email");
       FacebookOptions.Scope.Add("user_hometown");
