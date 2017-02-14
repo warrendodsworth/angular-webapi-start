@@ -11,7 +11,21 @@
     'ngImgCrop',
     'controllers',
     'services'
-  ]).run([
+  ])
+  .config([
+    '$httpProvider',
+    function ($httpProvider) {
+      $httpProvider.interceptors.push('HttpInterceptorService');
+    }
+  ])
+  .config(['toastyConfigProvider', function (toastyConfigProvider) {
+    toastyConfigProvider.setConfig({
+      sound: false,
+      shake: false,
+      theme: 'material'
+    });
+  }])
+  .run([
     '$rootScope',
     'AccountService',
     function ($rootScope, AccountService) {
@@ -21,20 +35,7 @@
         $rootScope.title = current.$$route.title;
       });
     }
-  ]).config([
-    '$httpProvider',
-    function ($httpProvider) {
-      $httpProvider.interceptors.push('HttpInterceptorService');
-    }
-  ])
-
-  .config(['toastyConfigProvider', function (toastyConfigProvider) {
-    toastyConfigProvider.setConfig({
-      sound: false,
-      shake: false,
-      theme: 'material'
-    });
-  }]);
+  ]);
 
   //TODO restructure modules by component
   angular.module('controllers', ['services']);

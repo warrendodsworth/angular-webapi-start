@@ -1,10 +1,16 @@
 (function () {
   'use strict';
 
-  angular.module('app').config([
-    '$routeProvider',
-    function ($routeProvider) {
+  angular
+    .module('app')
+    .config(['$routeProvider', '$locationProvider',
+    function ($routeProvider, $locationProvider) {
       var root = '/www/';
+      $locationProvider.hashPrefix('');
+      $locationProvider.html5Mode({
+        enabled: false,
+        requireBase: false
+      });
 
       //Account
       $routeProvider
@@ -20,7 +26,6 @@
 
       //Admin
         .when('/a', { title: 'Admin', controller: 'AdminController', templateUrl: root + 'admin/admin.html' })
-
         .when('/', { title: 'Home', controller: 'IndexController', templateUrl: root + 'home/index.html' })
         .otherwise({ redirectTo: '/' });
     }]);

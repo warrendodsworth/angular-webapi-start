@@ -23,131 +23,132 @@ var Server = require('karma').Server;
 
 var root = './www/';
 var paths = {
-    css: ['./less/**/*.less', root + 'css/**/*.css', '!' + root + 'lib/**.*'],
-    js: [root + 'app.js', root + '**/*.js', '!' + root + 'lib/**.*'],
-    font: root + 'fonts/',
-    lib: root + 'lib/'
+  css: ['./less/**/*.less', root + 'css/**/*.css', '!' + root + 'lib/**.*'],
+  js: [root + 'app.js', root + '**/*.js', '!' + root + 'lib/**.*'],
+  html: [root + '**/*.html'],
+  font: root + 'fonts/',
+  lib: root + 'lib/'
 };
 
 //Run test once and exit
 gulp.task('test', function (done) {
-    new Server({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    }, done).start();
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
 });
 
 gulp.task('default', ['css', 'js', 'bower', 'todo']);
 
 gulp.task('watch', ['default', 'livereload'], function () {
-    gulp.watch(paths.css, ['css']);
-    gulp.watch(paths.js, ['js']);
+  gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.js, ['js']);
 });
 
 gulp.task('livereload', function () {
-    var server = livereload.createServer();
-    server.watch([paths.css, paths.js]);
+  var server = livereload.createServer();
+  server.watch([paths.css, paths.js, paths.html]);
 });
 
 gulp.task('js', function (done) {
-    gulp.src(paths.js)
-        .pipe(plumber())
-        .pipe(concat('app.js'))
-        .pipe(jshint())
-        .pipe(jshint.reporter(stylish)) 
-        .pipe(gulp.dest(paths.lib))
-        .pipe(uglify())
-        .pipe(stripDebug())
-        .on('error', handleError)
-        .pipe(rename({ suffix: '.min' }))
-        .pipe(gulp.dest(paths.lib))
-        .on('end', done);
+  gulp.src(paths.js)
+      .pipe(plumber())
+      .pipe(concat('app.js'))
+      .pipe(jshint())
+      .pipe(jshint.reporter(stylish)) 
+      .pipe(gulp.dest(paths.lib))
+      .pipe(uglify())
+      .pipe(stripDebug())
+      .on('error', handleError)
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(gulp.dest(paths.lib))
+      .on('end', done);
 });
 
 gulp.task('css', function (done) {
-    gulp.src(paths.css)
-        .pipe(plumber())
-        .pipe(less())
-        .pipe(concat('app.css'))
-        .pipe(sourcemaps.init())
-        .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
-        .pipe(gulp.dest(paths.lib))
-        .pipe(minifyCss({
-            keepSpecialComments: 0
-        }))
-        .pipe(rename({ extname: '.min.css' }))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(paths.lib))
-        .on('end', done);
+  gulp.src(paths.css)
+      .pipe(plumber())
+      .pipe(less())
+      .pipe(concat('app.css'))
+      .pipe(sourcemaps.init())
+      .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
+      .pipe(gulp.dest(paths.lib))
+      .pipe(minifyCss({
+        keepSpecialComments: 0
+      }))
+      .pipe(rename({ extname: '.min.css' }))
+      .pipe(sourcemaps.write('.'))
+      .pipe(gulp.dest(paths.lib))
+      .on('end', done);
 });
 
 gulp.task('bower', ['install'], function (done) {
-    var files = mainBowerFiles(),
-        jsFilter = filter('**/*.js', { restore: true }),
-        cssFilter = filter(['**/*.css'], { restore: true }),
-        fontFilter = filter(['**/*.{eot,woff,woff2,svg,ttf,otf}'], { restore: true }),
-        everythingElseFilter = filter(['**/*.!{js,css}'], { restore: true }),
-        onError = function (err) {
-            console.log(err);
-        };
+  var files = mainBowerFiles(),
+      jsFilter = filter('**/*.js', { restore: true }),
+      cssFilter = filter(['**/*.css'], { restore: true }),
+      fontFilter = filter(['**/*.{eot,woff,woff2,svg,ttf,otf}'], { restore: true }),
+      everythingElseFilter = filter(['**/*.!{js,css}'], { restore: true }),
+      onError = function (err) {
+        console.log(err);
+      };
 
-    if (!files.length) {
-        return done();
-    }
+  if (!files.length) {
+    return done();
+  }
 
-    gulp.src(mainBowerFiles())
-        .pipe(jsFilter)
-        .pipe(concat('bower.js'))
-        .on('error', onError)
-        .pipe(gulp.dest(paths.lib))
-        .pipe(jsFilter.restore)
+  gulp.src(mainBowerFiles())
+      .pipe(jsFilter)
+      .pipe(concat('bower.js'))
+      .on('error', onError)
+      .pipe(gulp.dest(paths.lib))
+      .pipe(jsFilter.restore)
 
-        .pipe(cssFilter)
-        .pipe(less())
-        .pipe(concat('bower.css'))
-        .on('error', onError)
-        .pipe(gulp.dest(paths.lib))
-        .pipe(cssFilter.restore)
+      .pipe(cssFilter)
+      .pipe(less())
+      .pipe(concat('bower.css'))
+      .on('error', onError)
+      .pipe(gulp.dest(paths.lib))
+      .pipe(cssFilter.restore)
 
-        .pipe(fontFilter)
-        .on('error', onError)
-        .pipe(gulp.dest(paths.font))
-        .pipe(fontFilter.restore)
+      .pipe(fontFilter)
+      .on('error', onError)
+      .pipe(gulp.dest(paths.font))
+      .pipe(fontFilter.restore)
 
-        .pipe(everythingElseFilter)
-        .pipe(gulp.dest(paths.lib))
-        .on('end', done);
+      .pipe(everythingElseFilter)
+      .pipe(gulp.dest(paths.lib))
+      .on('end', done);
 });
 
 // -> Will output a TODO.md with your todos 
 gulp.task('todo', function () {
-    gulp.src(paths.js)
-        .pipe(todo())
-        .pipe(gulp.dest('./'));
+  gulp.src(paths.js)
+      .pipe(todo())
+      .pipe(gulp.dest('./'));
 });
 
 gulp.task('install', ['git-check'], function () {
-    return bower.commands.install()
-        .on('log', function (data) {
-            gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-        });
+  return bower.commands.install()
+      .on('log', function (data) {
+        gutil.log('bower', gutil.colors.cyan(data.id), data.message);
+      });
 });
 
 gulp.task('git-check', function (done) {
-    if (!sh.which('git')) {
-        console.log(
-            '  ' + gutil.colors.red('Git is not installed.'),
-            '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
-            '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
-        );
-        process.exit(1);
-    }
-    done();
+  if (!sh.which('git')) {
+    console.log(
+        '  ' + gutil.colors.red('Git is not installed.'),
+        '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
+        '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
+    );
+    process.exit(1);
+  }
+  done();
 });
 
 function handleError(err) {
-    console.log(err);
-    this.emit('end');
+  console.log(err);
+  this.emit('end');
 }
 
 

@@ -1,4 +1,4 @@
 ### TODOs
 | Filename | line # | TODO
 |:------|:------:|:------
-| app.js | 39 | restructure modules by component
+| app.js | 40 | restructure modules by component
