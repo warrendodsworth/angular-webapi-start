@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Web.Models;
+using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace Web.Services
 {
@@ -20,6 +22,11 @@ namespace Web.Services
     public IQueryable<TicketType> GetTicketTypes()
     {
       return TicketTypes;
+    }
+
+    public async Task<TicketType> GetTicketType(int id)
+    {
+      return await TicketTypes.FirstOrDefaultAsync(t=> t.Id == id);
     }
   }
 }
