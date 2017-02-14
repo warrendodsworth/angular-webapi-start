@@ -269,7 +269,9 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\Helpers\EnumHelper.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\PhotoService.cs" />
+    <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\UserManager.cs" />
     <Compile Include="App_Start\Mvc\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />

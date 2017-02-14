@@ -11,6 +11,9 @@ namespace Web.Models
   {
     IDbSet<User> Users { get; set; }
     DbSet<Post> Posts { get; set; }
+    DbSet<Order> Orders { get; set; }
+    DbSet<OrderItem> OrderItems { get; set; }
+    DbSet<Product> Products { get; set; }
 
     void MarkAsModified(object item);
     int SaveChanges();
