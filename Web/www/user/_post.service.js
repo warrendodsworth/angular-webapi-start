@@ -3,9 +3,9 @@
 
   angular
     .module('services')
-    .service('postService', postService);
+    .service('user.post', postService);
 
-  postService.$inject = ['$http', 'QsService'];
+  postService.$inject = ['$http', 'qs'];
 
   function postService($http, qs) {
     var service = {};

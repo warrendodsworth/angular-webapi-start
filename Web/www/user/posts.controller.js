@@ -5,23 +5,23 @@
     .module('controllers')
     .controller('posts.IndexController', postsController);
 
-  postsController.$inject = ['$scope', '$http', '$location', 'NotifyService', 'QsService', 'postService'];
+  postsController.$inject = ['$scope', '$http', '$location', 'notify', 'qs', 'user.post'];
 
-  function postsController($scope, $http, $location, NotifyService, qs, postService) {
+  function postsController($scope, $http, $location, _notify, _qs, _post) {
     var vm = $scope;
     vm.model = {};
-    vm.filters = qs.toFilters();
+    vm.filters = _qs.toFilters();
   
     vm.getPosts = function () {
-      postService.getPosts(vm.filters).then(function (res) {
+      _post.getPosts(vm.filters).then(function (res) {
         vm.posts = res.data;
       });
     };
     vm.getPosts();
 
     vm.create = function (model) {
-      postService.postPost(model).then(function (res) {
-        NotifyService.success('Created');
+      _post.postPost(model).then(function (res) {
+        _notify.success('Created');
         vm.posts.items.push(res.data);
         vm.filters.action = 'list'; 
       });
@@ -32,16 +32,16 @@
     };
 
     vm.update = function (model) {
-      postService.putPost(model).then(function (res) {
-        NotifyService.success('Saved');
+      _post.putPost(model).then(function (res) {
+        _notify.success('Saved');
         vm.filters.action = 'list';
       });
     };
 
     vm.delete = function (item, index) {
-      postService.deletePost(item.id).then(function (res) {
+      _post.deletePost(item.id).then(function (res) {
         vm.posts.items.splice(index, 1);
-        NotifyService.success('Deleted');
+        _notify.success('Deleted');
       });
     };
   }

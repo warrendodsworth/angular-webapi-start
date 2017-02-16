@@ -3,11 +3,11 @@
 
   // This service reads data from the query string into a filter object.
   //http://www.metaltoad.com/blog/managing-querystring-angular-location
-  angular.module('services').factory('QsService', QsService);
+  angular.module('services').factory('qs', qsService);
 
-  QsService.$inject = ['$location'];
+  qsService.$inject = ['$location'];
 
-  function QsService($location) {
+  function qsService($location) {
     var service = {};
 
     service.toFilters = function (filterObj) {

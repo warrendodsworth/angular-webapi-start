@@ -338,6 +338,7 @@
     <Content Include="www\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="www\home\index.html" />
     <Content Include="www\home\index.controller.js" />
+    <Content Include="www\home\_home.service.js" />
     <Content Include="www\lib\app.css" />
     <Content Include="www\lib\app.js" />
     <Content Include="www\lib\app.min.css">

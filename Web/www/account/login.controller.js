@@ -4,20 +4,20 @@
   angular.module('controllers').controller('LoginController', [
     '$scope',
     '$location',
-    'AccountService',
+    'account',
     LoginController
   ]);
 
-  function LoginController($scope, $location, AccountService) {
+  function LoginController($scope, $location, _account) {
     var vm = $scope;
     vm.$parent.title = 'Wow';
 
-    AccountService.getExternalLogins().then(function (res) {
+    _account.getExternalLogins().then(function (res) {
       vm.logins = res.data;
     });
 
     vm.login = function (model) {
-      AccountService.login(model).then(function (res) {
+      _account.login(model).then(function (res) {
         $location.path('/').search('m', 'welcome');
       });
     };

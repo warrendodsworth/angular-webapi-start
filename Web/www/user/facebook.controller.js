@@ -1,16 +1,14 @@
 (function () {
   'use strict';
-  angular.module('app').controller('FacebookController', FacebookController);
-  FacebookController.$inject = [
-    '$scope',
-    '$http',
-    '$facebook'
-  ];
-  function FacebookController($scope, $http, $facebook) {
+  angular.module('app').controller('FacebookController', facebookController);
+
+  facebookController.$inject = ['$scope', '$http', '$facebook'];
+
+  function facebookController($scope, $http, $facebook) {
     var vm = $scope;
     vm.connected = false;
     vm.title = 'Facebook';
-    vm.eventId = '1622893741337148'; //test
+    vm.eventId = '1622893741337148';
 
     function activate() {
       $facebook.cachedApi('/me').then(function (res) {

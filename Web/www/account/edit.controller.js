@@ -3,19 +3,19 @@
 
   angular
     .module('app')
-    .controller('EditController', ['$scope', '$location', 'AccountService', 'NotifyService', EditController]);
+    .controller('EditController', ['$scope', '$location', 'account', 'notify', EditController]);
 
-  function EditController($scope, $location, AccountService, NotifyService) {
+  function EditController($scope, $location, _account, _notify) {
     var vm = $scope;
     vm.title = '';
 
-    AccountService.getCurrentUser().then(function (res) {
+    _account.getCurrentUser().then(function (res) {
       vm.user = res.data;
     });
 
     vm.save = function (model) {
-      AccountService.putCurrentUser(model).then(function (res) {
-        NotifyService.success('Saved');
+      _account.putCurrentUser(model).then(function (res) {
+        _notify.success('Saved');
         $location.path('/manage');
       });
     };
@@ -33,13 +33,13 @@
         url: 'api/photos',
         data: { file: file, 'username': $scope.username }
       }).then(function (res) {
-        NotifyService.success('Success ' + resp.config.data.file.name + 'uploaded');
+        _notify.success('Success ' + resp.config.data.file.name + 'uploaded');
         console.log(res.data);
       }, function (res) {
         console.log(res);
       }, function (evt) {
         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-        NotifyService.info('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+        _notify.info('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
       });
     };
 

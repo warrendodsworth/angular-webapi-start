@@ -14,11 +14,11 @@
     };
   }
 
-  navbarController.$inject = ['$scope', '$http', '$timeout', '$location', 'AccountService'];
-  function navbarController($scope, $http, $timeout, $location, AccountService) {
-    $scope.identity = AccountService.identity;
+  navbarController.$inject = ['$scope', '$http', '$timeout', '$location', 'account'];
+  function navbarController($scope, $http, $timeout, $location, _account) {
+    $scope.identity = _account.identity;
     $scope.logout = function () {
-      AccountService.logout();
+      _account.logout();
       $location.path('/');
     };
 

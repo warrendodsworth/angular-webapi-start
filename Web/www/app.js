@@ -28,9 +28,9 @@
   }])
   .run([
     '$rootScope',
-    'AccountService',
-    function ($rootScope, AccountService) {
-      AccountService.getIdentity();
+    'account',
+    function ($rootScope, account) {
+      account.getIdentity();
 
       $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.$$route.title;

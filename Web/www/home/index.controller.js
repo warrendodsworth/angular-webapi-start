@@ -1,21 +1,20 @@
 (function () {
   'use strict';
 
-  angular.module('controllers').controller('IndexController', IndexController);
+  angular.module('controllers').controller('IndexController', indexController);
 
-  IndexController.$inject = ['$scope', '$http', '$location', 'QsService'];
+  indexController.$inject = ['$scope', 'home', 'qs'];
 
-  function IndexController($scope, $http, $location, Qs) {
+  function indexController($scope, _home, _qs) {
     var vm = $scope;
     vm.$parent.title = 'Wow';
     vm.posts = { items: [] };
-    vm.filters = Qs.toFilters();
+    vm.filters = _qs.toFilters();
 
     vm.getPosts = function () {
-      $http.get('/api/posts' + Qs.toQs(vm.filters)).then(function (res) {
-        vm.posts.items = res.data.items;
-        vm.posts.total = res.data.total;
-      });
+      _home.getPosts(vm.filters).then(function (res) {
+        vm.posts = res.data;
+      })
     };
     vm.getPosts();
   }
