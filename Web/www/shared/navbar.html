@@ -26,6 +26,7 @@
         <li><a href="#/login">Login</a></li>
       </ul>
       <ul ng-show="identity.auth" class="nav navbar-nav navbar-right">
+        <li><a href="#/facebook">Facebook</a></li>
         <li><a href="#/posts">{{identity.name}}</a></li>
         <li class="dropdown" uib-dropdown>
           <a uib-dropdown-toggle class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
@@ -38,7 +39,6 @@
             <li><a href="#/manage">Manage</a></li>
             <li><a href="#/manage/logins">Manage Logins</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="#/facebook" title="Basic Facebook data retrieved">Facebook Api</a></li>
             <li><a href="/help">API Docs</a></li>
             <li><a ng-click="logout()">Logout</a></li>
           </ul>

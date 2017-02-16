@@ -7,30 +7,48 @@
     '$facebook'
   ];
   function FacebookController($scope, $http, $facebook) {
-    $scope.title = 'Facebook';
-    var authData, connected;
-    $facebook.getLoginStatus().then(function (res) {
-      if (res.status === 'connected') {
+    var vm = $scope;
+    vm.connected = false;
+    vm.title = 'Facebook';
+    vm.eventId = '1622893741337148'; //test
+
+    function activate() {
+      $facebook.cachedApi('/me').then(function (res) {
+        vm.user = res;
+
+        $facebook.cachedApi('/' + vm.user.id + '/events').then(function (res) {
+          vm.user.events = res;
+        });
+      });
+    }
+
+    vm.importEvent = function (eventId) {
+      $facebook.api('/' + eventId).then(function (res) {
+        vm.event = res;
+      });
+    };
+
+
+
+    //login
+    $facebook.getLoginStatus().then(login);
+
+    function login(res) {
+      if (res.status == 'connected') {
+        vm.connected = true;
+        activate();
+        return;
       }
-      $facebook.login().then(function (res) {
-        if (res.status === 'connected') {
-          connected = true;
-          authData = {
-            accessToken: res.authResponse.accessToken,
-            expiresIn: res.authResponse.expiresIn,
-            userId: res.authResponse.userID
-          };
-          load();
-        }
-      });
-    });
-    function load() {
-      $facebook.api('/me').then(function (res) {
-        $scope.user = res;
-      });
-      $facebook.api('/' + authData.userId + '/photos').then(function (res) {
-        console.log(res);
-      });
+
+      $facebook.login().then(login);
     }
   }
 }());
+
+
+//var authData;
+//authData = {
+//  accessToken: res.authResponse.accessToken,
+//  expiresIn: res.authResponse.expiresIn,
+//  userId: res.authResponse.userID
+//};

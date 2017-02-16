@@ -1,5 +1,4 @@
-﻿
-<h4 ng-cloak>{{user.name}}</h4>
+﻿<h4 ng-cloak>{{user.name}}</h4>
 <p class="text-muted">Your <a href="{{user.link}}" target="_blank">facebook profile</a></p>
 <hr />
 
@@ -15,9 +14,34 @@
       <dt>Languages</dt>
       <dd><span ng-repeat="language in user.languages">{{language.name}} &nbsp;</span></dd>
     </dl>
+
+    <h4>Event</h4>
+    <form name="eventForm" class="form-inline v-m" novalidate>
+      <div class="form-group">
+        <input type="text" ng-model="eventId" class="form-control" placeholder="Event ID" />
+      </div>
+      <input type="submit" ng-click="importEvent(eventId)" class="btn btn-default" value="Import" />
+    </form>
+
+    <div class="v-m" ng-if="event">
+      <h4>{{event.name}}</h4>
+      <p>{{event.location}}</p>
+      <p>{{event.owner.name}}, {{event.owner.category}}</p>
+      <p>
+        {{event.start_time | toLocal}}
+        <span ng-if="event.end_time">
+          &mdash; {{event.end_time | toLocal}}
+        </span>
+        &nbsp; {{event.timezone}}
+      </p>
+      <p>{{event.description}}</p>
+    </div>
+
+    <pre>{{event | json}}</pre>
   </div>
 
   <div class="col-sm-6">
+    <h4>Me</h4>
     <pre>{{user | json}}</pre>
   </div>
 </div>

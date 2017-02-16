@@ -8,6 +8,7 @@
 lib/
 .vs/
 fonts/
+/Web/TODO.md
 
 # Build results
 [Dd]ebug/
