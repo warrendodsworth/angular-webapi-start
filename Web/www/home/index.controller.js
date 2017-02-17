@@ -12,7 +12,7 @@
     vm.filters = _qs.toFilters();
 
     vm.getPosts = function () {
-      _home.getPosts(vm.filters).then(function (res) {
+      _home.getPostsPC(vm.filters).then(function (res) {
         vm.posts = res.data;
       })
     };

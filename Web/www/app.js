@@ -10,6 +10,7 @@
     'ngFileUpload',
     'ngImgCrop',
     'ngFacebook',
+    'angular-promise-cache',
     'controllers',
     'services'
   ])
