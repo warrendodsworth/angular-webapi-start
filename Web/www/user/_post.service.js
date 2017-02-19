@@ -5,7 +5,7 @@
     .module('services')
     .service('user.post', postService);
 
-  postService.$inject = ['$http', 'qs'];
+  postService.$inject = ['$http', '_qs'];
 
   function postService($http, qs) {
     var service = {};

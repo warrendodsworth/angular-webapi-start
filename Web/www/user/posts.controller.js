@@ -5,7 +5,7 @@
     .module('controllers')
     .controller('posts.IndexController', postsController);
 
-  postsController.$inject = ['$scope', '$http', '$location', 'notify', 'qs', 'user.post'];
+  postsController.$inject = ['$scope', '$http', '$location', '_notify', '_qs', 'user.post'];
 
   function postsController($scope, $http, $location, _notify, _qs, _post) {
     var vm = $scope;

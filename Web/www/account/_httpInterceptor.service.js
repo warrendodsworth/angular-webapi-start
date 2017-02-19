@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('app').factory('HttpInterceptorService', httpInterceptorService);
+  angular.module('app').factory('_httpInterceptorService', httpInterceptorService);
 
-  httpInterceptorService.$inject = ['$q', '$location', '$injector', 'notify', 'localStorageService'];
+  httpInterceptorService.$inject = ['$q', '$location', '$injector', '_notify', 'localStorageService'];
 
   function httpInterceptorService($q, $location, $injector, _notify, localStorageService) {
     var service = {};

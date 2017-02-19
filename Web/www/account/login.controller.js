@@ -4,7 +4,7 @@
   angular.module('controllers').controller('LoginController', [
     '$scope',
     '$location',
-    'account',
+    '_account',
     LoginController
   ]);
 

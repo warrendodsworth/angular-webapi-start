@@ -17,7 +17,7 @@
   .config([
     '$httpProvider',
     function ($httpProvider) {
-      $httpProvider.interceptors.push('HttpInterceptorService');
+      $httpProvider.interceptors.push('_httpInterceptorService');
     }
   ])
   .config(['toastyConfigProvider', function (toastyConfigProvider) {
@@ -29,9 +29,9 @@
   }])
   .run([
     '$rootScope',
-    'account',
-    function ($rootScope, account) {
-      account.getIdentity();
+    '_account',
+    function ($rootScope, _account) {
+      _account.getIdentity();
 
       $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
         $rootScope.title = current.$$route.title;

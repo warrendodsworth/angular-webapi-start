@@ -6,8 +6,8 @@
     '$location',
     '$timeout',
     'Upload',
-    'account',
-    'notify'
+    '_account',
+    '_notify'
   ];
   function manageController($scope, $location, $timeout, Upload, _account, _notify) {
     _account.getCurrentUser().then(function (res) {

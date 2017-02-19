@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('services').factory('account', accountService);
+  angular.module('services').factory('_account', accountService);
 
   accountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
 

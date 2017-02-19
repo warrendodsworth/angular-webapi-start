@@ -14,21 +14,23 @@
     };
   }
 
-  navbarController.$inject = ['$scope', '$http', '$timeout', '$location', 'account'];
+  navbarController.$inject = ['$scope', '$http', '$timeout', '$location', '_account'];
+
   function navbarController($scope, $http, $timeout, $location, _account) {
-    $scope.identity = _account.identity;
-    $scope.logout = function () {
+    var vm = $scope;
+    vm.identity = _account.identity;
+    vm.logout = function () {
       _account.logout();
       $location.path('/');
     };
 
-    $scope.getPosts = function (q) {
+    vm.getPosts = function (q) {
       return $http.get('api/posts?search=' + q).then(function (res) {
         return res.data;
       });
     };
 
-    $scope.onFocus = function (e) {
+    vm.onFocus = function (e) {
       $timeout(function () {
         $(e.target).trigger('input');
       });
@@ -37,9 +39,8 @@
 
 
 
-
   angular
-     .module('app')
+    .module('app')
   .directive('focusMe', function ($timeout, $parse) {
     return {
       //scope: true,   // optionally create a child scope
@@ -49,6 +50,7 @@
           if (value === true) {
             $timeout(function () {
               element[0].focus();
+              console.log('focusMe');
             });
           }
         });

@@ -5,8 +5,8 @@
     '$scope',
     '$location',
     '$timeout',
-    'notify',
-    'account'
+    '_notify',
+    '_account'
   ];
   function RegisterController($scope, $location, $timeout, _notify, _account) {
     $scope.register = function (model) {

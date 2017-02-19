@@ -3,7 +3,7 @@
   angular.module('controllers').controller('manageLoginsController', manageLoginsController);
   manageLoginsController.$inject = [
     '$scope',
-    'account'
+    '_account'
   ];
   function manageLoginsController($scope, _account) {
     _account.getManageLogins().then(function (res) {

@@ -5,7 +5,7 @@
     '$scope',
     '$location',
     '$timeout',
-    'account'
+    '_account'
   ];
   function forgotPassword($scope, $location, $timeout, _account) {
     $scope.forgotPassword = function (model) {

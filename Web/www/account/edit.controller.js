@@ -3,7 +3,7 @@
 
   angular
     .module('app')
-    .controller('EditController', ['$scope', '$location', 'account', 'notify', EditController]);
+    .controller('EditController', ['$scope', '$location', '_account', '_notify', EditController]);
 
   function EditController($scope, $location, _account, _notify) {
     var vm = $scope;
