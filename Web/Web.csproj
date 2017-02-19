@@ -349,6 +349,7 @@
     </Content>
     <Content Include="www\lib\bower.css" />
     <Content Include="www\lib\bower.js" />
+    <Content Include="www\shared\dir\focusMe.js" />
     <Content Include="www\shared\dir\fromNow.js" />
     <Content Include="www\shared\dir\toLocal.js" />
     <Content Include="www\shared\navbar.directive.js" />
