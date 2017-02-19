@@ -354,6 +354,7 @@
     <Content Include="www\shared\dir\toLocal.js" />
     <Content Include="www\shared\navbar.directive.js" />
     <Content Include="www\shared\navbar.html" />
+    <Content Include="www\shared\_autocomplete.service.js" />
     <Content Include="www\shared\_cache.service.js" />
     <Content Include="www\shared\_notify.service.js" />
     <Content Include="www\shared\_qs.service.js" />
