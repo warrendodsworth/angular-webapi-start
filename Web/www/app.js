@@ -14,6 +14,9 @@
     'controllers',
     'services'
   ])
+  .constant('config', {
+    userPopover: './www/shared/tpl/userpopover.html'
+  })
   .config([
     '$httpProvider',
     function ($httpProvider) {

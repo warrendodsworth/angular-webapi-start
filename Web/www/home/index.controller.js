@@ -3,9 +3,9 @@
 
   angular.module('controllers').controller('IndexController', indexController);
 
-  indexController.$inject = ['$scope', 'home', '_qs'];
+  indexController.$inject = ['$scope','config', '_home', '_qs'];
 
-  function indexController($scope, _home, _qs) {
+  function indexController($scope, config, _home, _qs) {
     var vm = $scope;
     vm.$parent.title = 'Wow';
     vm.posts = { items: [] };
@@ -17,5 +17,13 @@
       })
     };
     vm.getPosts();
+
+    vm.popoverUser = function (user) {
+      vm.popover = {
+        templateUrl: config.userPopover,
+        user: user
+      };
+      return vm.popover.templateUrl;
+    };
   }
 }());

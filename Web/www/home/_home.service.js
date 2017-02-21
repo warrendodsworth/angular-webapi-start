@@ -3,7 +3,7 @@
 
   angular
     .module('app')
-    .factory('home', ['$http', '$q', '_cache', '_qs', homeService]);
+    .factory('_home', ['$http', '$q', '_cache', '_qs', homeService]);
 
   function homeService($http, $q, _cache, _qs) {
     var service = {};

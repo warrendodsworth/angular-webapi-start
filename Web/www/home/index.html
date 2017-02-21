@@ -5,7 +5,8 @@
     <div ng-repeat="post in posts.items">
       <p>
         <b>{{post.user.name}}</b>
-        <span class="font-sm text-muted">@{{post.user.username}} &middot;</span> 
+        <span uib-popover-template="popoverUser(post.user)" popover-trigger="'mouseenter'"
+              class="font-sm text-muted">@{{post.user.username}} &middot;</span> 
         <span class="font-xs text-muted">{{post.createDate | fromNow}}</span>
       </p>
       <p class="font-lg">{{post.text}}</p>
@@ -14,7 +15,6 @@
     
     <ul uib-pagination total-items="posts.total" items-per-page="filters.show"
                     ng-model="filters.page" force-ellipses="true" max-size="8"
-                    ng-show="posts.total > filters.show" 
-                    ng-change="getPosts()"></ul>
+                    ng-show="posts.total > filters.show" ng-change="getPosts()"></ul>
   </div>
 </div>

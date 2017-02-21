@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('serices')
+    .module('services')
     .factory('_autocomplete', ['$http', _autocomplete]);
 
   function _autocomplete($http) {
