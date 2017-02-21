@@ -17,7 +17,7 @@
         .when('/login', { title: 'Login', controller: 'LoginController', templateUrl: root + 'account/login.html' })
         .when('/register', { title: 'Register', controller: 'RegisterController', templateUrl: root + 'account/register.html' })
         .when('/manage', { title: 'Manage', controller: 'manageController', templateUrl: root + 'account/manage.html' })
-        .when('/maange/edit', { title: 'Edit', controller: 'EditController', templateUrl: root + 'account/edit.html' })
+        .when('/manage/edit', { title: 'Edit', controller: 'EditController', templateUrl: root + 'account/edit.html' })
         .when('/manage/logins', { title: 'Social Logins', controller: 'manageLoginsController', templateUrl: root + 'account/manageLogins.html' })
 
       //User

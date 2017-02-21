@@ -11,11 +11,17 @@
 
     service.request = function (config) {
       config.headers = config.headers || {};
-      config.headers['X-Requested-With'] = 'XMLHttpRequest';
-      var authData = localStorageService.get('authorizationData');
-      if (authData) {
-        config.headers.Authorization = 'Bearer ' + authData.access_token;
+
+      if (!config.headers) {
+        config.headers['X-Requested-With'] = 'XMLHttpRequest';
       }
+      if (!config.headers.Authorization) {
+        var authData = localStorageService.get('authorizationData');
+        if (authData) {
+          config.headers.Authorization = 'Bearer ' + authData.access_token;
+        }
+      }
+
       return config;
     };
 

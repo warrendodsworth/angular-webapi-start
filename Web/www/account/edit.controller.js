@@ -3,11 +3,12 @@
 
   angular
     .module('app')
-    .controller('EditController', ['$scope', '$location', '_account', '_notify', EditController]);
+    .controller('EditController', ['$scope', '$location', '_account','_autocomplete', '_notify', EditController]);
 
-  function EditController($scope, $location, _account, _notify) {
+  function EditController($scope, $location, _account,_autocomplete, _notify) {
     var vm = $scope;
     vm.title = '';
+    vm.getAddressHint = _autocomplete.getAddressHint;
 
     _account.getCurrentUser().then(function (res) {
       vm.user = res.data;

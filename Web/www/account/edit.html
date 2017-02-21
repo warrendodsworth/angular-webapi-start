@@ -1,29 +1,38 @@
 ﻿
+<h3 class="v-m">Account</h3>
+<div class="v-m">
+  <button class="btn btn-default" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+       ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+       ngf-resize="{width: 100, height: 100}">Select</button>
 
-<div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-     ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-     ngf-resize="{width: 100, height: 100}">Select</div>
+  <button class="btn btn-primary" ngf-select="upload($file)">Upload on file select</button>
+</div>
 
-<div class="button" ngf-select="upload($file)">Upload on file select</div>
+<div>
+  <div ngf-drop="uploadFiles($files)" class="drop-box"
+       ngf-drag-over-class="'dragover'" ngf-multiple="true"
+       ngf-pattern="'image/*,application/pdf'">Drop files here</div>
 
-<div ngf-drop="uploadFiles($files)" class="drop-box"
-     ngf-drag-over-class="'dragover'" ngf-multiple="true"
-     ngf-pattern="'image/*,application/pdf'">Drop files here</div>
-
-<img ngf-thumbnail="file || '/thumb.jpg'">
+  <img ngf-thumbnail="file || '/thumb.jpg'">
+</div>
 
 <form name="form">
-  <dl class="dl-horizontal">
-    <dt>Name</dt>
-    <dd><input type="text" ng-model="user.name" class="form-control" /></dd>
-
-    <dt>Email</dt>
-    <dd><input type="email" ng-model="user.email" class="form-control" /></dd>
-
-    <dt>Username</dt>
-    <dd><input type="text" ng-model="user.username" class="form-control" /></dd>
-  </dl>
-  <br />
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" ng-model="user.name" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Email</label>
+    <input type="email" ng-model="user.email" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" ng-model="user.username" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" ng-model="user.address" class="form-control"
+           uib-typeahead="address for address in getAddressHint($viewValue)" />
+  </div>
   <button type="submit" ng-click="save( user )" class="btn btn-primary">Save</button>
-
 </form>
