@@ -257,15 +257,13 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Labs\LabsController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
-    <Compile Include="Models\Bind\PostBindingModel.cs" />
-    <Compile Include="Models\Bind\UserBindingModel.cs" />
-    <Compile Include="Models\Dto\PagedResult.cs" />
-    <Compile Include="Models\Dto\PostDto.cs" />
+    <Compile Include="App_Start\Results\PagedResult.cs" />
+    <Compile Include="Models\PostDto.cs" />
     <Compile Include="Models\Enums\USTimeZones.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="App_Start\ApiHandleErrorAttribute.cs" />
     <Compile Include="App_Start\Mvc\FilterConfig.cs" />
-    <Compile Include="Models\Dto\UserDto.cs" />
+    <Compile Include="Models\UserDto.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\Helpers\EnumHelper.cs" />
@@ -283,7 +281,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bind\AccountBindingModels.cs" />
-    <Compile Include="Models\Dto\AccountViewModels.cs" />
+    <Compile Include="Models\AccountDtos.cs" />
     <Compile Include="Models\AppDbContext.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\User.cs" />
@@ -397,6 +395,7 @@
     <Content Include="www\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Dto\" />
     <Folder Include="test\labs\" />
   </ItemGroup>
   <ItemGroup>

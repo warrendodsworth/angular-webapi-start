@@ -10,7 +10,7 @@ namespace Web.Models
     public string ExternalAccessToken { get; set; }
   }
 
-  public class ChangePasswordBindingModel
+  public class ChangePasswordModel
   {
     [Required]
     public string OldPassword { get; set; }
@@ -24,7 +24,7 @@ namespace Web.Models
     public string ConfirmPassword { get; set; }
   }
 
-  public class RegisterBindingModel
+  public class RegisterModel
   {
     [Required]
     public string Username { get; set; }
@@ -37,7 +37,7 @@ namespace Web.Models
     public string Password { get; set; }
   }
 
-  public class RegisterExternalBindingModel
+  public class RegisterExternalModel
   {
     [Required]
     public string Username { get; set; }
@@ -46,7 +46,7 @@ namespace Web.Models
     public string Email { get; set; }
   }
 
-  public class RemoveLoginBindingModel
+  public class RemoveLoginModel
   {
     [Required]
     public string LoginProvider { get; set; }
@@ -55,7 +55,7 @@ namespace Web.Models
     public string ProviderKey { get; set; }
   }
 
-  public class SetPasswordBindingModel
+  public class SetPasswordModel
   {
     [Required]
     [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

@@ -18,7 +18,6 @@ using Web.Providers;
 using Web.Results;
 using Newtonsoft.Json.Linq;
 using System.Linq;
-using Web.Models.Bind;
 
 namespace Web.Controllers
 {
@@ -154,7 +153,7 @@ namespace Web.Controllers
 
     // POST api/Account/RemoveLogin
     [Route("RemoveLogin")]
-    public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
+    public async Task<IHttpActionResult> RemoveLogin(RemoveLoginModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -295,7 +294,7 @@ namespace Web.Controllers
     [OverrideAuthentication]
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [Route("RegisterExternal")]
-    public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
+    public async Task<IHttpActionResult> RegisterExternal(RegisterExternalModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -335,7 +334,7 @@ namespace Web.Controllers
 
     // POST api/Account/SetPassword
     [Route("SetPassword")]
-    public async Task<IHttpActionResult> SetPassword(SetPasswordBindingModel model)
+    public async Task<IHttpActionResult> SetPassword(SetPasswordModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -439,7 +438,7 @@ namespace Web.Controllers
     }
 
     [Route("me")]
-    public async Task<IHttpActionResult> PutMe(UserBindingModel model)
+    public async Task<IHttpActionResult> PutMe(UserDto model)
     {
       User user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
       if (user == null)
@@ -459,7 +458,7 @@ namespace Web.Controllers
     }
 
     [Route("ChangePassword")]
-    public async Task<IHttpActionResult> ChangePassword(ChangePasswordBindingModel model)
+    public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
     {
       if (!ModelState.IsValid)
       {
@@ -479,7 +478,7 @@ namespace Web.Controllers
 
     [AllowAnonymous]
     [Route("Register")]
-    public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+    public async Task<IHttpActionResult> Register(RegisterModel model)
     {
       if (!ModelState.IsValid)
       {

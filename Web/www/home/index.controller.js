@@ -3,7 +3,7 @@
 
   angular.module('controllers').controller('IndexController', indexController);
 
-  indexController.$inject = ['$scope','config', '_home', '_qs'];
+  indexController.$inject = ['$scope', 'config', '_home', '_qs'];
 
   function indexController($scope, config, _home, _qs) {
     var vm = $scope;

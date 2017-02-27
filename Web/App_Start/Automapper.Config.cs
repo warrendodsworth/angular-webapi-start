@@ -1,5 +1,4 @@
 ﻿using Web.Models;
-using Web.Models.Bind;
 using Web.Models.Dto;
 using AutoMapper;
 
@@ -22,7 +21,7 @@ namespace Web
     public PostProfile()
     {
       CreateMap<Post, PostDto>();
-      CreateMap<PostBindingModel, Post>();
+      CreateMap<PostDto, Post>();
     }
   }
 
