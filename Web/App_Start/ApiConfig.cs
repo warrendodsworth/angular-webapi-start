@@ -5,6 +5,7 @@ using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
 using System.Web.Configuration;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 
 namespace Web
 {
@@ -32,6 +33,9 @@ namespace Web
           routeTemplate: "api/{controller}/{id}",
           defaults: new { id = RouteParameter.Optional }
       );
+
+      config.Services.Replace(typeof(IExceptionHandler), new OopsExceptionHandler());
+      config.Services.Add(typeof(IExceptionLogger), new TraceExceptionLogger()); 
 
       AutofacConfig.InitApi(config);
     }
