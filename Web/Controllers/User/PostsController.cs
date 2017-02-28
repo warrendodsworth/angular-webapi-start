@@ -56,16 +56,15 @@ namespace Web.Controllers
     }
 
     [Route("")]
-    public async Task<IHttpActionResult> Post(PostDto model)
+    public async Task<IHttpActionResult> Post(PostDto dto)
     {
-      model.UserId = User.Identity.GetUserId();
-
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
-      }
+      }      
 
-      var post = Mapper.Map<Post>(model);
+      var post = dto.ToModel();
+      post.UserId = User.Identity.GetUserId();
 
       _db.Posts.Add(post);
       var created = 1 == await _db.SaveChangesAsync();

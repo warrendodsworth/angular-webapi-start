@@ -17,5 +17,14 @@ namespace Web.Models.Dto
     {
       return null;
     }
+
+    public Post ToModel(Post post = null)
+    {
+      var model = post ?? new Post();
+      model.Text = Text;
+      model.UserId = UserId;
+
+      return model;
+    }
   }
 }

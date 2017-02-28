@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity;
 using Web.Models;
 using Web.Controllers;
 using Web;
+using Web.Models.Dto;
+using System.Web.Http.Results;
 
 namespace Test
 {
@@ -47,8 +49,7 @@ namespace Test
     [TestMethod]
     public async Task User_Posts_GetAll()
     {
-     var db =  Seed();
-
+      var db = Seed();
       var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
 
       var posts = await controller.Get();
@@ -59,9 +60,22 @@ namespace Test
       Assert.AreEqual("Post text 0", posts.Items.First()?.Text);
     }
 
-    private IAppDbContext Seed(IAppDbContext db = null)
+    [TestMethod]
+    public async Task User_Posts_Create()
     {
-      db = db ?? new MockDbContext();
+      var db = Seed();
+      var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
+
+      var post = new PostDto { Text = "Test", UserId = "test" };
+      var res = await controller.Post(post) as CreatedAtRouteNegotiatedContentResult<PostDto>;
+
+      Assert.IsNotNull(res);
+      Assert.IsNotNull(res.Content);
+    }
+
+    private IAppDbContext Seed()
+    {
+      var db = new MockDbContext();
       var user = new User
       {
         Id = "test",
