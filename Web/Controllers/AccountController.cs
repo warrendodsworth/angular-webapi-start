@@ -438,7 +438,7 @@ namespace Web.Controllers
     }
 
     [Route("me")]
-    public async Task<IHttpActionResult> PutMe(UserDto model)
+    public async Task<IHttpActionResult> PutMe(UserDto dto)
     {
       User user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
       if (user == null)
@@ -446,10 +446,7 @@ namespace Web.Controllers
         return NotFound();
       }
 
-      user.Name = model.Name;
-      user.Email = model.Email;
-      user.UserName = model.UserName;
-
+      user = dto.ToModel(user);
       var result = await UserManager.UpdateAsync(user);
       if (!result.Succeeded)
         return GetErrorResult(result);
