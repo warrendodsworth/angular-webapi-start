@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,6 +8,7 @@ namespace Web.Models
   public class UserDto : IValidatableObject
   {
     public string Name { get; set; }
+    [JsonProperty("username")]
     public string UserName { get; set; }
     public string Email { get; set; }
     public string PhotoUrl { get; set; }
