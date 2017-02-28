@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web;
-using System.Web.Hosting;
 using System.Web.Http;
 using Web.Services;
 
@@ -12,10 +10,10 @@ namespace Web.Controllers
   [RoutePrefix("api/photos")]
   public class PhotosController : ApiController
   {
-    private PhotoService service;
+    private PhotoService _service;
     public PhotosController()
     {
-      service = new PhotoService();
+      _service = new PhotoService();
     }
 
     [Route("")]
@@ -31,9 +29,9 @@ namespace Web.Controllers
 
       var file = context.Request.Files[0];
 
-      service.SavePhoto(file);
+      var path = _service.SavePhoto(file);
 
-      return Ok();
+      return Ok(new { Name = file.FileName, Path = path });
     }
 
     [Route("{imageID:int}")]

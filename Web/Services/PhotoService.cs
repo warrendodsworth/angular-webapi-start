@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 
@@ -12,11 +9,15 @@ namespace Web.Services
   {
     public static string BaseUrl = ConfigurationManager.AppSettings["StorageBaseUrl"];
 
-    public void SavePhoto(HttpPostedFile file)
+    public string SavePhoto(HttpPostedFile file)
     {
       var filename = Path.GetFileName(file.FileName);
 
-      file.SaveAs(HostingEnvironment.MapPath("~/img") + "/" + file.FileName);
+      var filePath = HostingEnvironment.MapPath("~/www/img") + "/" + file.FileName;
+
+      file.SaveAs(filePath);
+
+      return filePath;
     }
   }
 }

@@ -378,6 +378,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="less\app.less" />
+    <Content Include="less\images.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />
     <Content Include="www\lib\app.min.css.map" />
@@ -397,6 +398,7 @@
   <ItemGroup>
     <Folder Include="Models\Dto\" />
     <Folder Include="test\labs\" />
+    <Folder Include="www\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="jscs.json" />

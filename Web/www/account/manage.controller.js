@@ -1,14 +1,9 @@
 (function () {
   'use strict';
+
   angular.module('controllers').controller('manageController', manageController);
-  manageController.$inject = [
-    '$scope',
-    '$location',
-    '$timeout',
-    'Upload',
-    '_account',
-    '_notify'
-  ];
+  manageController.$inject = ['$scope', '$location', '$timeout', 'Upload', '_account', '_notify'];
+
   function manageController($scope, $location, $timeout, Upload, _account, _notify) {
     _account.getCurrentUser().then(function (res) {
       $scope.user = res.data;
@@ -22,7 +17,7 @@
           $location.path('/');
         }, 2000);
       });
-    };   
+    };
   }
 
 }());
