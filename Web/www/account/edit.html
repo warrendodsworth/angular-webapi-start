@@ -1,19 +1,16 @@
 ﻿<h3 class="v-m">Account</h3>
 <div class="row v-lg">
   <div class="col-md-6">
-    <div ngf-drop="upload($files)" ngf-drag-over-class="'dragover'" class="drop-box"
-         ngf-multiple="true" ngf-pattern="'image/*'"
+    <div ngf-select="upload($file)" ngf-drop="upload($file)" ng-model="file" name="file"
+         ngf-drag-over-class="'drop-box-drag-over'" class="drop-box"
+         ngf-pattern="'image/*'"
          ngf-max-size="7MB" ngf-min-height="100"
-         ngf-resize="{width: 400, height: 400}">Drop files here</div>
+         ngf-resize="{width: 400, height: 400}">
+      Drop files here <br />
+      <span class="font-sm">(or click here to select)</span>
+    </div>
   </div>
   <div class="col-md-6">
-    <button class="btn btn-default" ng-model="file" name="file"
-            ngf-select="upload($file)"
-            ngf-pattern="'image/*'" ngf-accept="'image/*'"
-            ngf-max-size="7MB" ngf-min-height="100"
-            ngf-resize="{width: 100, height: 100}">
-      Select photo (instant upload)
-    </button>
     <img ngf-thumbnail="file">
   </div>
 </div>
@@ -39,3 +36,14 @@
   </div>
   <button type="submit" ng-click="save( user )" class="btn btn-primary">Save</button>
 </form>
+
+
+<!--
+  <button class="btn btn-default" ng-model="file" name="file"
+          ngf-select="upload($file)" ngf-multiple="true" 
+          ngf-pattern="'image/*'" ngf-accept="'image/*'"
+          ngf-max-size="7MB" ngf-min-height="100"
+          ngf-resize="{width: 100, height: 100}">
+    Select photo (instant upload)
+  </button>
+-->
