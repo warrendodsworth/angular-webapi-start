@@ -23,7 +23,7 @@ namespace Web.Controllers
     }
 
     [Route("")]
-    public async Task<PagedResult<PostDto>> Get(string search = null, int page = 1, int show = 10)
+    public async Task<PagedResult<PostDto>> GetPosts(string search = null, int page = 1, int show = 10)
     {
       var userId = User.Identity.GetUserId();
       var q = _db.Posts.Include(n => n.User)
@@ -44,7 +44,7 @@ namespace Web.Controllers
     }
 
     [Route("{id:int}", Name = "UserPost")]
-    public async Task<IHttpActionResult> Get(int id)
+    public async Task<IHttpActionResult> GetPost(int id)
     {
       var post = await _db.Posts.FindAsync(id);
       if (post == null)
@@ -56,7 +56,7 @@ namespace Web.Controllers
     }
 
     [Route("")]
-    public async Task<IHttpActionResult> Post(PostDto dto)
+    public async Task<IHttpActionResult> PostPost(PostDto dto)
     {
       if (!ModelState.IsValid)
       {
@@ -75,7 +75,7 @@ namespace Web.Controllers
     }
 
     [Route("{id:int}")]
-    public async Task<IHttpActionResult> Put(int id, PostDto model)
+    public async Task<IHttpActionResult> PutPost(int id, PostDto model)
     {
       if (!ModelState.IsValid)
       {
@@ -98,7 +98,7 @@ namespace Web.Controllers
     }
 
     [Route("{id:int}")]
-    public async Task<IHttpActionResult> Delete(int id)
+    public async Task<IHttpActionResult> DeletePost(int id)
     {
       var note = await _db.Posts.FindAsync(id);
       if (note == null)

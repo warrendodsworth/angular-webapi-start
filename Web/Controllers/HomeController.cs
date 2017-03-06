@@ -20,7 +20,7 @@ namespace Web.Controllers
     }
 
     [Route("posts")]
-    public async Task<PagedResult<PostDto>> Get(string search = null, int page = 1, int show = 10)
+    public async Task<PagedResult<PostDto>> GetPosts(string search = null, int page = 1, int show = 10)
     {
       var q = _db.Posts.Include(n => n.User).AsQueryable();
 
@@ -37,7 +37,7 @@ namespace Web.Controllers
     }
 
     [Route("posts/{id:int}")]
-    public async Task<IHttpActionResult> Get(int id)
+    public async Task<IHttpActionResult> GetPost(int id)
     {
       var post = await _db.Posts.FindAsync(id);
       if (post == null)

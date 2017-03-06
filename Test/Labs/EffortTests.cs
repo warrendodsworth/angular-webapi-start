@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Effort;
 using Web.Models;
-using Web;
 using Web.Controllers;
 
 namespace Test.Controllers
@@ -17,22 +14,17 @@ namespace Test.Controllers
     private IAppDbContext db;
 
     [TestInitialize]
-    public void Initialize()
+    public void BeforeEachTest()
     {
-      AutomapperConfig.Init();
-
-      var connection = DbConnectionFactory.CreateTransient();
-      db = new AppDbContext(connection);
-      //EntityConnection connection = EntityConnectionFactory.CreateTransient("name=DefaultConnection");
+      db = Seed();
     }
 
     [TestMethod]
     public async Task Effort_Posts_GetAll()
     {
-      Seed(db);
       var controller = new HomeController(db);
 
-      var posts = await controller.Get();
+      var posts = await controller.GetPosts();
 
       Assert.IsNotNull(posts);
       Assert.AreEqual(10, posts.Items.Count());
@@ -40,8 +32,10 @@ namespace Test.Controllers
       Assert.AreEqual("Post text 1", posts.Items.First()?.Text);
     }
 
-    private void Seed(IAppDbContext db)
+    private IAppDbContext Seed()
     {
+      var db = new AppDbContext(DbConnectionFactory.CreateTransient());
+
       var user = new User
       {
         Id = Guid.NewGuid().ToString(),
@@ -63,6 +57,8 @@ namespace Test.Controllers
         });
         db.SaveChanges();
       }
+
+      return db;
     }
   }
 }

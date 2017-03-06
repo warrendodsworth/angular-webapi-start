@@ -1,5 +1,5 @@
 ﻿describe('home.ctrl', function () {
-  var $controller, IndexController;
+  var $controller, IndexController, config, _home;
 
   // Load ui.router and our components.users module which we'll create next
   beforeEach(angular.mock.module('controllers'));
@@ -8,7 +8,9 @@
   beforeEach(inject(function ($rootScope, _$controller_) {
     scope = $rootScope.$new();
     $controller = _$controller_;
-    IndexController = $controller('IndexController', { $scope: scope });
+    config = {};
+    _home = {};
+    IndexController = $controller('IndexController', { $scope: scope, config: config });
   }));
 
   // Verify our controller exists
