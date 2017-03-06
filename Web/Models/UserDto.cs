@@ -11,9 +11,7 @@ namespace Web.Models
     public string Email { get; set; }
     public string PhotoUrl { get; set; }
 
-    public UserDto()
-    {
-    }
+    public UserDto() { }
 
     public UserDto (User user)
     {

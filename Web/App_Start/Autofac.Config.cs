@@ -5,6 +5,10 @@ using System.Reflection;
 using Autofac.Integration.WebApi;
 using System.Web.Mvc;
 using Autofac.Integration.Mvc;
+using Microsoft.Owin.Security.DataHandler.Serializer;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.Owin.Security.DataHandler;
 
 namespace Web
 {
@@ -12,25 +16,30 @@ namespace Web
   {
     public static void InitApi(HttpConfiguration config)
     {
-            var builder = new ContainerBuilder();
+      var builder = new ContainerBuilder();
 
-            builder.RegisterControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
+      builder.RegisterControllers(Assembly.GetExecutingAssembly());
+      builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterFilterProvider();
-            builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
+      builder.RegisterFilterProvider();
+      builder.RegisterWebApiFilterProvider(GlobalConfiguration.Configuration);
 
-            builder.RegisterType<AppDbContext>()
-                   .AsImplementedInterfaces()
-                   .InstancePerRequest();
+      builder.RegisterType<AppDbContext>()
+             .AsImplementedInterfaces()
+             .InstancePerRequest();
 
 
-            var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+      builder.RegisterType<TicketDataFo‌​rmat>()
+             .As<ISecureDataFormat<AuthenticationTicket>>();
+      builder.Register(c => new DpapiDataProtectionProvider().Create("ASP.NET Identity"))
+             .As<IDataProtector>();
 
-        }
+      var container = builder.Build();
+      DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+      GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
     }
+  }
 }
 
 

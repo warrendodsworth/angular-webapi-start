@@ -12,6 +12,7 @@ using Web.Controllers;
 using Web;
 using Web.Models.Dto;
 using System.Web.Http.Results;
+using Effort;
 
 namespace Test
 {
@@ -19,12 +20,12 @@ namespace Test
   public class PostsControllerTests
   {
     public Mock<HttpRequestContext> requestContext { get; set; }
+    private IAppDbContext db;
+    private UserPostsController ctrl;
 
     [TestInitialize]
-    public void Initialize()
+    public void BeforeEachTest()
     {
-      AutomapperConfig.Init();
-
       var identity = new GenericIdentity("test", "");
       identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "test"));
 
@@ -34,25 +35,22 @@ namespace Test
 
       requestContext = new Mock<HttpRequestContext>();
       requestContext.Setup(x => x.Principal).Returns(mockPrincipal.Object);
+
+      db = Seed();
+      ctrl = new UserPostsController(db) { RequestContext = requestContext.Object };
     }
 
     [TestMethod]
     public void User_Should_GetUserId_From_Identity()
     {
-      var db = Seed();
-      var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
-
-      Assert.AreEqual("test", controller.User.Identity.GetUserId());
-      Assert.IsTrue(controller.User.Identity.IsAuthenticated);
+      Assert.AreEqual("test", ctrl.User.Identity.GetUserId());
+      Assert.IsTrue(ctrl.User.Identity.IsAuthenticated);
     }
 
     [TestMethod]
     public async Task User_Posts_GetAll()
     {
-      var db = Seed();
-      var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
-
-      var posts = await controller.Get();
+      var posts = await ctrl.GetPosts();
 
       Assert.IsNotNull(posts);
       Assert.AreEqual(posts.Items.Count(), 10);
@@ -63,25 +61,20 @@ namespace Test
     [TestMethod]
     public async Task User_Posts_Create()
     {
-      var db = Seed();
-      var controller = new UserPostsController(db) { RequestContext = requestContext.Object };
-
       var post = new PostDto { Text = "Test", UserId = "test" };
-      var res = await controller.Post(post) as CreatedAtRouteNegotiatedContentResult<PostDto>;
+      var res = await ctrl.PostPost(post) as CreatedAtRouteNegotiatedContentResult<PostDto>;
 
       Assert.IsNotNull(res);
       Assert.IsNotNull(res.Content);
     }
 
-    private IAppDbContext Seed()
+    private IAppDbContext Seed(IAppDbContext db = null)
     {
-      var db = new MockDbContext();
-      var user = new User
-      {
-        Id = "test",
-        Name = "Test User",
-      };
-      //db.Users.Add(user);
+      db = db ?? new AppDbContext(DbConnectionFactory.CreateTransient());
+
+      var user = new User { Id = "test", Name = "Test User", UserName = "test", };
+      db.Users.Add(user);
+      db.SaveChanges();
 
       for (int i = 0; i < 100; i++)
       {
@@ -92,6 +85,8 @@ namespace Test
           UserId = user.Id,
         });
       }
+
+      db.SaveChanges();
 
       return db;
     }

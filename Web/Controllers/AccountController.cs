@@ -28,13 +28,12 @@ namespace Web.Controllers
     private const string LocalLoginProvider = "Local";
     private UserManager _userManager;
 
-    public AccountController()
-    {
-      AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
-    }
+    //public AccountController()
+    //{
+    //  AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
+    //}
 
-    public AccountController(UserManager userManager,
-        ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+    public AccountController(UserManager userManager, ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
     {
       UserManager = userManager;
       AccessTokenFormat = accessTokenFormat;

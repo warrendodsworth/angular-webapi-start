@@ -1,12 +1,9 @@
 ﻿using System.Linq;
-using System;
 using System.Threading.Tasks;
-using Test.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Effort;
 using System.Collections.Generic;
 using Web.Models;
-using Web;
 using Web.Controllers;
 
 namespace Test
@@ -14,19 +11,20 @@ namespace Test
   [TestClass]
   public class HomeControllerTests
   {
+    private IAppDbContext db;
+    private HomeController ctrl;
+
     [TestInitialize]
-    public void Init()
+    public void BeforeEachTest()
     {
-      AutomapperConfig.Init();
+      db = Seed();
+      ctrl = new HomeController(db);
     }
 
     [TestMethod]
     public async Task Home_Posts_GetAll()
     {
-      var db = Seed();
-      var controller = new HomeController(db);
-
-      var posts = await controller.Get();
+      var posts = await ctrl.GetPosts();
 
       Assert.IsNotNull(posts);
       Assert.AreEqual(posts.Items.Count(), 10);
@@ -37,10 +35,7 @@ namespace Test
     [TestMethod]
     public async Task Home_Posts_GetAll_ShouldReturnSearch()
     {
-      var db = Seed();
-      var controller = new HomeController(db);
-
-      var posts = await controller.Get(search: "0");
+      var posts = await ctrl.GetPosts(search: "0");
 
       Assert.IsNotNull(posts);
       Assert.AreEqual(10, posts.Items.Count());
@@ -49,15 +44,9 @@ namespace Test
 
     private IAppDbContext Seed(IAppDbContext db = null)
     {
-      var connection = DbConnectionFactory.CreateTransient();
-      db = db ?? new AppDbContext(connection);  //new MockDbContext();
+      db = db ?? new AppDbContext(DbConnectionFactory.CreateTransient());  //new MockDbContext();
 
-      var user = new User
-      {
-        Name = "User",
-        Email = "a@test.com",
-        UserName = "user"
-      };
+      var user = new User { Name = "User", Email = "a@test.com", UserName = "user" };
       db.Users.Add(user);
       db.SaveChanges();
 
@@ -74,7 +63,6 @@ namespace Test
 
       db.Posts.AddRange(posts);
       db.SaveChanges();
-
 
       return db;
     }

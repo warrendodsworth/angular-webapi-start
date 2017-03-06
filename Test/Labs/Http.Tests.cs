@@ -18,7 +18,6 @@ namespace Test.Labs
     public void Init()
     {
       client = new HttpClient();
-
       client.BaseAddress = new Uri(Url);
       client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
@@ -42,6 +41,4 @@ namespace Test.Labs
       Assert.IsNotNull(access_token);
     }
   }
-
-
 }
