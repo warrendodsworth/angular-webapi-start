@@ -25,19 +25,18 @@ namespace Web
       jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
       config.MapHttpAttributeRoutes();
-
-      config.Filters.Add(new HandleLogErrorApiAttribute());
-
       config.Routes.MapHttpRoute(
           name: "DefaultApi",
           routeTemplate: "api/{controller}/{id}",
           defaults: new { id = RouteParameter.Optional }
       );
 
+      config.Filters.Add(new HandleLogErrorApiAttribute());
       config.Services.Replace(typeof(IExceptionHandler), new OopsExceptionHandler());
-      config.Services.Add(typeof(IExceptionLogger), new TraceExceptionLogger()); 
+      config.Services.Add(typeof(IExceptionLogger), new TraceExceptionLogger());
 
-      AutofacConfig.InitApi(config);
+      TraceConfig.Init(config);
+      AutofacConfig.Init(config);
     }
   }
 }

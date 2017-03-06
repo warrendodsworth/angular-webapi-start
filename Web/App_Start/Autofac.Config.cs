@@ -5,7 +5,6 @@ using System.Reflection;
 using Autofac.Integration.WebApi;
 using System.Web.Mvc;
 using Autofac.Integration.Mvc;
-using Microsoft.Owin.Security.DataHandler.Serializer;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.DataHandler;
@@ -14,7 +13,7 @@ namespace Web
 {
   public class AutofacConfig
   {
-    public static void InitApi(HttpConfiguration config)
+    public static void Init(HttpConfiguration config)
     {
       var builder = new ContainerBuilder();
 
@@ -37,7 +36,6 @@ namespace Web
       var container = builder.Build();
       DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
       GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-
     }
   }
 }
