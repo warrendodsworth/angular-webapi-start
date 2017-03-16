@@ -31,12 +31,7 @@
 //  if (posts) {
 //    return posts;
 //  }
-//  var defer = $q.defer();
-//  $http.get(url).then(function (res) {
-//    defer.resolve(res);
-//  }, function (res) {
-//    defer.reject(res);
-//  });
-//  postCache.put(url, defer.promise);
-//  return defer.promise;
+//  var promise = $http.get(url);
+//  postCache.put(url, promise);
+//  return promise;
 //};

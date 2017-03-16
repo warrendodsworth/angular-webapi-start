@@ -19,20 +19,18 @@
 
     service.login = function (model) {
       var data = 'grant_type=password&username=' + model.username + '&password=' + model.password;
-      var deferred = $q.defer();
-
-      $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
+    
+     return $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
         localStorageService.set('authorizationData', res.data);
 
         service.identity.auth = true;
         service.identity.username = res.data.username;
         service.identity.name = res.data.name;
-        deferred.resolve(res);
+        return res;
       }, function (res) {
         service.logout();
-        deferred.reject(res);
+        return res;
       });
-      return deferred.promise;
     };
 
     service.logout = function () {
