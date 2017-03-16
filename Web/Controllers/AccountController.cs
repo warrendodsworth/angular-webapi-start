@@ -527,7 +527,7 @@ namespace Web.Controllers
     #region Manage
 
     [AllowAnonymous]
-    [Route("Register")]
+    [Route("forgot-password")]
     public async Task<IHttpActionResult> ForgotPassword(ForgotPasswordModel model)
     {
       if (!ModelState.IsValid)
@@ -541,15 +541,10 @@ namespace Web.Controllers
         return NotFound();
       }
 
-      string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-      //if ( !result.Succeeded )
-      //{
-      //  return GetErrorResult(result);
-      //}
+      var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
 
       return Ok();
     }
-
 
     #endregion
 
