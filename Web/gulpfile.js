@@ -55,7 +55,7 @@ gulp.task('js', function (done) {
       .pipe(plumber())
       .pipe(concat('app.js'))
       .pipe(jshint())
-      .pipe(jshint.reporter(stylish)) 
+      .pipe(jshint.reporter(stylish))
       .pipe(gulp.dest(paths.lib))
       .pipe(uglify())
       .pipe(stripDebug())
@@ -68,16 +68,16 @@ gulp.task('js', function (done) {
 gulp.task('css', function (done) {
   gulp.src(paths.css)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(less())
       .pipe(concat('app.css'))
-      .pipe(sourcemaps.init())
       .pipe(postcss([autoprefixer({ browsers: ['last 2 versions'] })]))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.lib))
       .pipe(minifyCss({
         keepSpecialComments: 0
       }))
-      .pipe(rename({ extname: '.min.css' }))
-      .pipe(sourcemaps.write('.'))
+      .pipe(rename('app.min.css'))
       .pipe(gulp.dest(paths.lib))
       .on('end', done);
 });

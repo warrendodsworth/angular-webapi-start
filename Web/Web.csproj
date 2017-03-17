@@ -385,8 +385,8 @@
     <None Include="less\app.less" />
     <None Include="less\var.less" />
     <Content Include="typings.json" />
-    <Content Include="www\lib\app.min.css.map" />
     <Content Include="TODO.md" />
+    <Content Include="www\lib\app.css.map" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="www\fonts\fontawesome-webfont.eot" />
