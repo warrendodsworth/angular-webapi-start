@@ -14,9 +14,16 @@
     vm.getPosts = function () {
       _home.getPosts(vm.filters).then(function (res) {
         vm.posts = res.data;
+        
       })
     };
     vm.getPosts();
+
+    vm.showQR = function (post) {
+      _home.getPostQR(post.id).then(function (res) {
+        post.qr = res.data;
+      });
+    };
 
     vm.popoverUser = function (user) {
       vm.popover = {

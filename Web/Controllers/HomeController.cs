@@ -6,6 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Data.Entity;
+using Gma.QrCodeNet.Encoding;
+using System.IO;
+using Gma.QrCodeNet.Encoding.Windows.Render;
+using System.Drawing.Imaging;
 
 namespace Web.Controllers
 {
@@ -48,5 +52,17 @@ namespace Web.Controllers
       return Ok(post);
     }
 
+    [Route("posts/{id:int}/qr")]
+    public IHttpActionResult GetQRCode(int id)
+    {
+      QrEncoder encoder = new QrEncoder(ErrorCorrectionLevel.M);
+      QrCode qrCode;
+      var ms = new MemoryStream();
+      encoder.TryEncode(Request.BaseUrl() + "#/posts/" + id, out qrCode);
+
+      var render = new GraphicsRenderer(new FixedModuleSize(10, QuietZoneModules.Two));
+      render.WriteToStream(qrCode.Matrix, ImageFormat.Png, ms);
+      return new FileResult(ms.GetBuffer(), @"image/png");
+    }
   }
 }

@@ -12,6 +12,10 @@
       return _cache.get('/api/posts' + _qs.toQs(filters));
     };
 
+    service.getPostQR = function (id) {
+      return $http.get('/api/posts/' + id + '/qr')
+    };
+
     return service;
   }
 })();

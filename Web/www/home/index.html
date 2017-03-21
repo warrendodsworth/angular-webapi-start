@@ -3,18 +3,27 @@
 <div class="row">
   <div class="col-sm-6 col-sm-offset-3">
     <div ng-repeat="post in posts.items">
-      <p>
-        <b>{{post.user.name}}</b>
-        <span uib-popover-template="popoverUser(post.user)" popover-trigger="'mouseenter'"
-              class="font-sm text-muted">@{{post.user.username}} &middot;</span> 
-        <span class="font-xs text-muted">{{post.createDate | fromNow}}</span>
-      </p>
-      <p class="font-lg">{{post.text}}</p>
+      <div class="row">
+        <div class="col-xs-10">
+          <p>
+            <b>{{post.user.name}}</b>
+            <span uib-popover-template="popoverUser(post.user)" popover-trigger="'mouseenter'"
+                  class="font-sm text-muted">@{{post.user.username}}&middot;</span>
+            <span class="font-xs text-muted">{{post.createDate | fromNow}}</span>
+
+            <a ng-click="showQR(post)"><i class="fa fa-qrcode"></i></a>
+          </p>
+          <p class="font-lg">{{post.text}}</p>
+        </div>
+        <div class="col-xs-2">
+          <img ng-if="post.qr" ng-src="data:image/PNG;base64,{{post.qr}}" alt="" class="img-responsive" />
+        </div>
+      </div>
       <hr />
     </div>
-    
+
     <ul uib-pagination total-items="posts.total" items-per-page="filters.show"
-                    ng-model="filters.page" force-ellipses="true" max-size="8"
-                    ng-show="posts.total > filters.show" ng-change="getPosts()"></ul>
+        ng-model="filters.page" force-ellipses="true" max-size="8"
+        ng-show="posts.total > filters.show" ng-change="getPosts()"></ul>
   </div>
 </div>
