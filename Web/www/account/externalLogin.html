@@ -6,7 +6,7 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto:700,400,300' rel='stylesheet' type='text/css'>
   <link rel="shortcut icon" href="/images/icon.ico" />
 
-  <title>Register External</title>
+  <title>Social login</title>
   <link href="/lib/bower.css" rel="stylesheet" />
 </head>
 <body ng-app="app" ng-controller="ExternalLoginController">
@@ -23,7 +23,7 @@
         </a>
       </div>
       <div class="navbar-collapse collapse">
-      
+
       </div>
     </div>
   </nav>
@@ -37,33 +37,25 @@
         <h4>Sign up with <b class="text-info">{{loginProvider}}</b></h4>
         <hr />
 
-        <h4>Almost done.</h4>
+        <h4>Almost done</h4>
         <p class="v-m">Check your info and click Create!</p>
 
         <form name="form" class="form-horizontal" role="form" novalidate>
           <div class="form-group">
-            <label class="col-md-2 control-label">Name</label>
-            <div class="col-md-10">
-              <input type="text" ng-model="model.name" name="name" class="form-control" />
-            </div>
+            <label>Name</label>
+            <input type="text" ng-model="model.name" name="name" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="col-md-2 control-label">Email</label>
-            <div class="col-md-10">
-              <input type="email" ng-model="model.email" name="email" class="form-control" />
-            </div>
+            <label>Email</label>
+            <input type="email" ng-model="model.email" name="email" class="form-control" />
           </div>
           <div class="form-group">
-            <label class="col-md-2 control-label">Username</label>
-            <div class="col-md-10">
-              <input type="text" ng-model="model.username" name="username" username-available class="form-control" />
-            </div>
+            <label>Username</label>
+            <input type="text" ng-model="model.username" name="username" username-available class="form-control" />
           </div>
           <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-              <input type="submit" ng-click="form.$valid && registerExternal( model )"
-                     class="btn btn-primary" value="Create account" />
-            </div>
+            <input type="submit" ng-click="form.$valid && registerExternal( model )"
+                   class="btn btn-primary" value="Create account" />
           </div>
         </form>
       </div>
@@ -76,10 +68,11 @@
         <h3 class="text-center">Whoops theres been an issue</h3>
       </div>
 
-      <toasty></toasty>
     </div>
     <footer></footer>
   </div>
+
+  <toasty></toasty>
 
   <div id="fb-root"></div>
 
