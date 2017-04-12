@@ -30,7 +30,7 @@ namespace Test.Controllers
     {
       db = Seed();
       userManager = new UserManager(db);
-      ctrl = new AccountController(userManager, new TicketDataFormat(new DpapiDataProtectionProvider().Create("ASP.NET Identity")));
+      ctrl = new AccountController(userManager);
     }
 
     [TestMethod]

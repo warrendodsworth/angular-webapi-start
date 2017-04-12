@@ -7,7 +7,13 @@
   <link rel="shortcut icon" href="/images/icon.ico" />
 
   <title>Social login</title>
-  <link href="/lib/bower.css" rel="stylesheet" />
+  <link href="/www/lib/bower.css" rel="stylesheet" />
+  <link href="/www/lib/app.css" rel="stylesheet" />
+  <link href="/www/lib/app.css.map" rel="stylesheet" />
+
+  <script src="/www/lib/bower.js"></script>
+  <script src="/www/lib/app.js"></script>
+  <link href="/www/lib/app.js.map" rel="sc" />
 </head>
 <body ng-app="app" ng-controller="ExternalLoginController">
   <nav class="navbar navbar-default navbar-fixed-top" ng-controller="NavbarController">
@@ -18,19 +24,14 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a href="/#/" class="navbar-brand">
-          Learn
-        </a>
-      </div>
-      <div class="navbar-collapse collapse">
-
+        <a href="/" class="navbar-brand"><i class="fa fa-circle-o-notch"></i></a>
       </div>
     </div>
   </nav>
 
   <div class="container">
     <div class="page">
-      <h2>Social Login</h2>
+      <h2 class="text-center">Social Login</h2>
 
       <div ng-show="action == 'register'">
 
@@ -75,9 +76,6 @@
   <toasty></toasty>
 
   <div id="fb-root"></div>
-
-  <script src="/lib/bower.js"></script>
-  <script src="/lib/app.js"></script>
 </body>
 </html>
 

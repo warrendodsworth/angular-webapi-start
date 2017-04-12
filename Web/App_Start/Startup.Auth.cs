@@ -13,6 +13,10 @@ using Microsoft.Owin.Cors;
 using System.Threading.Tasks;
 using System.Web.Cors;
 using System.Threading;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Web;
+using System.Net;
 
 namespace Web
 {
@@ -52,10 +56,10 @@ namespace Web
       {
         AppId = appSettings["FacebookAppId"],
         AppSecret = appSettings["FacebookAppSecret"],
+        Scope = { "email", "user_hometown", "user_location" },
+        BackchannelHttpHandler = new FacebookBackChannelHandler(),
+        UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name"
       };
-      FacebookOptions.Scope.Add("email");
-      FacebookOptions.Scope.Add("user_hometown");
-      FacebookOptions.Scope.Add("user_location");
 
 
       // Configure the db context and user manager to use a single instance per request
@@ -65,9 +69,48 @@ namespace Web
       app.UseCors(corsOptions);
       app.UseOAuthBearerTokens(OAuthOptions);
       app.UseFacebookAuthentication(FacebookOptions);
-      app.UseCookieAuthentication(new CookieAuthenticationOptions());
       app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
     }
+  }
+
+  public class FacebookBackChannelHandler : HttpClientHandler
+  {
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+      if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
+      {
+        request.RequestUri = new Uri(request.RequestUri.AbsoluteUri.Replace("?access_token", "&access_token"));
+      }
+
+      var result = await base.SendAsync(request, cancellationToken);
+      if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
+      {
+        return result;
+      }
+
+      var content = await result.Content.ReadAsStringAsync();
+      var facebookOauthResponse = JsonConvert.DeserializeObject<FacebookOauthResponse>(content);
+
+      var outgoingQueryString = HttpUtility.ParseQueryString(string.Empty);
+      outgoingQueryString.Add(nameof(facebookOauthResponse.access_token), facebookOauthResponse.access_token);
+      outgoingQueryString.Add(nameof(facebookOauthResponse.expires_in), facebookOauthResponse.expires_in + string.Empty);
+      outgoingQueryString.Add(nameof(facebookOauthResponse.token_type), facebookOauthResponse.token_type);
+      var postdata = outgoingQueryString.ToString();
+
+      var modifiedResult = new HttpResponseMessage(HttpStatusCode.OK)
+      {
+        Content = new StringContent(postdata)
+      };
+
+      return modifiedResult;
+    }
+  }
+
+  public class FacebookOauthResponse
+  {
+    public string access_token { get; set; }
+    public long expires_in { get; set; }
+    public string token_type { get; set; }
   }
 }
 

@@ -9,25 +9,18 @@
     var vm = $scope;
     vm.title = '';
 
-    _account.getCurrentUser().then(function (res) {
+    _account.getMe().then(function (res) {
       vm.user = res.data;
     });
 
     vm.save = function (model) {
-      _account.putCurrentUser(model).then(function (res) {
+      _account.putMe(model).then(function (res) {
         _notify.success('Saved');
         $location.path('/manage');
       });
     };
-
-    // upload later on form submit or something similar
-    vm.submit = function () {
-      if ($scope.form.file.$valid && $scope.file) {
-        $scope.upload($scope.file);
-      }
-    };
-
-    // upload on file select or drop
+  
+    //upload on file select or drop
     $scope.upload = function (file) {
       Upload.upload({
         url: 'api/photos',
@@ -42,9 +35,18 @@
         _notify.info('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
       });
     };
-
-    //$scope.uploadFiles = function (files) {
-    //  Upload.upload({url:'', data: {file: files});
-    //}
   }
 })();
+
+
+// upload later on form submit or something similar
+//vm.submit = function () {
+//  if ($scope.form.file.$valid && $scope.file) {
+//    $scope.upload($scope.file);
+//  }
+//};
+
+//$scope.uploadFiles = function (files) {
+//  Upload.upload({url:'', data: {file: files});
+//}
+

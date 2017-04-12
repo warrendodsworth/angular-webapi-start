@@ -53,10 +53,13 @@ gulp.task('livereload', function () {
 gulp.task('js', function (done) {
   gulp.src(paths.js)
       .pipe(plumber())
+      .pipe(sourcemaps.init())
       .pipe(concat('app.js'))
       .pipe(jshint())
       .pipe(jshint.reporter(stylish))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.lib))
+      .pipe(filter('**/*.js'))
       .pipe(uglify())
       .pipe(stripDebug())
       .on('error', handleError)

@@ -2,13 +2,13 @@
   'use strict';
 
   angular
-      .module('controllers')
+      .module('app')
       .controller('ExternalLoginController', ExternalLoginController);
 
-  ExternalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'localStorageService', 'AccountService'];
+  ExternalLoginController.$inject = ['$http', '$scope', '$location', '$window', 'localStorageService', '_account'];
 
   //Return from Facebook to this view, which should read #params and get the access token
-  function ExternalLoginController($http, $scope, $location, $window, localStorageService, AccountService) {
+  function ExternalLoginController($http, $scope, $location, $window, localStorageService, _account) {
     var vm = $scope;
 
     //Callback access_token
@@ -24,7 +24,7 @@
     console.log('Access token');
 
 
-    AccountService.getUserInfo(accessToken).then(function (res) {
+    _account.getUserInfo(accessToken).then(function (res) {
       console.log('Get User Info');
       console.log(res.data);
 
@@ -40,9 +40,9 @@
       if (res.data.hasRegistered) {
         vm.action = 'process';
 
-        if (AccountService.identity.isAuth) {
+        if (_account.identity.isAuth) {
           //Add login (user already registered)
-          AccountService.addExternalLogin({ externalAccessToken: accessToken }).then(function (res) {
+          _account.addExternalLogin({ externalAccessToken: accessToken }).then(function (res) {
             $window.location.href = '/#/manage/logins?m=added';
           }, function (res) {
             vm.res = res;
@@ -66,7 +66,7 @@
 
 
     vm.registerExternal = function (model) {
-      AccountService.registerExternal(model, accessToken).then(function (res) {
+      _account.registerExternal(model, accessToken).then(function (res) {
         vm.res = 'You\'ve registered successfully';
         console.log(res);
 
