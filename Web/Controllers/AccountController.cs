@@ -25,18 +25,14 @@ namespace Web.Controllers
   [RoutePrefix("api/account")]
   public class AccountController : ApiController
   {
+    public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
     private const string LocalLoginProvider = "Local";
     private UserManager _userManager;
 
-    //public AccountController()
-    //{
-    //  AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
-    //}
-
-    public AccountController(UserManager userManager, ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
+    public AccountController(UserManager userManager)
     {
       UserManager = userManager;
-      AccessTokenFormat = accessTokenFormat;
+      AccessTokenFormat = Startup.OAuthOptions.AccessTokenFormat;
     }
 
     public UserManager UserManager
@@ -51,13 +47,12 @@ namespace Web.Controllers
       }
     }
 
-    public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
     #region Social
+    //Thinking http://bitoftech.net/2014/08/11/asp-net-web-api-2-external-logins-social-logins-facebook-google-angularjs-app/
 
-    // GET api/Account/UserInfo
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-    [Route("UserInfo")]
+    [Route("user-info")]
     public UserInfoDto GetUserInfo()
     {
       ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
@@ -72,8 +67,7 @@ namespace Web.Controllers
       };
     }
 
-    // GET api/Account/ManageInfo?returnUrl=%2F&generateState=true
-    [Route("ManageInfo")]
+    [Route("manage-info")]
     public async Task<ManageInfoDto> GetManageInfo(string returnUrl, bool generateState = false)
     {
       IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -112,8 +106,7 @@ namespace Web.Controllers
       };
     }
 
-    // POST api/Account/AddExternalLogin
-    [Route("AddExternalLogin")]
+    [Route("add-external-login")]
     public async Task<IHttpActionResult> AddExternalLogin(AddExternalLoginBindingModel model)
     {
       if (!ModelState.IsValid)
@@ -150,8 +143,7 @@ namespace Web.Controllers
       return Ok();
     }
 
-    // POST api/Account/RemoveLogin
-    [Route("RemoveLogin")]
+    [Route("remove-login")]
     public async Task<IHttpActionResult> RemoveLogin(RemoveLoginModel model)
     {
       if (!ModelState.IsValid)
@@ -179,9 +171,8 @@ namespace Web.Controllers
       return Ok();
     }
 
-    // GET api/Account/ExternalLogins?returnUrl=%2F&generateState=true
     [AllowAnonymous]
-    [Route("ExternalLogins")]
+    [Route("external-logins")]
     public IEnumerable<ExternalLoginDto> GetExternalLogins(string returnUrl, bool generateState = false)
     {
       IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
@@ -220,11 +211,10 @@ namespace Web.Controllers
       return logins;
     }
 
-    // GET api/Account/ExternalLogin
     [OverrideAuthentication]
     [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
     [AllowAnonymous]
-    [Route("ExternalLogin", Name = "ExternalLogin")]
+    [Route("external-login", Name = "ExternalLogin")]
     public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
     {
       if (error != null)
@@ -289,10 +279,9 @@ namespace Web.Controllers
       return Ok();
     }
 
-    // POST api/Account/RegisterExternal
     [OverrideAuthentication]
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-    [Route("RegisterExternal")]
+    [Route("register-external")]
     public async Task<IHttpActionResult> RegisterExternal(RegisterExternalModel model)
     {
       if (!ModelState.IsValid)
@@ -331,30 +320,9 @@ namespace Web.Controllers
       return Ok(accessToken);
     }
 
-    // POST api/Account/SetPassword
-    [Route("SetPassword")]
-    public async Task<IHttpActionResult> SetPassword(SetPasswordModel model)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-
-      IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
-
-      return Ok();
-    }
-
-
-    //Thinking http://bitoftech.net/2014/08/11/asp-net-web-api-2-external-logins-social-logins-facebook-google-angularjs-app/
     [AllowAnonymous]
     [HttpGet]
-    [Route("LocalAccessToken")]
+    [Route("localAccessToken")]
     public async Task<IHttpActionResult> GetLocalAccessToken(string externalAccessToken)
     {
       if (string.IsNullOrWhiteSpace(externalAccessToken))
@@ -390,35 +358,7 @@ namespace Web.Controllers
       var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
 
       return Ok(accessTokenResponse);
-    }
-
-    public async Task<JObject> GenerateLocalAccessTokenResponse(User user)
-    {
-      var tokenExpiration = TimeSpan.FromDays(1);
-
-      ClaimsIdentity identity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
-
-      var props = new AuthenticationProperties()
-      {
-        IssuedUtc = DateTime.UtcNow,
-        ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
-      };
-
-      var ticket = new AuthenticationTicket(identity, props);
-
-      var accessToken = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
-
-      JObject tokenResponse = new JObject(
-                                  new JProperty("username", user.UserName),
-                                  new JProperty("access_token", accessToken),
-                                  new JProperty("token_type", "bearer"),
-                                  new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
-                                  new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
-                                  new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
-                              );
-
-      return tokenResponse;
-    }
+    }   
 
     #endregion
 
@@ -454,25 +394,6 @@ namespace Web.Controllers
         return GetErrorResult(result);
 
       return StatusCode(System.Net.HttpStatusCode.NoContent);
-    }
-
-    [Route("ChangePassword")]
-    public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-
-      IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
-          model.NewPassword);
-
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
-
-      return Ok();
     }
 
     [AllowAnonymous]
@@ -522,9 +443,6 @@ namespace Web.Controllers
       return Ok();
     }
 
-    #endregion
-
-    #region Manage
 
     [AllowAnonymous]
     [Route("forgot-password")]
@@ -546,6 +464,42 @@ namespace Web.Controllers
       return Ok();
     }
 
+    [Route("changepassword")]
+    public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
+          model.NewPassword);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      return Ok();
+    }
+
+    [Route("setpassword")]
+    public async Task<IHttpActionResult> SetPassword(SetPasswordModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      IdentityResult result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      return Ok();
+    }
     #endregion
 
     #region Helpers
@@ -553,6 +507,34 @@ namespace Web.Controllers
     private IAuthenticationManager Authentication
     {
       get { return Request.GetOwinContext().Authentication; }
+    }
+
+    private async Task<JObject> GenerateLocalAccessTokenResponse(User user)
+    {
+      var tokenExpiration = TimeSpan.FromDays(1);
+
+      ClaimsIdentity identity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
+
+      var props = new AuthenticationProperties()
+      {
+        IssuedUtc = DateTime.UtcNow,
+        ExpiresUtc = DateTime.UtcNow.Add(tokenExpiration),
+      };
+
+      var ticket = new AuthenticationTicket(identity, props);
+
+      var accessToken = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
+
+      JObject tokenResponse = new JObject(
+                                  new JProperty("username", user.UserName),
+                                  new JProperty("access_token", accessToken),
+                                  new JProperty("token_type", "bearer"),
+                                  new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
+                                  new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
+                                  new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
+                              );
+
+      return tokenResponse;
     }
 
     private IHttpActionResult GetErrorResult(IdentityResult result)
@@ -690,5 +672,4 @@ namespace Web.Controllers
 
     #endregion
   }
-
 }

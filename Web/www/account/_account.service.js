@@ -6,92 +6,94 @@
   accountService.$inject = ['$q', '$http', '$rootScope', 'localStorageService'];
 
   function accountService($q, $http, $rootScope, localStorageService) {
-    var service = {};
+    var svc = {};
 
-    $rootScope.identity = service.identity = {
+    $rootScope.identity = svc.identity = {
       auth: false
     };
 
-    service.register = function (model) {
-      service.logout();
+    svc.login = function (model) {
+      var data = 'grant_type=password&username=' + model.username + '&password=' + model.password;
+
+      return $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+        .then(function (res) {
+          localStorageService.set('authorizationData', res.data);
+
+          svc.identity.auth = true;
+          svc.identity.username = res.data.username;
+          svc.identity.name = res.data.name;
+          return res;
+        }, function (res) {
+          svc.logout();
+          return res;
+        });
+    };
+    svc.logout = function () {
+      localStorageService.remove('authorizationData');
+      svc.identity.auth = false;
+      svc.identity.username = '';
+      svc.identity.name = '';
+    };
+    svc.register = function (model) {
+      svc.logout();
       return $http.post('/api/account/register', model);
     };
-
-    service.login = function (model) {
-      var data = 'grant_type=password&username=' + model.username + '&password=' + model.password;
-    
-     return $http.post('/token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (res) {
-        localStorageService.set('authorizationData', res.data);
-
-        service.identity.auth = true;
-        service.identity.username = res.data.username;
-        service.identity.name = res.data.name;
-        return res;
-      }, function (res) {
-        service.logout();
-        return res;
-      });
-    };
-
-    service.logout = function () {
-      localStorageService.remove('authorizationData');
-      service.identity.auth = false;
-      service.identity.username = '';
-      service.identity.name = '';
-      //$rootScope.$broadcast('user:logout', service.identity);
-      //Only required if you overwrite an entire service object, modifying the individual properties removes the need for broadcast
-    };
-    service.getIdentity = function () {
+    svc.getIdentity = function () {
       var authData = localStorageService.get('authorizationData');
       if (authData) {
-        service.identity.auth = true;
-        service.identity.username = authData.username;
-        service.identity.name = authData.name;
+        svc.identity.auth = true;
+        svc.identity.username = authData.username;
+        svc.identity.name = authData.name;
       }
     };
-    service.deactivateAccount = function () {
+    svc.deactivateAccount = function () {
       return $http.put('/api/account/deactivate');
     };
-    service.getCurrentUser = function () {
+    svc.getMe = function () {
       return $http.get('/api/account/me');
     };
-
-    service.putCurrentUser = function (userBindingModel) {
+    svc.putMe = function (userBindingModel) {
       return $http.put('/api/account/me', userBindingModel);
     };
 
 
     //EXTERNAL LOGINS
-    service.getUserInfo = function (accessToken) {
+    svc.getUserInfo = function (accessToken) {
       var config = accessToken ? { headers: { Authorization: 'Bearer ' + accessToken } } : {};
-      return $http.get('/api/account/UserInfo', config);
+      return $http.get('/api/account/user-info', config);
     };
-
-    service.getExternalLogins = function (returnUrl, generateState) {
-      return $http.get('/api/account/externalLogins' + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html') + '&generateState=' + (generateState || false));
+    svc.getExternalLogins = function (returnUrl, generateState) {
+      return $http.get('/api/account/external-logins' + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html') + '&generateState=' + (generateState || false));
     };
-    //model > { email }
-    service.registerExternal = function (model, externalAccessToken) {
+    //{ email }
+    svc.registerExternal = function (model, externalAccessToken) {
       var config = externalAccessToken ? { headers: { Authorization: 'Bearer ' + externalAccessToken } } : {};
-      return $http.post('/api/account/registerExternal', model, config);
+      return $http.post('/api/account/register-external', model, config);
     };
-    //model > { externalAccessToken }
-    service.addExternalLogin = function (model) {
-      return $http.post('/api/account/addExternalLogin', model);
+    //{ externalAccessToken }
+    svc.addExternalLogin = function (model) {
+      return $http.post('/api/account/add-external-login', model);
     };
-    //model > { loginProvider, providerKey }
-    service.removeLogin = function (model) {
-      return $http.post('/api/account/removeLogin', model);
+    //{ loginProvider, providerKey }
+    svc.removeLogin = function (model) {
+      return $http.post('/api/account/remove-login', model);
     };
-
-    service.getManageLogins = function (returnUrl) {
-      return $http.get('/api/account/manageInfo' + '?returnUrl=' + encodeURIComponent(returnUrl || '/js/account/externalLogin.html'));
+    svc.getManageLogins = function () {
+      return $http.get('/api/account/manage-info' + '?returnUrl=' + encodeURIComponent('/js/account/externalLogin.html'));
     };
 
     //MANAGE
-    service.forgotPassword = function (model) {
-      return $http.post('/api/account/forgotPassword', model);
+    svc.forgotPassword = function (model) {
+      return $http.post('/api/account/forgot-password', model);
     };
-    return service;
+    svc.setPassword = function (model) {
+      return $http.post('/api/account/set-password', model);
+    };
+
+    return svc;
   }
 }());
+
+
+//$rootScope.$broadcast('user:logout', svc.identity);
+//Only required if you overwrite an entire svc object, modifying the individual properties removes the need for broadcast
