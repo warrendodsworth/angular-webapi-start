@@ -65,6 +65,9 @@
     svc.getExternalLogins = function (returnUrl, generateState) {
       return $http.get('/api/account/external-logins' + '?returnUrl=' + encodeURIComponent(returnUrl || '/www/account/externalLogin.html') + '&generateState=' + (generateState || false));
     };
+    svc.getManageLogins = function () {
+      return $http.get('/api/account/manage-info' + '?returnUrl=' + encodeURIComponent('/www/account/externalLogin.html'));
+    };
     //{ email }
     svc.registerExternal = function (model, externalAccessToken) {
       var config = externalAccessToken ? { headers: { Authorization: 'Bearer ' + externalAccessToken } } : {};
@@ -78,13 +81,13 @@
     svc.removeLogin = function (model) {
       return $http.post('/api/account/remove-login', model);
     };
-    svc.getManageLogins = function () {
-      return $http.get('/api/account/manage-info' + '?returnUrl=' + encodeURIComponent('/js/account/externalLogin.html'));
-    };
-
+   
     //MANAGE
     svc.forgotPassword = function (model) {
       return $http.post('/api/account/forgot-password', model);
+    };
+    svc.changePassword = function (model) {
+      return $http.post('/api/account/change-password', model);
     };
     svc.setPassword = function (model) {
       return $http.post('/api/account/set-password', model);

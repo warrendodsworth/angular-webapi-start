@@ -28,7 +28,7 @@
       console.log('Get User Info');
       console.log(res.data);
 
-      //1st time user - register local account
+      //1st case user - wait for registration
       vm.loginProvider = res.data.loginProvider;
       vm.model = {
         name: res.data.name,
@@ -36,32 +36,21 @@
         email: res.data.email
       };
 
-      //2nd time user has local account
+      //2nd case - has local account, add social login or sign user in if not logged in
       if (res.data.hasRegistered) {
         vm.action = 'process';
 
-        if (_account.identity.isAuth) {
-          //Add login (user already registered)
+        if (_account.identity.auth) {
           _account.addExternalLogin({ externalAccessToken: accessToken }).then(function (res) {
             $window.location.href = '/#/manage/logins?m=added';
-          }, function (res) {
-            vm.res = res;
           });
-
         } else {
-          //Log user in
-          localStorageService.set('authorizationData', {
-            token: accessToken,
-            tokenType: tokenType,
-            expiresIn: expiresIn
-          });
+          localStorageService.set('authorizationData', { name: res.data.name, username: res.data.username, email: res.data.email, token: accessToken, tokenType: tokenType, expiresIn: expiresIn });
           $window.location.href = '/#/';
         }
       } else {
         vm.action = 'register';
       }
-    }, function (res) {
-      vm.res = res;
     });
 
 
@@ -77,8 +66,6 @@
         });
 
         $window.location.href = '/#/';
-      }, function (res) {
-        vm.res = res;
       });
     };
   }

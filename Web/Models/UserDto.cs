@@ -4,25 +4,22 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
-  public class UserDto : IValidatableObject
+  public class UserDto
   {
     public string Name { get; set; }
-    public string UserName { get; set; }
+    [Required]
+    public string Username { get; set; }
+    [Required]
     public string Email { get; set; }
     public string PhotoUrl { get; set; }
 
     public UserDto() { }
 
-    public UserDto (User user)
+    public UserDto(User user)
     {
       Name = user.Name;
-      UserName = user.UserName;
+      Username = user.UserName;
       Email = user.Email;
-    }
-
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-      throw new NotImplementedException();
     }
   }
 }

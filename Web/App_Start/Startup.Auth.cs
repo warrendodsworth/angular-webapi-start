@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using Web.Providers;
@@ -46,7 +45,7 @@ namespace Web
       {
         TokenEndpointPath = new PathString("/token"),
         Provider = new ApplicationOAuthProvider(PublicClientId),
-        AuthorizeEndpointPath = new PathString("/api/account/externalLogin"),
+        AuthorizeEndpointPath = new PathString("/api/account/external-ogin"),
         AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
         // In production mode set AllowInsecureHttp = false
         AllowInsecureHttp = true
@@ -58,9 +57,8 @@ namespace Web
         AppSecret = appSettings["FacebookAppSecret"],
         Scope = { "email", "user_hometown", "user_location" },
         BackchannelHttpHandler = new FacebookBackChannelHandler(),
-        UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name"
-      };
-
+        UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name",
+    };
 
       // Configure the db context and user manager to use a single instance per request
       app.CreatePerOwinContext(AppDbContext.Create);

@@ -1,22 +1,25 @@
-﻿<h2>Login</h2>
-<hr />
+﻿<div class="row">
+  <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+    <h2>Login</h2>
+    <hr />
+    <form name="form" novalidate>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" ng-model="model.username" name="username" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" ng-model="model.password" name="password" class="form-control" />
+      </div>
 
-<form name="form" novalidate>
-  <div class="form-group">
-    <label>Username</label>
-    <input type="text" ng-model="model.username" name="username" class="form-control" />
+      <input type="submit" class="btn btn-primary" ng-click="form.$valid && login( model )" value="Login" /> &nbsp;
+      <a href="#/register">Create Account</a>
+    </form>
+    <br />
+
+    <p>
+      <a ng-repeat="login in logins" href="{{login.url}}" class="btn btn-default">{{login.name}}</a>
+    </p>
   </div>
-  <div class="form-group">
-    <label>Password</label>
-    <input type="password" ng-model="model.password" name="password" class="form-control" />
-  </div>
-
-  <input type="submit" class="btn btn-primary" ng-click="form.$valid && login( model )" value="Login" /> &nbsp;
-  <a href="#/register">Create Account</a>
-</form>
-<br />
-
-<!-- Load External logins list here -->
-<a ng-repeat="login in logins" href="{{login.url}}" class="btn btn-default">{{login.name}}</a>
-
+</div>
 

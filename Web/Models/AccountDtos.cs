@@ -35,8 +35,6 @@ namespace Web.Models
     public string State { get; set; }
   }
 
-
-
   public class UserLoginInfoDto
   {
     public string LoginProvider { get; set; }

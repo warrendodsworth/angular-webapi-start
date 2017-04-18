@@ -47,9 +47,109 @@ namespace Web.Controllers
       }
     }
 
-
     #region Social
     //Thinking http://bitoftech.net/2014/08/11/asp-net-web-api-2-external-logins-social-logins-facebook-google-angularjs-app/
+
+    [AllowAnonymous]
+    [Route("external-logins")]
+    public IEnumerable<ExternalLoginDto> GetExternalLogins(string returnUrl, bool generateState = false)
+    {
+      IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
+
+      string state;
+
+      if (generateState)
+      {
+        const int strengthInBits = 256;
+        state = RandomOAuthStateGenerator.Generate(strengthInBits);
+      }
+      else
+      {
+        state = null;
+      }
+
+      var logins = new List<ExternalLoginDto>();
+
+      foreach (AuthenticationDescription description in descriptions)
+      {
+        var login = new ExternalLoginDto
+        {
+          Name = description.Caption,
+          Url = Url.Route("ExternalLogin", new
+          {
+            provider = description.AuthenticationType,
+            response_type = "token",
+            client_id = Startup.PublicClientId,
+            redirect_uri = new Uri(Request.RequestUri, returnUrl).AbsoluteUri,
+            state = state
+          }),
+          State = state
+        };
+        logins.Add(login);
+      }
+
+      return logins;
+    }
+
+    [AllowAnonymous]
+    [OverrideAuthentication]
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
+    [Route("external-login", Name = "ExternalLogin")]
+    public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
+    {
+      if (error != null)
+      {
+        return Redirect(Url.Content("~/www/account/externalLogin.html") + "#/error=" + Uri.EscapeDataString(error));
+      }
+
+      //Send user to external provider to login
+      if (!User.Identity.IsAuthenticated)
+      {
+        return new ChallengeResult(provider, this);
+      }
+
+      //Logged in - return from Facebook with External cookie
+      ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
+      if (externalLogin == null)
+      {
+        return InternalServerError();
+      }
+
+      if (externalLogin.LoginProvider != provider)
+      {
+        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+        return new ChallengeResult(provider, this);
+      }
+
+      var user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+      var hasRegistered = user != null;
+
+      if (hasRegistered)
+      {
+        //2rd case - sign user in 
+        var oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
+        var cookieIdentity = await user.GenerateUserIdentityAsync(UserManager, CookieAuthenticationDefaults.AuthenticationType);
+
+        AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user);
+        Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
+        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+      }
+      else
+      {
+        //3nd case - wait for user to register
+        var claims = externalLogin.GetClaims();
+        var identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
+        Authentication.SignIn(identity);
+      }
+
+      //http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/
+      //Invoke externalLogin with the same URL as before - 2rd time after RegisterExternal - will come here now
+      //the user is still authenticated using the same external cookie & the login provider / user id pair is now registered
+      //The controller clears the external cookie and creates a new authentication ticket & this ticket translates to a new token with an issuer LOCAL
+      //The callback URL transmits the token back to the client
+
+      return Ok();
+    }
 
     [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
     [Route("user-info")]
@@ -66,6 +166,48 @@ namespace Web.Controllers
         LoginProvider = externalLogin != null ? externalLogin.LoginProvider : null
       };
     }
+
+    [OverrideAuthentication]
+    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+    [Route("register-external")]
+    public async Task<IHttpActionResult> RegisterExternal(RegisterExternalModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
+
+      var info = await Authentication.GetExternalLoginInfoAsync();
+      if (info == null)
+      {
+        return InternalServerError();
+      }
+
+      var userCheck = await UserManager.FindAsync(info.Login);
+      if (userCheck != null)
+      {
+        return BadRequest("User already registered");
+      }
+
+      var user = new User() { UserName = model.Username, Email = model.Email };
+
+      IdentityResult result = await UserManager.CreateAsync(user);
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      result = await UserManager.AddLoginAsync(user.Id, info.Login); //Instead of password associate external login with this new account
+      if (!result.Succeeded)
+      {
+        return GetErrorResult(result);
+      }
+
+      var accessToken = GenerateLocalAccessTokenResponse(user);
+
+      return Ok(accessToken);
+    }
+
 
     [Route("manage-info")]
     public async Task<ManageInfoDto> GetManageInfo(string returnUrl, bool generateState = false)
@@ -172,157 +314,8 @@ namespace Web.Controllers
     }
 
     [AllowAnonymous]
-    [Route("external-logins")]
-    public IEnumerable<ExternalLoginDto> GetExternalLogins(string returnUrl, bool generateState = false)
-    {
-      IEnumerable<AuthenticationDescription> descriptions = Authentication.GetExternalAuthenticationTypes();
-      List<ExternalLoginDto> logins = new List<ExternalLoginDto>();
-
-      string state;
-
-      if (generateState)
-      {
-        const int strengthInBits = 256;
-        state = RandomOAuthStateGenerator.Generate(strengthInBits);
-      }
-      else
-      {
-        state = null;
-      }
-
-      foreach (AuthenticationDescription description in descriptions)
-      {
-        ExternalLoginDto login = new ExternalLoginDto
-        {
-          Name = description.Caption,
-          Url = Url.Route("ExternalLogin", new
-          {
-            provider = description.AuthenticationType,
-            response_type = "token",
-            client_id = Startup.PublicClientId,
-            redirect_uri = new Uri(Request.RequestUri, returnUrl).AbsoluteUri,
-            state = state
-          }),
-          State = state
-        };
-        logins.Add(login);
-      }
-
-      return logins;
-    }
-
-    [OverrideAuthentication]
-    [HostAuthentication(DefaultAuthenticationTypes.ExternalCookie)]
-    [AllowAnonymous]
-    [Route("external-login", Name = "ExternalLogin")]
-    public async Task<IHttpActionResult> GetExternalLogin(string provider, string error = null)
-    {
-      if (error != null)
-      {
-        return Redirect(Url.Content("~/www/account/externalLogin.html") + "#/error=" + Uri.EscapeDataString(error));
-      }
-
-      //1st time - send user to external provider to login
-      if (!User.Identity.IsAuthenticated)
-      {
-        return new ChallengeResult(provider, this);
-      }
-
-      //Logged in with Fb - Return from Facebook with External cookie set - User logged in with Facebook successfully
-      ExternalLoginData externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-
-      if (externalLogin == null)
-      {
-        return InternalServerError();
-      }
-
-      if (externalLogin.LoginProvider != provider)
-      {
-        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-        return new ChallengeResult(provider, this);
-      }
-
-      //Check if user is registered locally
-      User user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
-
-      bool hasRegistered = user != null;
-
-      if (hasRegistered)
-      {
-        //3rd time - Give local access token - user already Registered
-
-        //http://leastprivilege.com/2013/11/26/dissecting-the-web-api-individual-accounts-templatepart-3-external-accounts/
-        //Invoke externalLogin with the same URL as before - 3rd time after RegisterExternal - will come here now
-        // the user is still authenticated using the same external cookie
-        // the login provider / user id pair is now registered
-        //The controller clears the external cookie
-        // and creates a new authentication ticket
-        // this ticket translates to a new token with an issuer of LOCAL AUTHORITY – aka local account
-        //The callback URL transmits the token back to the client
-        Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-
-        ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager, OAuthDefaults.AuthenticationType);
-        ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager, CookieAuthenticationDefaults.AuthenticationType);
-
-        AuthenticationProperties properties = ApplicationOAuthProvider.CreateProperties(user);
-        Authentication.SignIn(properties, oAuthIdentity, cookieIdentity);
-      }
-      else
-      {
-        //2nd time - Register External
-        IEnumerable<Claim> claims = externalLogin.GetClaims();
-        ClaimsIdentity identity = new ClaimsIdentity(claims, OAuthDefaults.AuthenticationType);
-        Authentication.SignIn(identity);
-      }
-
-
-      return Ok();
-    }
-
-    [OverrideAuthentication]
-    [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
-    [Route("register-external")]
-    public async Task<IHttpActionResult> RegisterExternal(RegisterExternalModel model)
-    {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
-
-      var info = await Authentication.GetExternalLoginInfoAsync();
-      if (info == null)
-      {
-        return InternalServerError();
-      }
-
-      var userCheck = await UserManager.FindAsync(info.Login);
-      if (userCheck != null)
-      {
-        return BadRequest("User already registered");
-      }
-
-      var user = new User() { UserName = model.Username, Email = model.Email };
-
-      IdentityResult result = await UserManager.CreateAsync(user);
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
-
-      result = await UserManager.AddLoginAsync(user.Id, info.Login); //Instead of password associate external login with this new account
-      if (!result.Succeeded)
-      {
-        return GetErrorResult(result);
-      }
-
-      var accessToken = GenerateLocalAccessTokenResponse(user);
-
-      return Ok(accessToken);
-    }
-
-    [AllowAnonymous]
     [HttpGet]
-    [Route("localAccessToken")]
+    [Route("local-access-token")]
     public async Task<IHttpActionResult> GetLocalAccessToken(string externalAccessToken)
     {
       if (string.IsNullOrWhiteSpace(externalAccessToken))
@@ -358,7 +351,7 @@ namespace Web.Controllers
       var accessTokenResponse = GenerateLocalAccessTokenResponse(user);
 
       return Ok(accessTokenResponse);
-    }   
+    }
 
     #endregion
 
@@ -387,7 +380,7 @@ namespace Web.Controllers
 
       user.Name = model.Name;
       user.Email = model.Email;
-      user.UserName = model.UserName;
+      user.UserName = model.Username;
 
       var result = await UserManager.UpdateAsync(user);
       if (!result.Succeeded)
@@ -397,7 +390,7 @@ namespace Web.Controllers
     }
 
     [AllowAnonymous]
-    [Route("Register")]
+    [Route("register")]
     public async Task<IHttpActionResult> Register(RegisterModel model)
     {
       if (!ModelState.IsValid)
@@ -417,15 +410,8 @@ namespace Web.Controllers
       return Ok();
     }
 
-    [Route("Logout")]
-    public IHttpActionResult Logout()
-    {
-      Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-      return Ok();
-    }
-
     [HttpPut]
-    [Route("Deactivate")]
+    [Route("deactivate")]
     public async Task<IHttpActionResult> Deactivate()
     {
       User user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -442,7 +428,6 @@ namespace Web.Controllers
 
       return Ok();
     }
-
 
     [AllowAnonymous]
     [Route("forgot-password")]
@@ -464,7 +449,7 @@ namespace Web.Controllers
       return Ok();
     }
 
-    [Route("changepassword")]
+    [Route("change-password")]
     public async Task<IHttpActionResult> ChangePassword(ChangePasswordModel model)
     {
       if (!ModelState.IsValid)
@@ -483,7 +468,7 @@ namespace Web.Controllers
       return Ok();
     }
 
-    [Route("setpassword")]
+    [Route("set-password")]
     public async Task<IHttpActionResult> SetPassword(SetPasswordModel model)
     {
       if (!ModelState.IsValid)
@@ -500,6 +485,7 @@ namespace Web.Controllers
 
       return Ok();
     }
+
     #endregion
 
     #region Helpers
@@ -577,29 +563,16 @@ namespace Web.Controllers
 
       public IList<Claim> GetClaims()
       {
-        IList<Claim> claims = new List<Claim>();
+        var claims = new List<Claim>();
         claims.Add(new Claim(ClaimTypes.NameIdentifier, ProviderKey, null, LoginProvider));
+        claims.Add(new Claim(ClaimTypes.Name, Name, null, LoginProvider));
+        claims.Add(new Claim(ClaimTypes.Email, Email, null, LoginProvider));
+        claims.Add(new Claim("FacebookAccessToken", Token, null, LoginProvider));
 
-        if (Name != null)
-        {
-          claims.Add(new Claim(ClaimTypes.Name, Name, null, LoginProvider));
-        }
-
-        //Facebook nolonger provides the users username
         if (Username != null)
         {
+          //Facebook nolonger provides the users username
           claims.Add(new Claim("Username", Username, null, LoginProvider));
-        }
-
-        if (Email != null)
-        {
-          claims.Add(new Claim(ClaimTypes.Email, Email, null, LoginProvider));
-        }
-
-        //Not used anywhere yet
-        if (Token != null)
-        {
-          claims.Add(new Claim("FacebookAccessToken", Token, null, LoginProvider));
         }
 
         return claims;
