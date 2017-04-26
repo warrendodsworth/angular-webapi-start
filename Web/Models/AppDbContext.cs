@@ -25,6 +25,7 @@ namespace Web.Models
     public AppDbContext()
       : base("name=DefaultConnection", throwIfV1Schema: false)
     {
+      Database.SetInitializer(new CreateDatabaseIfNotExists<AppDbContext>());
     }
 
     //Effort in memory db
