@@ -29,10 +29,8 @@ namespace Web
     {
       var appSettings = WebConfigurationManager.AppSettings;
       var corsPolicy = new EnableCorsAttribute(appSettings["cors:Origins"], appSettings["cors:Headers"], appSettings["cors:Methods"]);
-      var corsOptions = new CorsOptions
-      {
-        PolicyProvider = new CorsPolicyProvider
-        {
+      var corsOptions = new CorsOptions {
+        PolicyProvider = new CorsPolicyProvider {
           PolicyResolver = request =>
               request.Path.Value == "/token" ?
               corsPolicy.GetCorsPolicyAsync(null, CancellationToken.None) :
@@ -41,24 +39,22 @@ namespace Web
       };
 
       PublicClientId = "self";
-      OAuthOptions = new OAuthAuthorizationServerOptions
-      {
+      OAuthOptions = new OAuthAuthorizationServerOptions {
         TokenEndpointPath = new PathString("/token"),
         Provider = new ApplicationOAuthProvider(PublicClientId),
-        AuthorizeEndpointPath = new PathString("/api/account/external-ogin"),
+        AuthorizeEndpointPath = new PathString("/api/account/external-login"),
         AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
         // In production mode set AllowInsecureHttp = false
         AllowInsecureHttp = true
       };
 
-      FacebookOptions = new FacebookAuthenticationOptions
-      {
+      FacebookOptions = new FacebookAuthenticationOptions {
         AppId = appSettings["FacebookAppId"],
         AppSecret = appSettings["FacebookAppSecret"],
         Scope = { "email", "user_hometown", "user_location" },
         BackchannelHttpHandler = new FacebookBackChannelHandler(),
         UserInformationEndpoint = "https://graph.facebook.com/v2.8/me?fields=id,name,email,first_name,last_name",
-    };
+      };
 
       // Configure the db context and user manager to use a single instance per request
       app.CreatePerOwinContext(AppDbContext.Create);
@@ -75,14 +71,12 @@ namespace Web
   {
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-      if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
-      {
+      if (!request.RequestUri.AbsolutePath.Contains("/oauth")) {
         request.RequestUri = new Uri(request.RequestUri.AbsoluteUri.Replace("?access_token", "&access_token"));
       }
 
       var result = await base.SendAsync(request, cancellationToken);
-      if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
-      {
+      if (!request.RequestUri.AbsolutePath.Contains("/oauth")) {
         return result;
       }
 
@@ -95,8 +89,7 @@ namespace Web
       outgoingQueryString.Add(nameof(facebookOauthResponse.token_type), facebookOauthResponse.token_type);
       var postdata = outgoingQueryString.ToString();
 
-      var modifiedResult = new HttpResponseMessage(HttpStatusCode.OK)
-      {
+      var modifiedResult = new HttpResponseMessage(HttpStatusCode.OK) {
         Content = new StringContent(postdata)
       };
 
